@@ -1,5 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
 export default [
@@ -9,12 +10,10 @@ export default [
         output: {
             name: 'cloudifyUiCommon',
             file: pkg.browser,
-            format: 'umd'
+            format: 'umd',
+            sourcemap: true
         },
-        plugins: [
-            resolve(), // so Rollup can find `ms`
-            commonjs() // so Rollup can convert `ms` to an ES module
-        ]
+        plugins: [resolve(), commonjs(), terser()]
     },
 
     // CommonJS (for Node) and ES module (for bundlers) build.
@@ -25,9 +24,6 @@ export default [
     // `file` and `format` for each target)
     {
         input: 'src/index.js',
-        output: [
-            { file: pkg.main, format: 'cjs' },
-            { file: pkg.module, format: 'es' }
-        ]
+        output: [{ file: pkg.main, format: 'cjs' }, { file: pkg.module, format: 'es' }]
     }
 ];

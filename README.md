@@ -5,3 +5,28 @@
 
 This repo contains common static assets (images, fonts, styles, etc.) as well as JS library containing functions reusable across Cloudify UI applications.
 
+## Usage
+
+### Static files
+
+#### Fonts
+
+#### Images
+
+#### Styles
+
+### JS code
+
+
+## Development
+
+### Static files
+
+### JS code 
+
+
+## Deployment
+
+### Manual
+
+### Automatic

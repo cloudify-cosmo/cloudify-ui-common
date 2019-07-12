@@ -1,11 +1,14 @@
 {
   "name": "cloudify-ui-common",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.0",
   "description": "Common Cloudify UI library",
   "main": "dist/cloudify-ui-common.cjs.js",
   "module": "dist/cloudify-ui-common.esm.js",
-  "browser": "dist/cloudify-ui-common.umd.js",
+  "browser": "dist/cloudify-ui-common.min.js",
   "devDependencies": {
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "babel-jest": "^24.8.0",
     "eslint": "^6.0.1",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-config-prettier": "^6.0.0",
@@ -15,20 +18,29 @@
     "prettier": "^1.18.2",
     "rollup": "^1.16.7",
     "rollup-plugin-commonjs": "^10.0.1",
-    "rollup-plugin-node-resolve": "^5.2.0"
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.1"
   },
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "lint": "eslint src",
-    "test": "jest test"
+    "lint": "eslint src test",
+    "prepare": "npm test && npm run build",
+    "test": "npm run lint && npm run test:coverage",
+    "test:only": "jest test",
+    "test:coverage": "jest test --coverage"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cloudify-cosmo/cloudify-ui-common.git"
   },
   "files": [
-    "dist", "fonts", "images", "scripts", "styles"
+    "index.js",
+    "dist",
+    "fonts",
+    "images",
+    "scripts",
+    "styles"
   ],
   "author": "Jakub Niezgoda",
   "license": "Apache-2.0",
