@@ -1,7 +1,11 @@
 /**
- * @param hierarchy - string or array containing node type hierarchy, from the most specific to the most generic
+ * Get node type icon character to be used with gigaspaces font.
  *
- * @return character from gigaspaces font
+ * @param {string|string[]} hierarchy - node type hierarchy, from the most specific to the most generic,
+ * can be single string (eg. "cloudify.nodes.Root")
+ * or array of strings (eg. ["cloudify.nodes.CloudifyManager", "cloudify.nodes.SoftwareComponent", "cloudify.nodes.Root"]).
+ *
+ * @return {string} character from gigaspaces font
  */
 function getNodeIcon(hierarchy) {
     const nodeTypeToChar = {
