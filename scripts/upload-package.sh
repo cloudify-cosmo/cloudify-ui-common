@@ -16,7 +16,7 @@
 # Arguments:
 #   $1 (package_file) - path to package file, eg. "./stage.tar.gz"
 #   $2 (ssh_command)  - string with command to be executed after uploading
-#                       on remote machine, eg. ""tar xzf stage.tar.gz"
+#                       on remote machine, eg. "tar xzf stage.tar.gz"
 # Returns:
 #   None
 #===================================================================================
