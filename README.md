@@ -4,7 +4,7 @@
 [![CircleCI](https://img.shields.io/circleci/project/github/cloudify-cosmo/cloudify-ui-common.svg?style=svg)](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common)
 [![jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
 
-This repo contains common static assets (images, fonts, styles, etc.) as well as JS library with functions reusable across Cloudify UI applications.
+This repository contains common static assets (images, fonts, styles, etc.) as well as JS library with functions reusable across Cloudify UI applications.
 
 ## Installation
 
@@ -14,19 +14,23 @@ npm install cloudify-ui-common
 
 ## Usage
 
+After you have installed the package by npm in your project, you need to specify the file(s) you want to use. 
+
 ### Static files
+
+They are grouped by the following folders:
 ```
 \fonts - official font files used in Cloudify
 \images - logos, icons and other image files
-\styles - CSS, SASS stylesheet files
+\styles - CSS, SASS stylesheet files, fonts to font-face mappers
 \scripts - shell scripts 
 ```
 
 ### JS code
 
-In the distribution package you can use the code exported in `src/index.js` file. 
+In the distribution package you can use the code exported from `src/index.js` file. 
 
-To load the package into your environment use one of the below presented option. 
+To load the package into your environment use one of the below presented option for getting [icons](./src/icons.js) module. 
 
 #### ES module
 ```javascript
@@ -47,27 +51,29 @@ Check [jsDelivr home page](https://www.jsdelivr.com/) for details about the URL 
 
 ## Development
 
+Development environment is set up to enforce good practices in JS development (static code analysis, style formatting, code coverage check). 
+
+Some general guidelines for different type of assets are listed below. 
+
 ### Static files
 
-Guidelines:
-- add new assets to 
+- add new assets to dedicated folder for specific type 
 - when removing assets verify that it is not used anywhere
+- if relevant and possible add documentation on asset usage (eg. in README.md file in the same folder as asset)
 
 ### JS code 
 
-Guidelines:
 - add new code to `src` folder
 - remember to export new files in `src/index.js` (otherwise the new code will not be available in the distribution package)
 - build: `npm run build` (production build) or `npm run dev` (automatic rebuilding)
 - test: `npm test` (static analysis, code style check and unit testing)
 - its wise to use [prettier](https://prettier.io/) and [eslint](https://eslint.org/) during development
-
-Remember to:
 - test your code (we are using [Jest](https://jestjs.io/en/) testing framework)
 - document your code (we aim to be compatible with [ESdoc](https://esdoc.org/manual/tags.html))
 
-
 ## Deployment
+
+Cloudify UI Common library is deployed to [NPM](https://www.npmjs.com). There are mainly two supported options how to deploy new version. Both are described below.
 
 ### Manual
 
