@@ -18,7 +18,7 @@ function getNodeIcon(hierarchy) {
         'cloudify.nodes.LoadBalancer': '\ue617',
         'cloudify.nodes.MessageBusServer': '\ue61c',
         'cloudify.nodes.Network': '\ue62f',
-        'cloudify.nodes.ObjectStorage': '\ue625',
+        'cloudify.nodes.ObjectStorage': '\ue627',
         'cloudify.nodes.Port': '\ue61a',
         'cloudify.nodes.Root': '\ue616',
         'cloudify.nodes.Router': '\ue618',
