@@ -1,0 +1,22 @@
+toc:
+  - name: Assets
+    description: |
+      In this section available static assets are described.
+    children:
+      - name: Fonts
+        file: fonts/README.md
+      - name: Images
+        file: images/README.md
+      - name: Styles
+        file: styles/README.md
+      - name: Scripts
+        file: styles/README.md
+  - name: API
+    description: |
+      In this section JavaScript API exposed by the library is described.
+    children:
+      - name: icons
+        description: |
+          Icons API intends to provide helper functions to access icons defined within [cloudify](#fonts) font.
+        children:
+          - getNodeIcon
