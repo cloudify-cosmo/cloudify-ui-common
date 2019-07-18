@@ -6,11 +6,13 @@
 
 This repository contains common static assets (images, fonts, styles, etc.) as well as JS library with functions reusable across Cloudify UI applications.
 
+
 ## Installation
 
 ```npm
 npm install cloudify-ui-common
 ```
+
 
 ## Usage
 
@@ -36,10 +38,18 @@ const icons = require('cloudify-ui-common').icons;
 
 Check [jsDelivr home page](https://www.jsdelivr.com/) for details about the URL format. You can get specific version and/or specific file from the package.
 
+
 ## Documentation
 
-[Auto-generated documentation](./docs/README.md) contains description of exposed APIs and static files.
+* [API](./src/README.md) - exposed JavaScript API 
 
+
+* [Fonts](./fonts/README.md) - shared common fonts
+* [Images](./images/README.md) - shared common images 
+* [Styles](./styles/README.md) - shared CSS, SCSS stylesheets
+* [Scripts](./scripts/README.md) - shared shell scripts
+
+ 
 ## Development
 
 Development environment is set up to enforce good practices in JS development (static code analysis, style formatting, code coverage check). 
@@ -61,6 +71,7 @@ Some general guidelines for different type of assets are listed below.
 - its wise to use [prettier](https://prettier.io/) and [eslint](https://eslint.org/) during development
 - test your code (we are using [Jest](https://jestjs.io/en/) testing framework)
 - document your code (we aim to be compatible with [ESdoc](https://esdoc.org/manual/tags.html))
+
 
 ## Deployment
 
