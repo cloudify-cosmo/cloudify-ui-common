@@ -1,0 +1,6 @@
+toc:
+  - name: icons
+    description: |
+      Icons API intends to provide helper functions to access icons defined within [cloudify](#fonts) font.
+    children:
+      - getNodeIcon

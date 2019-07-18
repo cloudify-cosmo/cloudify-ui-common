@@ -6,49 +6,50 @@
 
 This repository contains common static assets (images, fonts, styles, etc.) as well as JS library with functions reusable across Cloudify UI applications.
 
+
 ## Installation
 
 ```npm
 npm install cloudify-ui-common
 ```
 
+
 ## Usage
-
-After you have installed the package by npm in your project, you need to specify the file(s) you want to use. 
-
-### Static files
-
-They are grouped by the following folders:
-```
-\fonts - official font files used in Cloudify
-\images - logos, icons and other image files
-\styles - CSS, SASS stylesheet files, fonts to font-face mappers
-\scripts - shell scripts 
-```
-
-### JS code
-
-In the distribution package you can use the code exported from `src/index.js` file. 
 
 To load the package into your environment use one of the below presented option for getting [icons](./src/icons.js) module. 
 
 #### ES module
+
 ```javascript
 import { icons } from 'cloudify-ui-common';
 ```
 
 #### CommonJS
+
 ```javascript
 const icons = require('cloudify-ui-common').icons;
 ```
 
 #### Browser
+
 ```html
 <script src="https://cdn.jsdelivr.net/npm/cloudify-ui-common@1.0.0"></script>
 ```
 
 Check [jsDelivr home page](https://www.jsdelivr.com/) for details about the URL format. You can get specific version and/or specific file from the package.
 
+
+## Documentation
+
+* [API](./src/README.md) - exposed JavaScript API 
+
+
+* [Fonts](./fonts/README.md) - shared common fonts
+* [Images](./images/README.md) - shared common images 
+* [Styles](./styles/README.md) - shared CSS, SCSS stylesheets
+* [Scripts](./scripts/README.md) - shared shell scripts
+
+ 
 ## Development
 
 Development environment is set up to enforce good practices in JS development (static code analysis, style formatting, code coverage check). 
@@ -61,7 +62,7 @@ Some general guidelines for different type of assets are listed below.
 - when removing assets verify that it is not used anywhere
 - if relevant and possible add documentation on asset usage (eg. in README.md file in the same folder as asset)
 
-### JS code 
+### JS code
 
 - add new code to `src` folder
 - remember to export new files in `src/index.js` (otherwise the new code will not be available in the distribution package)
@@ -70,6 +71,7 @@ Some general guidelines for different type of assets are listed below.
 - its wise to use [prettier](https://prettier.io/) and [eslint](https://eslint.org/) during development
 - test your code (we are using [Jest](https://jestjs.io/en/) testing framework)
 - document your code (we aim to be compatible with [ESdoc](https://esdoc.org/manual/tags.html))
+
 
 ## Deployment
 
