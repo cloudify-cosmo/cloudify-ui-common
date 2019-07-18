@@ -1,11 +1,13 @@
 version: 2.1
+
+defaults: &defaults
+  docker:
+    - image: circleci/node:10.15-stretch
+  working_directory: ~/repo
+
 jobs:
-  build-and-test:
-    docker:
-      - image: circleci/node:10.15-stretch
-
-    working_directory: ~/repo
-
+  build-test:
+    <<: *defaults
     steps:
       - checkout
 
@@ -33,8 +35,56 @@ jobs:
           name: Verify if documentation is up-to-date
           command: npm run test:docs
 
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - repo
+
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=${npmjs_token_cosmo}" > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: npm publish
+
+      - run:
+          name: Setup git user
+          command: |
+            git config credential.helper 'cache --timeout=120'
+            git config user.email "cosmo-admin@github.com"
+            git config user.name "cosmo-admin-CircleCI"
+
+      - run:
+          name: Update main branch
+          command: |
+            git checkout ${master_branch}
+            git merge --ff-only ${CIRCLE_BRANCH}
+            git push -q https://${gh_token_qooban}@github.com/cloudify-cosmo/cloudify-ui-common.git ${master_branch}
+
+      - run:
+          name: Remove publish branch
+          command: |
+            git push -q https://${gh_token_qooban}@github.com/cloudify-cosmo/cloudify-ui-common.git --delete ${CIRCLE_BRANCH}
+
 workflows:
   version: 2
-  build-test:
+  build-test-deploy:
     jobs:
-      - build-and-test
+      - build-test:
+          filters:
+            tags:
+              only: /.*/
+      - deploy:
+          requires:
+            - build-test
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only: /^publish-version-v.*/
+

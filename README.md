@@ -1,4 +1,4 @@
-# cloudify-ui-common
+# Cloudify UI Common
 
 [![npm](https://img.shields.io/npm/v/cloudify-ui-common.svg?style=flat)](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common)
 [![CircleCI](https://img.shields.io/circleci/project/github/cloudify-cosmo/cloudify-ui-common.svg?style=svg)](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common)
@@ -62,25 +62,31 @@ Some general guidelines for different type of assets are listed below.
 - when removing assets verify that it is not used anywhere
 - if relevant and possible add documentation on asset usage (eg. in README.md file in the same folder as asset)
 
-### JS code
+### JS API
 
 - add new code to `src` folder
 - remember to export new files in `src/index.js` (otherwise the new code will not be available in the distribution package)
 - build: `npm run build` (production build) or `npm run dev` (automatic rebuilding)
-- test: `npm test` (static analysis, code style check and unit testing)
-- its wise to use [prettier](https://prettier.io/) and [eslint](https://eslint.org/) during development
-- test your code (we are using [Jest](https://jestjs.io/en/) testing framework)
-- document your code (we aim to be compatible with [ESdoc](https://esdoc.org/manual/tags.html))
+- test: `npm test` (static analysis, code style check, documentation check and unit testing with [Jest](https://jestjs.io/en/) testing framework) 
+- use [prettier](https://prettier.io/) and [eslint](https://eslint.org/) during development
+- document your code (we are using [JSdoc block tags](https://jsdoc.app/#block-tags) as documentation is auto-generated using [documentation.js](http://documentation.js.org))
 
 
 ## Deployment
 
-Cloudify UI Common library is deployed to [NPM](https://www.npmjs.com). There are mainly two supported options how to deploy new version. Both are described below.
+Cloudify UI Common library is published in [NPM](https://www.npmjs.com) registry.
 
-### Manual
+Assuming all your changes are merged and you have up-to-date local `master` branch:
+1. Create new version using npm-version internal command, eg. 
+   
+   `npm version patch` for new patch version, 
+   
+   `npm version minor` for new minor version, 
+   
+   `npm version --help` for usage details.
 
-TODO: Use [np](https://github.com/sindresorhus/np) tool.
+1. Create new branch and push it to remote.
 
-### Automatic
+1. Check if [CircleCI publish job](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common) was successful.
 
-TODO: Add CircleCI configuration and description.
+1. Verify [NPM registry](https://www.npmjs.com/package/cloudify-ui-common) was updated.
