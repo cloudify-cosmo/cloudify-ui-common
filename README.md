@@ -1,4 +1,4 @@
-# cloudify-ui-common
+# Cloudify UI Common
 
 [![npm](https://img.shields.io/npm/v/cloudify-ui-common.svg?style=flat)](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common)
 [![CircleCI](https://img.shields.io/circleci/project/github/cloudify-cosmo/cloudify-ui-common.svg?style=svg)](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common)
@@ -62,15 +62,14 @@ Some general guidelines for different type of assets are listed below.
 - when removing assets verify that it is not used anywhere
 - if relevant and possible add documentation on asset usage (eg. in README.md file in the same folder as asset)
 
-### JS code
+### JS API
 
 - add new code to `src` folder
 - remember to export new files in `src/index.js` (otherwise the new code will not be available in the distribution package)
 - build: `npm run build` (production build) or `npm run dev` (automatic rebuilding)
-- test: `npm test` (static analysis, code style check and unit testing)
-- its wise to use [prettier](https://prettier.io/) and [eslint](https://eslint.org/) during development
-- test your code (we are using [Jest](https://jestjs.io/en/) testing framework)
-- document your code (we aim to be compatible with [ESdoc](https://esdoc.org/manual/tags.html))
+- test: `npm test` (static analysis, code style check, documentation check and unit testing with [Jest](https://jestjs.io/en/) testing framework) 
+- use [prettier](https://prettier.io/) and [eslint](https://eslint.org/) during development
+- document your code (we are using [JSdoc block tags](https://jsdoc.app/#block-tags) as documentation is auto-generated using [documentation.js](http://documentation.js.org))
 
 
 ## Deployment

@@ -1,11 +1,13 @@
-#### _colors.scss 
+## Styles
+
+### _colors.scss 
 
 Provides set of variables with official Cloudify colors.
 
-#### font-cloudify.css
+### font-cloudify.css
 
 Creates font-family for cloudify font.
 
-#### font-JosefinSans-Bold.css
+### font-JosefinSans-Bold.css
 
 Creates font-family for JosefinSans-Bold font.

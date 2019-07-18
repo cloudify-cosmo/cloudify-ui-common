@@ -31,7 +31,7 @@
     "lint:code": "eslint src test",
     "lint:docs": "documentation lint src/index.js",
     "prepare": "npm test && npm run build",
-    "test": "npm run lint && npm run test:coverage",
+    "test": "npm run lint && npm run test:coverage && npm run test:docs",
     "test:only": "jest test",
     "test:coverage": "jest test --coverage",
     "test:docs": "npm run docs && npm run verify:docs",
