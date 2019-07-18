@@ -1,8 +1,10 @@
-#### cloudify
+## Fonts
+
+### cloudify
 
 This font only contains Cloudify node types, workflow and tasks related icons.
 
-##### Updating the font
+#### Updating the font
 
 We currently use [IcoMoon](https://icomoon.io) for making any changes (adding/deleting/editing) to the font, so please follow the current steps:
 
@@ -14,14 +16,14 @@ We currently use [IcoMoon](https://icomoon.io) for making any changes (adding/de
 6. Move the new font files to the cloudify font directory.
 7. Remember to update the "cloudify-ui-common" package, so your changes to the font will be available for use.
 
-#### JosefinSans
+### JosefinSans
 [OpenSans @ Google Fonts](https://fonts.google.com/specimen/OpenSans)
 
-#### OpenSans
+### OpenSans
 [OpenSans @ Google Fonts](https://fonts.google.com/specimen/OpenSans)
 
-#### Quicksand
+### Quicksand
 [QuickSand @ Google Fonts](https://fonts.google.com/specimen/Quicksand) 
 
-#### Roboto
+### Roboto
 [Roboto @ Google Fonts](https://fonts.google.com/specimen/Roboto) 
