@@ -74,12 +74,19 @@ Some general guidelines for different type of assets are listed below.
 
 ## Deployment
 
-Cloudify UI Common library is deployed to [NPM](https://www.npmjs.com). There are mainly two supported options how to deploy new version. Both are described below.
+Cloudify UI Common library is published in [NPM](https://www.npmjs.com) registry.
 
-### Manual
+Assuming all your changes are merged and you have up-to-date local `master` branch:
+1. Create new version using npm-version internal command, eg. 
+   
+   `npm version patch` for new patch version, 
+   
+   `npm version minor` for new minor version, 
+   
+   `npm version --help` for usage details.
 
-TODO: Use [np](https://github.com/sindresorhus/np) tool.
+1. Create new branch and push it to remote.
 
-### Automatic
+1. Check if [CircleCI publish job](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common) was successful.
 
-TODO: Add CircleCI configuration and description.
+1. Verify [NPM registry](https://www.npmjs.com/package/cloudify-ui-common) was updated.
