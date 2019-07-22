@@ -1,11 +1,13 @@
 version: 2.1
+
+defaults: &defaults
+  docker:
+    - image: circleci/node:10.15-stretch
+  working_directory: ~/repo
+
 jobs:
   build-and-test:
-    docker:
-      - image: circleci/node:10.15-stretch
-
-    working_directory: ~/repo
-
+    <<: *defaults
     steps:
       - checkout
 
