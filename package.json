@@ -1,6 +1,6 @@
 {
   "name": "cloudify-ui-common",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "Common Cloudify UI library",
   "main": "dist/cloudify-ui-common.cjs.js",
   "module": "dist/cloudify-ui-common.esm.js",
