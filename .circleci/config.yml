@@ -39,7 +39,7 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: ~/repo
+          at: ~/
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$npmjs_token_cosmo" > ~/repo/.npmrc
