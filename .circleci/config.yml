@@ -42,7 +42,7 @@ jobs:
           at: ~/repo
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$npmjs_token_cosmo" > ~/repo/.npmrc
       - run:
           name: Publish package
           command: npm publish
@@ -55,9 +55,9 @@ workflows:
       - deploy:
           requires:
             - build-and-test
-            filters:
-              tags:
-                only: /^v.*/
-              branches:
-                ignore: /.*/
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
 
