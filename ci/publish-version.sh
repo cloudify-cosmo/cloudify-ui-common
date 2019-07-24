@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Switching to master branch and checking if its up-to-date...";
-git checkout master
+MAIN_BRANCH=${MAIN_BRANCH:-master}
+echo "Switching to main branch (${MAIN_BRANCH}) and checking if its up-to-date...";
+git checkout ${MAIN_BRANCH}
 git fetch
-git diff master..origin/master --exit-code --name-only
+git diff ${MAIN_BRANCH}..origin/${MAIN_BRANCH} --quiet
 if [ $? -ne 0 ]; then
-    echo "ERROR: Please update your master branch before creating new version.";
+    echo "ERROR: Please update your main branch (${MAIN_BRANCH}) before creating new version.";
 fi
 
 NEXT_VERSION=$(npm version --no-git-tag-version "$@")
@@ -14,8 +15,7 @@ echo "Creating cloudify-ui-common ${NEXT_VERSION}...";
 
 echo "Creating version publish branch...";
 NEXT_VERSION_BRANCH="publish-version-$NEXT_VERSION"
-git branch ${NEXT_VERSION_BRANCH}
-git checkout ${NEXT_VERSION_BRANCH}
+git checkout -b ${NEXT_VERSION_BRANCH}
 git add package.json package-lock.json
 git commit -m "Bump version"
 git tag $NEXT_VERSION
@@ -27,13 +27,14 @@ select choice in "Yes" "No"; do
 case "$choice" in
     Yes)
         echo "Pushing changes";
-        # git push --follow-tags ${NEXT_VERSION_BRANCH}
+        git push --quiet --follow-tags origin ${NEXT_VERSION_BRANCH}
+        git checkout ${MAIN_BRANCH}
         break;;
     *)
         echo "Reverting changes";
         git checkout master
-        git branch -D ${NEXT_VERSION_BRANCH}
         git tag -d $NEXT_VERSION
+        git branch -D ${NEXT_VERSION_BRANCH}
         break;;
 esac
 done
