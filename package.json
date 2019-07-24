@@ -36,6 +36,7 @@
     "test:coverage": "jest test --coverage",
     "test:docs": "npm run docs && npm run verify:docs",
     "verify:docs": "git diff --exit-code ./src/README.md || echo Run `npm run docs` and commit updated `src/README.md` file."
+      
   },
   "repository": {
     "type": "git",
