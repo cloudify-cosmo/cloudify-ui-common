@@ -50,7 +50,7 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=$npmjs_token_cosmo" > ~/repo/.npmrc
       - run:
           name: Publish package
-          command: npm publish
+          command: npm publish --dry-run
 
 workflows:
   version: 2
