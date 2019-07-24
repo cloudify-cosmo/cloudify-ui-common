@@ -5,10 +5,7 @@ MAIN_BRANCH=${MAIN_BRANCH:-master}
 echo "Switching to main branch (${MAIN_BRANCH}) and checking if its up-to-date...";
 git checkout ${MAIN_BRANCH}
 git fetch
-git diff ${MAIN_BRANCH}..origin/${MAIN_BRANCH} --quiet
-if [ $? -ne 0 ]; then
-    echo "ERROR: Please update your main branch (${MAIN_BRANCH}) before creating new version.";
-fi
+git diff ${MAIN_BRANCH}..origin/${MAIN_BRANCH} --exit-code --name-only
 
 NEXT_VERSION=$(npm version --no-git-tag-version "$@")
 echo "Creating cloudify-ui-common ${NEXT_VERSION}...";
