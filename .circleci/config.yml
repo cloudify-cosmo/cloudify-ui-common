@@ -47,7 +47,7 @@ jobs:
           at: ~/
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$npmjs_token_cosmo" > ~/repo/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=${npmjs_token_cosmo}" > ~/repo/.npmrc
       - run:
           name: Publish package
           command: npm publish
@@ -58,10 +58,9 @@ jobs:
             git config user.email "cosmo-admin@github.com"
             git config user.name "cosmo-admin-CircleCI"
             git checkout ${master_branch}
-            git merge --ff-only $CIRCLE_TAG
+            git merge --ff-only ${CIRCLE_BRANCH}
+            git branch -D ${CIRCLE_BRANCH}
             git push -q https://${gh_token_qooban}@github.com/cloudify-cosmo/cloudify-ui-common.git ${master_branch}
-            git branch -D publish-version-$CIRCLE_TAG
-            git push
 
 workflows:
   version: 2
