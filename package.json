@@ -1,6 +1,6 @@
 {
   "name": "cloudify-ui-common",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "description": "Common Cloudify UI library",
   "main": "dist/cloudify-ui-common.cjs.js",
   "module": "dist/cloudify-ui-common.esm.js",
@@ -31,6 +31,9 @@
     "lint:code": "eslint src test",
     "lint:docs": "documentation lint src/index.js",
     "prepare": "npm test && npm run build",
+    "publish:patch": "sh version.sh patch",
+    "publish:minor": "sh version.sh minor",
+    "publish:major": "sh version.sh major",
     "test": "npm run lint && npm run test:coverage",
     "test:only": "jest test",
     "test:coverage": "jest test --coverage",

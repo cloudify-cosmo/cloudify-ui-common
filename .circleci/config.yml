@@ -9,14 +9,6 @@ jobs:
     steps:
       - checkout
 
-      - run:
-          command: |
-            git config credential.helper 'cache --timeout=120'
-            git config user.email "qooban@gh-bot.com"
-            git config user.name "qooban GH Bot"
-            git commit --allow-empty -m "Trigger deployment"
-            # Push quietly to prevent showing the token in log
-            git push -q https://${gh_token_qooban}@github.com/cloudify-cosmo/cloudify-ui-common.git gh-token-test
 
 workflows:
   version: 2
