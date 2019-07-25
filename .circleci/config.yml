@@ -47,7 +47,7 @@ jobs:
           at: ~/
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=${npmjs_token_cosmo}" > ~/repo/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/repo/.npmrc
       - run:
           name: Publish package
           command: npm publish
@@ -55,21 +55,20 @@ jobs:
       - run:
           name: Setup git user
           command: |
-            git config credential.helper 'cache --timeout=120'
             git config user.email "cosmo-admin@github.com"
             git config user.name "cosmo-admin-CircleCI"
 
       - run:
           name: Update main branch
           command: |
-            git checkout ${master_branch}
+            git checkout ${MAIN_BRANCH}
             git merge --ff-only ${CIRCLE_BRANCH}
-            git push -q https://${gh_token_qooban}@github.com/cloudify-cosmo/cloudify-ui-common.git ${master_branch}
+            git push -q https://${GITHUB_TOKEN}@github.com/cloudify-cosmo/cloudify-ui-common.git ${MAIN_BRANCH}
 
       - run:
           name: Remove publish branch
           command: |
-            git push -q https://${gh_token_qooban}@github.com/cloudify-cosmo/cloudify-ui-common.git --delete ${CIRCLE_BRANCH}
+            git push -q https://${GITHUB_TOKEN}@github.com/cloudify-cosmo/cloudify-ui-common.git --delete ${CIRCLE_BRANCH}
 
 workflows:
   version: 2
@@ -86,5 +85,5 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              only: /^publish-version-v.*/
+              only: /^publish-v.*/
 

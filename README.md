@@ -74,19 +74,30 @@ Some general guidelines for different type of assets are listed below.
 
 ## Deployment
 
-Cloudify UI Common library is published in [NPM](https://www.npmjs.com) registry.
+Cloudify UI Common library is published in [NPM](https://www.npmjs.com) registry. See [cloudify-ui-common@npm](https://www.npmjs.com/package/cloudify-ui-common).
 
-Assuming all your changes are merged and you have up-to-date local `master` branch:
-1. Create new version using npm-version internal command, eg. 
+The way of work with publishing the package is described below.
+
+#### Prerequisites
+
+* all your changes are merged to `master` branch, so that your local `master` branch is up-to-date
+* you are aware of [Semantic Versioning 2.0.0](https://semver.org/) rules and requirements that dictate how version numbers are assigned and incremented:  
+  >Given a version number MAJOR.MINOR.PATCH, increment the:
+  >* MAJOR version when you make incompatible API changes,<br/>
+  >* MINOR version when you add functionality in a backwards-compatible manner, and<br/>
+  >* PATCH version when you make backwards-compatible bug fixes.
+
+
+#### Steps
+
+1. Run one of the following scripts:  
    
-   `npm version patch` for new patch version, 
-   
-   `npm version minor` for new minor version, 
-   
-   `npm version --help` for usage details.
+   * `npm publish:patch` for new patch version,
+   * `npm publish:minor` for new minor version,
+   * `npm publish:major` for new major version,
 
-1. Create new branch and push it to remote.
+   which will create special branch, add commit to it containing version bump in package*.json files according to your choice, tag the commit and push branch to remote. That should trigger CircleCI jobs finalizing publish.
 
-1. Check if [CircleCI publish job](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common) was successful.
+1. Check if [cloudify-ui-common@CircleCI](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common) jobs were successful.
 
-1. Verify [NPM registry](https://www.npmjs.com/package/cloudify-ui-common) was updated.
+1. Verify [cloudify-ui-common@NPM](https://www.npmjs.com/package/cloudify-ui-common) was updated properly.
