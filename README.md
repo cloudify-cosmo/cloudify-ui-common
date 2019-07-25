@@ -43,7 +43,6 @@ Check [jsDelivr home page](https://www.jsdelivr.com/) for details about the URL 
 
 * [API](./src/README.md) - exposed JavaScript API 
 
-
 * [Fonts](./fonts/README.md) - shared common fonts
 * [Images](./images/README.md) - shared common images 
 * [Styles](./styles/README.md) - shared CSS, SCSS stylesheets
@@ -80,13 +79,9 @@ The way of work with publishing the package is described below.
 
 #### Prerequisites
 
-* all your changes are merged to `master` branch, so that your local `master` branch is up-to-date
-* you are aware of [Semantic Versioning 2.0.0](https://semver.org/) rules and requirements that dictate how version numbers are assigned and incremented:  
-  >Given a version number MAJOR.MINOR.PATCH, increment the:
-  >* MAJOR version when you make incompatible API changes,<br/>
-  >* MINOR version when you add functionality in a backwards-compatible manner, and<br/>
-  >* PATCH version when you make backwards-compatible bug fixes.
-
+* all your changes are merged to `master` branch, so that your local `master` branch is up-to-date,
+* know and follow [Semantic Versioning 2.0.0](https://semver.org/#summary) rules when creating version (first step below),
+* know and follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/#how) guiding principles when adding release notes (last step below).
 
 #### Steps
 
@@ -96,8 +91,10 @@ The way of work with publishing the package is described below.
    * `npm publish:minor` for new minor version,
    * `npm publish:major` for new major version,
 
-   which will create special branch, add commit to it containing version bump in package*.json files according to your choice, tag the commit and push branch to remote. That should trigger CircleCI jobs finalizing publish.
+   which will create special branch, add commit to it containing version bump in `package*.json` files according to your choice, tag the commit and push branch to remote. That should trigger CircleCI jobs finalizing publish.
 
-1. Check if [cloudify-ui-common@CircleCI](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common) jobs were successful.
+1. Check if [cloudify-ui-common @ CircleCI](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common) jobs were successful.
 
-1. Verify [cloudify-ui-common@NPM](https://www.npmjs.com/package/cloudify-ui-common) was updated properly.
+1. Verify [cloudify-ui-common @ NPM](https://www.npmjs.com/package/cloudify-ui-common) was updated properly.
+
+1. Go to [Create Release page @ GitHub](https://github.com/cloudify-cosmo/cloudify-ui-common/releases/new) to create release and add release notes.
