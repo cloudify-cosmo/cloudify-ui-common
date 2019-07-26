@@ -1,4 +1,4 @@
-# cloudify-ui-common
+# Cloudify UI Common
 
 [![npm](https://img.shields.io/npm/v/cloudify-ui-common.svg?style=flat)](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common)
 [![CircleCI](https://img.shields.io/circleci/project/github/cloudify-cosmo/cloudify-ui-common.svg?style=svg)](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common)
@@ -43,7 +43,6 @@ Check [jsDelivr home page](https://www.jsdelivr.com/) for details about the URL 
 
 * [API](./src/README.md) - exposed JavaScript API 
 
-
 * [Fonts](./fonts/README.md) - shared common fonts
 * [Images](./images/README.md) - shared common images 
 * [Styles](./styles/README.md) - shared CSS, SCSS stylesheets
@@ -62,25 +61,40 @@ Some general guidelines for different type of assets are listed below.
 - when removing assets verify that it is not used anywhere
 - if relevant and possible add documentation on asset usage (eg. in README.md file in the same folder as asset)
 
-### JS code
+### JS API
 
 - add new code to `src` folder
 - remember to export new files in `src/index.js` (otherwise the new code will not be available in the distribution package)
 - build: `npm run build` (production build) or `npm run dev` (automatic rebuilding)
-- test: `npm test` (static analysis, code style check and unit testing)
-- its wise to use [prettier](https://prettier.io/) and [eslint](https://eslint.org/) during development
-- test your code (we are using [Jest](https://jestjs.io/en/) testing framework)
-- document your code (we aim to be compatible with [ESdoc](https://esdoc.org/manual/tags.html))
+- test: `npm test` (static analysis, code style check, documentation check and unit testing with [Jest](https://jestjs.io/en/) testing framework) 
+- use [prettier](https://prettier.io/) and [eslint](https://eslint.org/) during development
+- document your code (we are using [JSdoc block tags](https://jsdoc.app/#block-tags) as documentation is auto-generated using [documentation.js](http://documentation.js.org))
 
 
 ## Deployment
 
-Cloudify UI Common library is deployed to [NPM](https://www.npmjs.com). There are mainly two supported options how to deploy new version. Both are described below.
+Cloudify UI Common library is published in [NPM](https://www.npmjs.com) registry. See [cloudify-ui-common@npm](https://www.npmjs.com/package/cloudify-ui-common).
 
-### Manual
+The way of work with publishing the package is described below.
 
-TODO: Use [np](https://github.com/sindresorhus/np) tool.
+#### Prerequisites
 
-### Automatic
+* all your changes are merged to `master` branch, so that your local `master` branch is up-to-date,
+* know and follow [Semantic Versioning 2.0.0](https://semver.org/#summary) rules when creating version (first step below),
+* know and follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/#how) guiding principles when adding release notes (last step below).
 
-TODO: Add CircleCI configuration and description.
+#### Steps
+
+1. Run one of the following scripts:  
+   
+   * `npm publish:patch` for new patch version,
+   * `npm publish:minor` for new minor version,
+   * `npm publish:major` for new major version,
+
+   which will create special branch, add commit to it containing version bump in `package*.json` files according to your choice, tag the commit and push branch to remote. That should trigger CircleCI jobs finalizing publish.
+
+1. Check if [cloudify-ui-common @ CircleCI](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common) jobs were successful.
+
+1. Verify [cloudify-ui-common @ NPM](https://www.npmjs.com/package/cloudify-ui-common) was updated properly.
+
+1. Go to [Create Release page @ GitHub](https://github.com/cloudify-cosmo/cloudify-ui-common/releases/new) to create release and add release notes.
