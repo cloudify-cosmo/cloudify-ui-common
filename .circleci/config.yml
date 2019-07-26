@@ -74,16 +74,10 @@ workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - build-test:
-          filters:
-            tags:
-              only: /.*/
+      - build-test
       - deploy:
           requires:
             - build-test
           filters:
-            tags:
-              only: /^v.*/
             branches:
               only: /^publish-v.*/
-
