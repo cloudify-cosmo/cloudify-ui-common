@@ -31,7 +31,7 @@ select choice in "Yes" "No"; do
 case "$choice" in
     Yes)
         log "Pushing changes...";
-        git push --follow-tags origin ${NEXT_VERSION_BRANCH}
+        git push origin ${NEXT_VERSION_BRANCH} tag ${NEXT_VERSION}
         git checkout ${MAIN_BRANCH}
         break;;
     *)
