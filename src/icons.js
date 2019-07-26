@@ -40,6 +40,40 @@ function getNodeIcon(hierarchy) {
     return knownType ? nodeTypeToChar[knownType] : nodeTypeToChar[defaultNodeType];
 }
 
+/**
+ * Get event type icon character to be used with cloudify font.
+ *
+ * @param {string} eventType - event type, eg. "workflow_started" or "task_received".
+ *
+ * @returns {string} character from cloudify font
+ */
+function getEventIcon(eventType) {
+    const eventTypeToChar = {
+        policy_failed: '\ue605',
+        policy_success: '\ue606',
+        sending_task: '\ue62c',
+        task_failed: '\ue608',
+        task_received: '\ue609',
+        task_rescheduled: '\ue613',
+        task_retried: '\ue604',
+        task_started: '\ue62d',
+        task_succeeded: '\ue60b',
+        workflow_cancelled: '\ue600',
+        workflow_failed: '\ue601',
+        workflow_initializing_node: '\ue60c',
+        workflow_initializing_policies: '\ue60c',
+        workflow_received: '\ue60c',
+        workflow_stage: '\ue60c',
+        workflow_started: '\ue602',
+        workflow_succeeded: '\ue603'
+    };
+    const defaultChar = '\ue60a';
+    const knownType = !!eventTypeToChar[eventType];
+
+    return knownType ? eventTypeToChar[eventType] : defaultChar;
+}
+
 export default {
+    getEventIcon,
     getNodeIcon
 };
