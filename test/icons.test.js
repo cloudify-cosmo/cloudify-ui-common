@@ -21,3 +21,17 @@ describe('getNodeIcon', () => {
         expect(icons.getNodeIcon(555)).toBe('\ue616');
     });
 });
+
+describe('getEventIcon', () => {
+    test('handles empty string', () => {
+        expect(icons.getEventIcon('')).toBe('\ue60a');
+    });
+
+    test('handles string', () => {
+        expect(icons.getEventIcon('task_succeeded')).toBe('\ue60b');
+    });
+
+    test('handles invalid input', () => {
+        expect(icons.getEventIcon(555)).toBe('\ue60a');
+    });
+});
