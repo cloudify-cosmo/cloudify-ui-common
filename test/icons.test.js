@@ -22,6 +22,20 @@ describe('getNodeIcon', () => {
     });
 });
 
+describe('getNodeStausIcon', () => {
+    test('handles empty string', () => {
+        expect(icons.getNodeStatusIcon('')).toBe('');
+    });
+
+    test('handles string', () => {
+        expect(icons.getNodeStatusIcon('alert')).toBe('\ue629');
+    });
+
+    test('handles invalid input', () => {
+        expect(icons.getNodeStatusIcon('abcd')).toBe('');
+    });
+});
+
 describe('getEventIcon', () => {
     test('handles empty string', () => {
         expect(icons.getEventIcon('')).toBe('\ue60a');

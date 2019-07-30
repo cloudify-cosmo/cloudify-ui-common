@@ -41,6 +41,26 @@ function getNodeIcon(hierarchy) {
 }
 
 /**
+ * Get node status icon character to be used with cloudify font.
+ *
+ * @param {string} nodeStatus - node status, eg. "node-status-success" or "node-status-loading".
+ *
+ * @returns {string} character from cloudify font
+ */
+function getNodeStatusIcon(nodeStatus) {
+    const nodeStatusToChar = {
+        alert: '\ue629',
+        done: '\ue62a',
+        failed: '\ue62b',
+        loading: '\ue630'
+    };
+    const defaultChar = '';
+    const knownType = !!nodeStatusToChar[nodeStatus];
+
+    return knownType ? nodeStatusToChar[nodeStatus] : defaultChar;
+}
+
+/**
  * Get event type icon character to be used with cloudify font.
  *
  * @param {string} eventType - event type, eg. "workflow_started" or "task_received".
@@ -75,5 +95,6 @@ function getEventIcon(eventType) {
 
 export default {
     getEventIcon,
-    getNodeIcon
+    getNodeIcon,
+    getNodeStatusIcon
 };
