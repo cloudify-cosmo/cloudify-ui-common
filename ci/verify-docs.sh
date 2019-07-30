@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+set -e
 
-git diff --exit-code --compact-summary ./src/README.md
+git diff --exit-code ./src/README.md
 EXIT_CODE=$?
 
 if [ "$EXIT_CODE" != "0" ]; then
