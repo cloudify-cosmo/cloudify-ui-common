@@ -2,14 +2,45 @@
 
 ### Table of Contents
 
--   [icons][1]
-    -   [getNodeIcon][2]
-        -   [Parameters][3]
+-   [consts][1]
+    -   [nodeStatuses][2]
+-   [icons][3]
+    -   [getEventIcon][4]
+        -   [Parameters][5]
+    -   [getNodeIcon][6]
+        -   [Parameters][7]
+    -   [getNodeStatusIcon][8]
+        -   [Parameters][9]
+
+## consts
+
+Common constants.
+
+
+### nodeStatuses
+
+Node statuses constants.
+
+-   UNINITIALIZED
+-   LOADING
+-   DONE
+-   ALERT
+-   FAILED
 
 ## icons
 
-Icons API intends to provide helper functions to access icons defined within [cloudify][4] font.
+Icons API intends to provide helper functions to access icons defined within [cloudify][10] font.
 
+
+### getEventIcon
+
+Get event type icon character to be used with cloudify font.
+
+#### Parameters
+
+-   `eventType` **[string][11]** event type, eg. "workflow_started" or "task_received".
+
+Returns **[string][11]** character from cloudify font
 
 ### getNodeIcon
 
@@ -17,20 +48,42 @@ Get node type icon character to be used with cloudify font.
 
 #### Parameters
 
--   `hierarchy` **([string][5] \| [Array][6]&lt;[string][5]>)** node type hierarchy, from the most specific to the most generic,
+-   `hierarchy` **([string][11] \| [Array][12]&lt;[string][11]>)** node type hierarchy, from the most specific to the most generic,
     can be single string (eg. "cloudify.nodes.Root")
     or array of strings (eg. ["cloudify.nodes.CloudifyManager", "cloudify.nodes.SoftwareComponent", "cloudify.nodes.Root"]).
 
-Returns **[string][5]** character from cloudify font
+Returns **[string][11]** character from cloudify font
 
-[1]: #icons
+### getNodeStatusIcon
 
-[2]: #getnodeicon
+Get node status icon character to be used with cloudify font.
 
-[3]: #parameters
+#### Parameters
 
-[4]: #fonts
+-   `nodeStatus` **[string][11]** node status value. Check `consts.nodeStatuses` for supported node status values.
 
-[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+Returns **[string][11]** character from cloudify font
 
-[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[1]: #consts
+
+[2]: #nodestatuses
+
+[3]: #icons
+
+[4]: #geteventicon
+
+[5]: #parameters
+
+[6]: #getnodeicon
+
+[7]: #parameters-1
+
+[8]: #getnodestatusicon
+
+[9]: #parameters-2
+
+[10]: #fonts
+
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array

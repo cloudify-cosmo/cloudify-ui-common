@@ -1,3 +1,11 @@
+/**
+ * Node statuses constants.
+ * - UNINITIALIZED
+ * - LOADING
+ * - DONE
+ * - ALERT
+ * - FAILED
+ */
 export const nodeStatuses = {
     UNINITIALIZED: 'uninitialized',
     LOADING: 'loading',
