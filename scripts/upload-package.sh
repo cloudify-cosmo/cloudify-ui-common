@@ -37,7 +37,7 @@ uploadPackage() {
 
     # SSH key check
     if [ ! -f "${SSH_KEY_PATH}" ]; then
-        echo "ERROR: SSH key to Cloudify Manager - '${SSH_KEY_PATH}' - not found.";
+        echo "ERROR: SSH key to Cloudify Manager (SSH_KEY_PATH variable) - '${SSH_KEY_PATH}' - not found.";
         ((ERROR_CODE++))
     fi
 
