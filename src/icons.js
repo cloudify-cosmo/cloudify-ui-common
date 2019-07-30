@@ -1,3 +1,5 @@
+import { nodeStatuses } from './consts';
+
 /**
  * Get node type icon character to be used with cloudify font.
  *
@@ -7,7 +9,7 @@
  *
  * @returns {string} character from cloudify font
  */
-function getNodeIcon(hierarchy) {
+export function getNodeIcon(hierarchy) {
     const nodeTypeToChar = {
         'cloudify.nodes.ApplicationModule': '\ue616',
         'cloudify.nodes.ApplicationServer': '\ue61e',
@@ -47,12 +49,12 @@ function getNodeIcon(hierarchy) {
  *
  * @returns {string} character from cloudify font
  */
-function getNodeStatusIcon(nodeStatus) {
+export function getNodeStatusIcon(nodeStatus) {
     const nodeStatusToChar = {
-        alert: '\ue629',
-        done: '\ue62a',
-        failed: '\ue62b',
-        loading: '\ue630'
+        [nodeStatuses.ALERT]: '\ue629',
+        [nodeStatuses.DONE]: '\ue62a',
+        [nodeStatuses.FAILED]: '\ue62b',
+        [nodeStatuses.LOADING]: '\ue630'
     };
     const defaultChar = '';
     const knownType = !!nodeStatusToChar[nodeStatus];
@@ -67,7 +69,7 @@ function getNodeStatusIcon(nodeStatus) {
  *
  * @returns {string} character from cloudify font
  */
-function getEventIcon(eventType) {
+export function getEventIcon(eventType) {
     const eventTypeToChar = {
         policy_failed: '\ue605',
         policy_success: '\ue606',

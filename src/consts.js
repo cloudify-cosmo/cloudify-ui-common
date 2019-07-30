@@ -1,4 +1,4 @@
-const nodeStatuses = {
+export const nodeStatuses = {
     UNINITIALIZED: 'uninitialized',
     LOADING: 'loading',
     DONE: 'done',

@@ -1,51 +1,51 @@
-import icons from '../src/icons';
+import { getEventIcon, getNodeIcon, getNodeStatusIcon } from '../src/icons';
 
 describe('getNodeIcon', () => {
     test('handles empty string', () => {
-        expect(icons.getNodeIcon('')).toBe('\ue616');
+        expect(getNodeIcon('')).toBe('\ue616');
     });
 
     test('handles string', () => {
-        expect(icons.getNodeIcon('cloudify.nodes.Compute')).toBe('\ue61b');
+        expect(getNodeIcon('cloudify.nodes.Compute')).toBe('\ue61b');
     });
 
     test('handles empty array', () => {
-        expect(icons.getNodeIcon([])).toBe('\ue616');
+        expect(getNodeIcon([])).toBe('\ue616');
     });
 
     test('handles array', () => {
-        expect(icons.getNodeIcon(['cloudify.nodes.Compute', 'cloudify.nodes.Root'])).toBe('\ue61b');
+        expect(getNodeIcon(['cloudify.nodes.Compute', 'cloudify.nodes.Root'])).toBe('\ue61b');
     });
 
     test('handles invalid input', () => {
-        expect(icons.getNodeIcon(555)).toBe('\ue616');
+        expect(getNodeIcon(555)).toBe('\ue616');
     });
 });
 
 describe('getNodeStausIcon', () => {
     test('handles empty string', () => {
-        expect(icons.getNodeStatusIcon('')).toBe('');
+        expect(getNodeStatusIcon('')).toBe('');
     });
 
     test('handles string', () => {
-        expect(icons.getNodeStatusIcon('alert')).toBe('\ue629');
+        expect(getNodeStatusIcon('alert')).toBe('\ue629');
     });
 
     test('handles invalid input', () => {
-        expect(icons.getNodeStatusIcon('abcd')).toBe('');
+        expect(getNodeStatusIcon('abcd')).toBe('');
     });
 });
 
 describe('getEventIcon', () => {
     test('handles empty string', () => {
-        expect(icons.getEventIcon('')).toBe('\ue60a');
+        expect(getEventIcon('')).toBe('\ue60a');
     });
 
     test('handles string', () => {
-        expect(icons.getEventIcon('task_succeeded')).toBe('\ue60b');
+        expect(getEventIcon('task_succeeded')).toBe('\ue60b');
     });
 
     test('handles invalid input', () => {
-        expect(icons.getEventIcon(555)).toBe('\ue60a');
+        expect(getEventIcon(555)).toBe('\ue60a');
     });
 });
