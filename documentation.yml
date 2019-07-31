@@ -1,6 +1,14 @@
 toc:
+  - name: consts
+    description: |
+      Common constants.
+    children:
+      - nodeStatuses
   - name: icons
     description: |
       Icons API intends to provide helper functions to access icons defined within [cloudify](#fonts) font.
     children:
+      - getEventIcon
       - getNodeIcon
+      - getNodeStatusIcon
+
