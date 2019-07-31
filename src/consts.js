@@ -1,10 +1,6 @@
 /**
  * Node statuses constants.
- * - UNINITIALIZED
- * - LOADING
- * - DONE
- * - ALERT
- * - FAILED
+ * @enum {string}
  */
 export const nodeStatuses = {
     UNINITIALIZED: 'uninitialized',

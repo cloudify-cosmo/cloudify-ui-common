@@ -21,15 +21,11 @@ Common constants.
 
 Node statuses constants.
 
--   UNINITIALIZED
--   LOADING
--   DONE
--   ALERT
--   FAILED
+Type: [string][10]
 
 ## icons
 
-Icons API intends to provide helper functions to access icons defined within [cloudify][10] font.
+Icons API intends to provide helper functions to access icons defined within [cloudify][11] font.
 
 
 ### getEventIcon
@@ -38,9 +34,9 @@ Get event type icon character to be used with cloudify font.
 
 #### Parameters
 
--   `eventType` **[string][11]** event type, eg. "workflow_started" or "task_received".
+-   `eventType` **[string][10]** event type, eg. "workflow_started" or "task_received".
 
-Returns **[string][11]** character from cloudify font
+Returns **[string][10]** character from cloudify font
 
 ### getNodeIcon
 
@@ -48,11 +44,11 @@ Get node type icon character to be used with cloudify font.
 
 #### Parameters
 
--   `hierarchy` **([string][11] \| [Array][12]&lt;[string][11]>)** node type hierarchy, from the most specific to the most generic,
+-   `hierarchy` **([string][10] \| [Array][12]&lt;[string][10]>)** node type hierarchy, from the most specific to the most generic,
     can be single string (eg. "cloudify.nodes.Root")
     or array of strings (eg. ["cloudify.nodes.CloudifyManager", "cloudify.nodes.SoftwareComponent", "cloudify.nodes.Root"]).
 
-Returns **[string][11]** character from cloudify font
+Returns **[string][10]** character from cloudify font
 
 ### getNodeStatusIcon
 
@@ -60,9 +56,9 @@ Get node status icon character to be used with cloudify font.
 
 #### Parameters
 
--   `nodeStatus` **[string][11]** node status value. Check `consts.nodeStatuses` for supported node status values.
+-   `nodeStatus` **[nodeStatuses][13]** node status value.
 
-Returns **[string][11]** character from cloudify font
+Returns **[string][10]** character from cloudify font or empty string for not [nodeStatuses][2] value
 
 [1]: #consts
 
@@ -82,8 +78,10 @@ Returns **[string][11]** character from cloudify font
 
 [9]: #parameters-2
 
-[10]: #fonts
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[11]: #fonts
 
 [12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[13]: #nodestatuses

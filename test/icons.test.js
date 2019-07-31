@@ -22,7 +22,7 @@ describe('getNodeIcon', () => {
     });
 });
 
-describe('getNodeStausIcon', () => {
+describe('getNodeStatusIcon', () => {
     test('handles empty string', () => {
         expect(getNodeStatusIcon('')).toBe('');
     });

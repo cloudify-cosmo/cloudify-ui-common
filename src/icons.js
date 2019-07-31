@@ -45,9 +45,9 @@ export function getNodeIcon(hierarchy) {
 /**
  * Get node status icon character to be used with cloudify font.
  *
- * @param {string} nodeStatus - node status value. Check `consts.nodeStatuses` for supported node status values.
+ * @param {nodeStatuses} nodeStatus - node status value.
  *
- * @returns {string} character from cloudify font
+ * @returns {string} character from cloudify font or empty string for not {@link nodeStatuses} value
  */
 export function getNodeStatusIcon(nodeStatus) {
     const nodeStatusToChar = {
