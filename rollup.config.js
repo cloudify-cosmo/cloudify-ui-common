@@ -1,10 +1,11 @@
 import resolve from 'rollup-plugin-node-resolve';
+import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
 export default [
-    // browser-friendly UMD build
+    // browser-friendly UMD build - ES5
     {
         input: 'src/index.js',
         output: {
@@ -13,7 +14,12 @@ export default [
             format: 'umd',
             sourcemap: true
         },
-        plugins: [resolve(), commonjs(), terser()]
+        plugins: [
+            resolve(),
+            commonjs(),
+            babel({ presets: ['@babel/preset-env'], exclude: 'node_modules/**' }),
+            terser()
+        ]
     },
 
     // CommonJS (for Node) and ES module (for bundlers) build.
