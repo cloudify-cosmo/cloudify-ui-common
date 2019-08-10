@@ -1,9 +1,9 @@
 ## Images
 
-### favicon.png 
+### favicon.png
 
-Small version (200px x 200px) of official Cloudify logo. 
+Small version (64px x 64px) of official Cloudify logo.
 
 ### logo.png
 
-Official Cloudify white logo. 
+Official Cloudify white logo (200px x 200px).
