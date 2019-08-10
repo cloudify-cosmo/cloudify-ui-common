@@ -1,7 +1,9 @@
 /**
  * Node statuses constants.
+ *
  * @enum {string}
  */
+
 export const nodeStatuses = {
     UNINITIALIZED: 'uninitialized',
     LOADING: 'loading',
