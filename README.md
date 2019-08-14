@@ -6,6 +6,30 @@
 
 This repository contains common static assets (images, fonts, styles, etc.) as well as JS library with functions reusable across Cloudify UI applications.
 
+## Table of Contents
+
+  * [Installation](#installation)
+  * [Usage](#usage)
+      - [ES module](#es-module)
+      - [CommonJS](#commonjs)
+      - [Browser](#browser)
+  * [Documentation](#documentation)
+    + [External](#external)
+    + [Internal](#internal)
+  * [Development](#development)
+    + [Static files](#static-files)
+    + [JS API](#js-api)
+  * [Debugging](#debugging)
+    + [Internal](#internal-1)
+    + [External](#external-1)
+  * [Deployment](#deployment)
+      - [When?](#when-)
+      - [Who?](#who-)
+      - [How?](#how-)
+        * [Checklist](#checklist)
+        * [Steps](#steps)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 ## Installation
 
@@ -41,6 +65,12 @@ Check [jsDelivr home page](https://www.jsdelivr.com/) for details about the URL 
 
 ## Documentation
 
+### External
+
+There is [Cloudify Brandbook](https://drive.google.com/file/d/1KimyHFey_AoK2nKopRoo_CK-emZs7Pr_/view) containing Cloudify Brand Guidelines we should follow creating new resources.
+
+### Internal
+
 * [API](./src/README.md) - exposed JavaScript API 
 
 * [Fonts](./fonts/README.md) - shared common fonts
@@ -48,7 +78,7 @@ Check [jsDelivr home page](https://www.jsdelivr.com/) for details about the URL 
 * [Styles](./styles/README.md) - shared CSS, SCSS stylesheets
 * [Scripts](./scripts/README.md) - shared shell scripts
 
- 
+
 ## Development
 
 Development environment is set up to enforce good practices in JS development (static code analysis, style formatting, code coverage check). 
@@ -71,19 +101,56 @@ Some general guidelines for different type of assets are listed below.
 - document your code (we are using [JSdoc block tags](https://jsdoc.app/#block-tags) as documentation is auto-generated using [documentation.js](http://documentation.js.org))
 
 
+## Debugging
+
+### Internal
+
+There is no standalone application for `cloudify-ui-common`, so the best way to debug some portion of it internally is using Jest unit tests (see: [test](./test) folder).
+
+### External
+
+If you want to develop/debug `cloudify-ui-common` from the package user side (eg. from [cloudify-stage](https://github.com/cloudify-cosmo/cloudify-stage)), then instead of using `cloudify-ui-common` package from NPM registry, you can:
+ 1. Use `npm link cloudify-ui-common <local-path-to-cloudify-ui-common>` command in your package user project,
+ 1. Build `cloudify-ui-common` project (see: [Development](#development) section), 
+ 1. Run package user project and see changes applied locally in `cloudify-ui-common`.   
+
+
 ## Deployment
 
 Cloudify UI Common library is published in [NPM](https://www.npmjs.com) registry. See [cloudify-ui-common@npm](https://www.npmjs.com/package/cloudify-ui-common).
 
-The way of work with publishing the package is described below.
+The way of work with publishing the package is described below. This section is divided into 3 parts:
+1. **When?** - describes when we can publish the package,
+1. **Who?** - describes who can publish the package and under which conditions,
+1. **How?** - describes technical details to follow to publish the package. 
 
-#### Prerequisites
+#### When?
+
+We can release when:
+- code on `master` branch is necessary for one of the dependant projects (stage, composer, topology, ...),
+- fix/feature on `master` branch is finished.
+ 
+#### Who?
+
+Developers from _cloudify-rnd-ui_ e-mail group can publish new version after agreement with maintainer 
+(see author or maintainers field in [package.json](./package.json) file).
+
+#### How?
+
+This section is divided into two parts:
+1. **Checklist** - describes prerquisities to be met before publishing the package,
+1. **Steps** - describes technical steps to be executed to publish the package.
+
+##### Checklist
 
 * all your changes are merged to `master` branch, so that your local `master` branch is up-to-date,
-* know and follow [Semantic Versioning 2.0.0](https://semver.org/#summary) rules when creating version (first step below),
-* know and follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/#how) guiding principles when adding release notes (last step below).
+* you know and follow [Semantic Versioning 2.0.0](https://semver.org/#summary) rules when creating version (first step below),
+* you know and follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/#how) guiding principles when adding release notes (last step below),
+* you have agreement with developers from _cloudify-rnd-ui_ group on publishing new version.
 
-#### Steps
+##### Steps
+
+If you met all points from the checklist above, follow these steps:
 
 1. Run one of the following scripts:  
    
