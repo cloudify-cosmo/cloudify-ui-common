@@ -20,8 +20,8 @@ This repository contains common static assets (images, fonts, styles, etc.) as w
     + [Static files](#static-files)
     + [JS API](#js-api)
   * [Debugging](#debugging)
-    + [Internally](#internally)
-    + [Externally](#externally)
+    + [Internal](#internal-1)
+    + [External](#external-1)
   * [Deployment](#deployment)
       - [When?](#when-)
       - [Who?](#who-)
@@ -30,7 +30,6 @@ This repository contains common static assets (images, fonts, styles, etc.) as w
         * [Steps](#steps)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
 
 ## Installation
 
