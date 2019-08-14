@@ -6,6 +6,31 @@
 
 This repository contains common static assets (images, fonts, styles, etc.) as well as JS library with functions reusable across Cloudify UI applications.
 
+## Table of Contents
+
+  * [Installation](#installation)
+  * [Usage](#usage)
+      - [ES module](#es-module)
+      - [CommonJS](#commonjs)
+      - [Browser](#browser)
+  * [Documentation](#documentation)
+    + [External](#external)
+    + [Internal](#internal)
+  * [Development](#development)
+    + [Static files](#static-files)
+    + [JS API](#js-api)
+  * [Debugging](#debugging)
+    + [Internally](#internally)
+    + [Externally](#externally)
+  * [Deployment](#deployment)
+      - [When?](#when-)
+      - [Who?](#who-)
+      - [How?](#how-)
+        * [Checklist](#checklist)
+        * [Steps](#steps)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 
 ## Installation
 
@@ -41,6 +66,12 @@ Check [jsDelivr home page](https://www.jsdelivr.com/) for details about the URL 
 
 ## Documentation
 
+### External
+
+There is [Cloudify Brandbook](https://drive.google.com/file/d/1KimyHFey_AoK2nKopRoo_CK-emZs7Pr_/view) containing Cloudify Brand Guidelines we should follow creating new resources.
+
+### Internal
+
 * [API](./src/README.md) - exposed JavaScript API 
 
 * [Fonts](./fonts/README.md) - shared common fonts
@@ -48,7 +79,7 @@ Check [jsDelivr home page](https://www.jsdelivr.com/) for details about the URL 
 * [Styles](./styles/README.md) - shared CSS, SCSS stylesheets
 * [Scripts](./scripts/README.md) - shared shell scripts
 
- 
+
 ## Development
 
 Development environment is set up to enforce good practices in JS development (static code analysis, style formatting, code coverage check). 
@@ -70,18 +101,20 @@ Some general guidelines for different type of assets are listed below.
 - use [prettier](https://prettier.io/) and [eslint](https://eslint.org/) during development
 - document your code (we are using [JSdoc block tags](https://jsdoc.app/#block-tags) as documentation is auto-generated using [documentation.js](http://documentation.js.org))
 
+
 ## Debugging
 
-### Internally
+### Internal
 
 There is no standalone application for `cloudify-ui-common`, so the best way to debug some portion of it internally is using Jest unit tests (see: [test](./test) folder).
 
-### Externally
+### External
 
 If you want to develop/debug `cloudify-ui-common` from the package user side (eg. from [cloudify-stage](https://github.com/cloudify-cosmo/cloudify-stage)), then instead of using `cloudify-ui-common` package from NPM registry, you can:
  1. Use `npm link cloudify-ui-common <local-path-to-cloudify-ui-common>` command in your package user project,
  1. Build `cloudify-ui-common` project (see: [Development](#development) section), 
  1. Run package user project and see changes applied locally in `cloudify-ui-common`.   
+
 
 ## Deployment
 
