@@ -24,7 +24,9 @@
     "module": "dist/cloudify-ui-common.esm.js",
     "browser": "dist/cloudify-ui-common.min.js",
     "scripts": {
-        "build": "rollup -c",
+        "build": "npm run build:code && npm run build:docs",
+        "build:code": "rollup -c",
+        "build:docs": "npm run docs && cp src/README.md dist",
         "dev": "rollup -c -w",
         "docs": "documentation build src/index.js -c documentation.yml -f md > src/README.md",
         "lint": "npm run lint:code",
