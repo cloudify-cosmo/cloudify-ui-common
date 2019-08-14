@@ -75,15 +75,38 @@ Some general guidelines for different type of assets are listed below.
 
 Cloudify UI Common library is published in [NPM](https://www.npmjs.com) registry. See [cloudify-ui-common@npm](https://www.npmjs.com/package/cloudify-ui-common).
 
-The way of work with publishing the package is described below.
+The way of work with publishing the package is described below. This section is divided into 3 parts:
+1. **When?** - describes when we can publish the package,
+1. **Who?** - describes who can publish the package and under which conditions,
+1. **How?** - describes technical details to follow to publish the package. 
 
-#### Prerequisites
+#### When?
+
+We can release when:
+- code on `master` branch is necessary for one of the dependant projects (stage, composer, topology, ...),
+- fix/feature on `master` branch is finished.
+ 
+#### Who?
+
+Developers from _cloudify-rnd-ui_ e-mail group can publish new version after agreement with maintainer 
+(see author or maintainers field in [package.json](./package.json) file).
+
+#### How?
+
+This section is divided into two parts:
+1. **Checklist** - describes prerquisities to be met before publishing the package,
+1. **Steps** - describes technical steps to be executed to publish the package.
+
+##### Checklist
 
 * all your changes are merged to `master` branch, so that your local `master` branch is up-to-date,
-* know and follow [Semantic Versioning 2.0.0](https://semver.org/#summary) rules when creating version (first step below),
-* know and follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/#how) guiding principles when adding release notes (last step below).
+* you know and follow [Semantic Versioning 2.0.0](https://semver.org/#summary) rules when creating version (first step below),
+* you know and follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/#how) guiding principles when adding release notes (last step below),
+* you have agreement with developers from _cloudify-rnd-ui_ group on publishing new version.
 
-#### Steps
+##### Steps
+
+If you met all points from the checklist above, follow these steps:
 
 1. Run one of the following scripts:  
    
