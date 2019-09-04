@@ -10,4 +10,4 @@ Official Cloudify white logo (200px x 200px).
 
 ### logo_color.png
 
-Color version of the logo.
+Color version of the logo (200px x 200px).
