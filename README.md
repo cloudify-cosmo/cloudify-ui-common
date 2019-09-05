@@ -154,9 +154,9 @@ If you met all points from the checklist above, follow these steps:
 
 1. Run one of the following scripts:  
    
-   * `npm publish:patch` for new patch version,
-   * `npm publish:minor` for new minor version,
-   * `npm publish:major` for new major version,
+   * `npm run publish:patch` for new patch version,
+   * `npm run publish:minor` for new minor version,
+   * `npm run publish:major` for new major version,
 
    which will create special branch, add commit to it containing version bump in `package*.json` files according to your choice, tag the commit and push branch to remote. That should trigger CircleCI jobs finalizing publish.
 
