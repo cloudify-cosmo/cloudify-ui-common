@@ -12,7 +12,7 @@
 #   MANAGER_USER - (optional) Cloudify Manager SSH username (default: centos)
 #   MANAGER_IP   - (required) Cloudify Manager IP address
 #   SSH_KEY_PATH - (required) Cloudify Manager SSH key path
-
+#
 # Arguments:
 #   $1 (package_file) - path to package file, eg. "./stage.tar.gz"
 #   $2 (ssh_command)  - string with command to be executed after uploading
