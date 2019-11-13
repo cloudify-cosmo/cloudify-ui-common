@@ -25,7 +25,6 @@ createVersion() {
         echo -e $LOG_PREFIX $@
     }
 
-    NPM_VERSION_ARGUMENT=$@
     NPM_PACKAGE_NAME=`cut -d "=" -f 2 <<< $(npm run env | grep "npm_package_name")`
 
     MAIN_BRANCH=${MAIN_BRANCH:-master}
@@ -55,7 +54,7 @@ createVersion() {
       log "Running build failed"
     }
 
-    NEXT_VERSION=$(npm version --no-git-tag-version "$NPM_VERSION_ARGUMENT")
+    NEXT_VERSION=$(npm version --no-git-tag-version "$@")
     log "Creating ${NPM_PACKAGE_NAME} ${NEXT_VERSION}...";
 
     log "Creating version publish branch...";
