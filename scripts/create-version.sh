@@ -49,9 +49,11 @@ createVersion() {
     log "Running tests and build..."
     npm run test || {
       log "Running tests failed"
+      false
     }
     npm run build || {
       log "Running build failed"
+      false
     }
 
     NEXT_VERSION=$(npm version --no-git-tag-version "$@")
