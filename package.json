@@ -18,7 +18,8 @@
         "fonts",
         "images",
         "scripts",
-        "styles"
+        "styles",
+        "eslint-common.json"
     ],
     "main": "dist/cloudify-ui-common.cjs.js",
     "module": "dist/cloudify-ui-common.esm.js",
