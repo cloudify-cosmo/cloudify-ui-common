@@ -19,7 +19,7 @@
         "images",
         "scripts",
         "styles",
-        "eslint-common.json"
+        "eslint-common-react.json"
     ],
     "main": "dist/cloudify-ui-common.cjs.js",
     "module": "dist/cloudify-ui-common.esm.js",
@@ -41,6 +41,10 @@
         "test:docs": "npm run docs && npm run verify:docs",
         "test:only": "jest test",
         "verify:docs": "sh ci/verify-docs.sh"
+    },
+    "dependencies": {
+        "eslint-config-airbnb": "^18.0.1",
+        "eslint-config-prettier": "^6.4.0"
     },
     "devDependencies": {
         "@babel/core": "^7.5.4",
@@ -64,7 +68,10 @@
         "rollup-plugin-terser": "^5.1.1"
     },
     "peerDependencies": {
+        "eslint": "^6.1.0",
         "eslint-plugin-prettier": "^3.1.1",
+        "eslint-plugin-jsx-a11y": "^6.2.3",
+        "eslint-plugin-react": "^7.14.3",
         "eslint-plugin-scanjs-rules": "^0.2.1",
         "eslint-plugin-security": "^1.4.0"
     }
