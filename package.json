@@ -15,11 +15,11 @@
     },
     "files": [
         "dist",
+        "eslint",
         "fonts",
         "images",
         "scripts",
-        "styles",
-        "eslint-common-react.json"
+        "styles"
     ],
     "main": "dist/cloudify-ui-common.cjs.js",
     "module": "dist/cloudify-ui-common.esm.js",

@@ -2,7 +2,7 @@
     "extends": [
         "airbnb-base",
         "plugin:jsdoc/recommended",
-        "./eslint-common.json"
+        "./eslint/eslint-common.json"
     ],
     "plugins": [
         "jsdoc"
