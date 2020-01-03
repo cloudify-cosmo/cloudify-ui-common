@@ -1,16 +1,10 @@
 {
     "extends": [
-        "airbnb-base",
-        "prettier",
-        "plugin:jsdoc/recommended"
-    ],
-    "plugins": [
-        "prettier",
-        "jsdoc"
+        "plugin:jsdoc/recommended",
+        "./eslint/eslint-common.json"
     ],
     "rules": {
-        "jsdoc/require-jsdoc": ["error"],
-        "prettier/prettier": ["error"]
+        "jsdoc/require-jsdoc": ["error"]
     },
     "overrides": [
         {
