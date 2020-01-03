@@ -1,14 +1,19 @@
 {
     "extends": [
-        "prettier",
+        "airbnb-base",
+        "plugin:prettier/recommended",
         "plugin:security/recommended"
     ],
     "plugins": [
-        "prettier",
         "scanjs-rules"
     ],
     "rules": {
-        "prettier/prettier": ["error"],
+        "no-param-reassign": [
+            "error",
+            {
+                "props": false
+            }
+        ],
 
         "scanjs-rules/accidental_assignment": "warn",
         "scanjs-rules/assign_to_hostname" : "error",

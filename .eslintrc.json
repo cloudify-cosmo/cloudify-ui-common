@@ -1,11 +1,7 @@
 {
     "extends": [
-        "airbnb-base",
         "plugin:jsdoc/recommended",
         "./eslint/eslint-common.json"
-    ],
-    "plugins": [
-        "jsdoc"
     ],
     "rules": {
         "jsdoc/require-jsdoc": ["error"]
