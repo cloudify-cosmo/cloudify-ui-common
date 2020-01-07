@@ -11,6 +11,15 @@
         -   [Parameters][7]
     -   [getNodeStatusIcon][8]
         -   [Parameters][9]
+-   [types][10]
+    -   [getStringValue][11]
+        -   [Parameters][12]
+    -   [getTypedValue][13]
+        -   [Parameters][14]
+    -   [toCloudifyType][15]
+        -   [Parameters][16]
+    -   [toType][17]
+        -   [Parameters][18]
 
 ## consts
 
@@ -21,11 +30,11 @@ Common constants.
 
 Node statuses constants.
 
-Type: [string][10]
+Type: [string][19]
 
 ## icons
 
-Icons API intends to provide helper functions to access icons defined within [cloudify][11] font.
+Icons API intends to provide helper functions to access icons defined within [cloudify][20] font.
 
 
 ### getEventIcon
@@ -34,9 +43,9 @@ Get event type icon character to be used with cloudify font.
 
 #### Parameters
 
--   `eventType` **[string][10]** event type, eg. "workflow_started" or "task_received".
+-   `eventType` **[string][19]** event type, eg. "workflow_started" or "task_received".
 
-Returns **[string][10]** character from cloudify font
+Returns **[string][19]** character from cloudify font
 
 ### getNodeIcon
 
@@ -44,11 +53,11 @@ Get node type icon character to be used with cloudify font.
 
 #### Parameters
 
--   `hierarchy` **([string][10] \| [Array][12]&lt;[string][10]>)** node type hierarchy, from the most specific to the most generic,
+-   `hierarchy` **([string][19] \| [Array][21]&lt;[string][19]>)** node type hierarchy, from the most specific to the most generic,
     can be single string (eg. "cloudify.nodes.Root")
     or array of strings (eg. ["cloudify.nodes.CloudifyManager", "cloudify.nodes.SoftwareComponent", "cloudify.nodes.Root"]).
 
-Returns **[string][10]** character from cloudify font
+Returns **[string][19]** character from cloudify font
 
 ### getNodeStatusIcon
 
@@ -56,9 +65,54 @@ Get node status icon character to be used with cloudify font.
 
 #### Parameters
 
--   `nodeStatus` **[nodeStatuses][13]** node status value.
+-   `nodeStatus` **[nodeStatuses][22]** node status value.
 
-Returns **[string][10]** character from cloudify font or empty string for not [nodeStatuses][2] value
+Returns **[string][19]** character from cloudify font or empty string for not [nodeStatuses][2] value
+
+## types
+
+Types API provides helper functions to support type conversions.
+
+
+### getStringValue
+
+Get string value of provided variable.
+
+#### Parameters
+
+-   `value` **any** any type variable
+
+Returns **[string][19]** stringified value of provided variable
+
+### getTypedValue
+
+Get typed value of provided string variable.
+
+#### Parameters
+
+-   `value` **[string][19]** any string value
+
+Returns **any** typed value of provided string
+
+### toCloudifyType
+
+Get type, used in Cloudify core, of provided variable.
+
+#### Parameters
+
+-   `obj` **any** any variable
+
+Returns **[string][19]** variable Cloudify type name
+
+### toType
+
+Get type name of provided variable.
+
+#### Parameters
+
+-   `obj` **any** any variable
+
+Returns **[string][19]** variable type name
 
 [1]: #consts
 
@@ -78,10 +132,28 @@ Returns **[string][10]** character from cloudify font or empty string for not [n
 
 [9]: #parameters-2
 
-[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[10]: #types
 
-[11]: #fonts
+[11]: #getstringvalue
 
-[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[12]: #parameters-3
 
-[13]: #nodestatuses
+[13]: #gettypedvalue
+
+[14]: #parameters-4
+
+[15]: #tocloudifytype
+
+[16]: #parameters-5
+
+[17]: #totype
+
+[18]: #parameters-6
+
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[20]: #fonts
+
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[22]: #nodestatuses

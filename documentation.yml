@@ -11,4 +11,12 @@ toc:
       - getEventIcon
       - getNodeIcon
       - getNodeStatusIcon
+  - name: types
+    description: |
+      Types API provides helper functions to support type conversions.
+    children:
+      - getStringValue
+      - getTypedValue
+      - toCloudifyType
+      - toType
 
