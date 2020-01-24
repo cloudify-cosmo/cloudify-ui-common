@@ -3,16 +3,16 @@ $blue-normal: #0077FC;
 $blue-dark: #0064BF;
 
 $cyan-light: #D9FDFF;
-$cyan-normal: #BAF8FF;
+$cyan-normal: #BAF7FF;
 $cyan-dark: #7EF2F2;
 
 $green-light: #8BFDDA;
-$green-normal: #3DFBC2;
+$green-normal: #3DFAC2;
 $green-dark: #16B77D;
 
 $grey-veryLight: #F2F2F2;
-$grey-light: #E2E2E2;
-$grey-normal: #C1C1C6;
+$grey-light: #E3E3E3;
+$grey-normal: #C1C1C2;
 $grey-dark: #AAAAB2;
 $grey-veryDark: #7C7C84;
 $grey-darkest: #585860;
@@ -23,3 +23,31 @@ $yellow-dark: #EFA500;
 
 $white: #FFFFFF;
 $black: #000000;
+
+:export {
+    blueLight: $blue-light;
+    blueNormal: $blue-normal;
+    blueDark: $blue-dark;
+
+    cyanLight: $cyan-light;
+    cyanNormal: $cyan-normal;
+    cyanDark: $cyan-dark;
+
+    greenLight: $green-light;
+    greenNormal: $green-normal;
+    greenDark: $green-dark;
+
+    gryeVeryLight: $grey-veryLight;
+    greyLight: $grey-light;
+    greyNormal: $grey-normal;
+    greyDark: $grey-dark;
+    greyVeryDark: $grey-veryDark;
+    greyDarkest: $grey-darkest;
+
+    yellowLight: $yellow-light;
+    yellowNormal: $yellow-normal;
+    yellowDark: $yellow-dark;
+
+    white: $white;
+    black: $black;
+}

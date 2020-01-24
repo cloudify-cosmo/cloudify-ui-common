@@ -1,0 +1,51 @@
+@import "font-Quicksand-Bold";
+@import 'font-Quicksand-Light';
+@import 'font-Quicksand-Regular';
+@import 'font-Roboto-Bold';
+@import 'font-Roboto-Regular';
+
+$body-font-family: 'Roboto Regular';
+$h1-font-family: 'Quicksand Light';
+$h2-font-family: 'Quicksand Regular';
+$h3-font-family: 'Quicksand Bold';
+$h4-font-family: 'Quicksand Regular';
+$h5-font-family: 'Roboto Regular';
+$h6-font-family: 'Roboto Bold';
+
+body {
+    font-family: "#{$body-font-family}, sans-serif";
+}
+
+h1 {
+    font-family: #{$h1-font-family}, sans-serif !important;
+}
+
+h2 {
+    font-family: #{$h2-font-family}, sans-serif !important;
+}
+
+h3 {
+    font-family: #{$h3-font-family}, sans-serif !important;
+}
+
+h4 {
+    font-family: #{$h4-font-family}, sans-serif !important;
+}
+
+h5 {
+    font-family: #{$h5-font-family}, sans-serif !important;
+}
+
+h6 {
+    font-family: #{$h6-font-family}, sans-serif !important;
+}
+
+:export {
+    bodyFontFamily: $body-font-family;
+    h1FontFamily: $h1-font-family;
+    h2FontFamily: $h2-font-family;
+    h3FontFamily: $h3-font-family;
+    h4FontFamily: $h4-font-family;
+    h5FontFamily: $h5-font-family;
+    h6FontFamily: $h6-font-family;
+}
