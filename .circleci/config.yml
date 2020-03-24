@@ -10,31 +10,32 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-
+      - restore_cache:
+          keys:
+            - v1-npm-{{ checksum "package-lock.json" }}
+            - v1-npm-
       - run:
           name: Install dependencies
           command: npm ci
-
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-npm-{{ checksum "package-lock.json" }}
       - run:
           name: Build application
           command: npm run build
-
       - run:
           name: Run static analysis and check code style
           command: npm run lint
-
       - run:
           name: Run tests with coverage check
           command: npm run test:coverage
-
       - run:
           name: Run documentation linter
           command: npm run lint:docs
-
       - run:
           name: Verify if documentation is up-to-date
           command: npm run test:docs
-
       - persist_to_workspace:
           root: ~/
           paths:
@@ -51,20 +52,17 @@ jobs:
       - run:
           name: Publish package
           command: npm publish
-
       - run:
           name: Setup git user
           command: |
             git config user.email "cosmo-admin@github.com"
             git config user.name "cosmo-admin-CircleCI"
-
       - run:
           name: Update main branch
           command: |
             git checkout ${MAIN_BRANCH}
             git merge --ff-only ${CIRCLE_BRANCH}
             git push -q https://${GITHUB_TOKEN}@github.com/cloudify-cosmo/cloudify-ui-common.git ${MAIN_BRANCH}
-
       - run:
           name: Remove publish branch
           command: |
