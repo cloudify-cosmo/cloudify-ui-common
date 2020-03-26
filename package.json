@@ -33,14 +33,14 @@
         "lint": "npm run lint:code",
         "lint:code": "eslint src test",
         "lint:docs": "documentation lint src/index.js",
-        "publish:major": "sh ci/publish-version.sh major",
-        "publish:minor": "sh ci/publish-version.sh minor",
-        "publish:patch": "sh ci/publish-version.sh patch",
+        "publish:major": "bash ci/publish-version.sh major",
+        "publish:minor": "bash ci/publish-version.sh minor",
+        "publish:patch": "bash ci/publish-version.sh patch",
         "test": "npm run lint && npm run test:coverage",
         "test:coverage": "jest test --coverage",
         "test:docs": "npm run docs && npm run verify:docs",
         "test:only": "jest test",
-        "verify:docs": "sh ci/verify-docs.sh"
+        "verify:docs": "bash ci/verify-docs.sh"
     },
     "dependencies": {
         "eslint-config-airbnb": "^18.0.1",
