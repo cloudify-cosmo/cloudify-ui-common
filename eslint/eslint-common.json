@@ -8,12 +8,8 @@
         "scanjs-rules"
     ],
     "rules": {
-        "no-param-reassign": [
-            "error",
-            {
-                "props": false
-            }
-        ],
+        "no-param-reassign": ["error", { "props": false }],
+        "func-names": ["error", "always", { "generators": "never" }],
 
         "scanjs-rules/accidental_assignment": "warn",
         "scanjs-rules/assign_to_hostname" : "error",
