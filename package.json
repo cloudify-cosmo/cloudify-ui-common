@@ -25,6 +25,7 @@
     "module": "dist/cloudify-ui-common.esm.js",
     "browser": "dist/cloudify-ui-common.min.js",
     "scripts": {
+        "audit": "npm audit --production",
         "build": "npm run build:code && npm run build:docs",
         "build:code": "rollup -c",
         "build:docs": "npm run docs && cp src/README.md dist",

@@ -68,6 +68,15 @@ jobs:
           command: |
             git push -q https://${GITHUB_TOKEN}@github.com/cloudify-cosmo/cloudify-ui-common.git --delete ${CIRCLE_BRANCH}
 
+  audit:
+    <<: *defaults
+    steps:
+      -   attach_workspace:
+            at: ~/
+      -   run:
+            name: Run npm production dependencies security audit
+            command: npm run audit
+
 workflows:
   version: 2
   build-test-deploy:
@@ -79,3 +88,9 @@ workflows:
           filters:
             branches:
               only: /^publish-v.*/
+      - audit:
+          requires:
+            - build-test
+          filters:
+            branches:
+              only: master
