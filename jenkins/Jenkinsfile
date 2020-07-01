@@ -7,8 +7,6 @@ def secrets = [
 
 def configuration = [vaultUrl: "${env.VAULT_URL}",  vaultCredentialId: 'vault-app-role', engineVersion: 2]
 
-@Library('pipeline-shared-library') _
-
 pipeline {
   agent {
     kubernetes {
@@ -34,8 +32,6 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        repoCheckout('https://github.com/cloudify-cosmo/cloudify-ui-common.git', "${env.PROJECT}", "${env.BRANCH}")
-        
         container('node'){
           dir("${env.WORKSPACE}/${env.PROJECT}") {
             echo "Install dependencies"
