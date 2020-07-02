@@ -1,0 +1,106 @@
+def secrets = [
+  [path: 'secret/jenkins/github', engineVersion: 2, secretValues: [
+    [envVar: 'GITHUB_TOKEN', vaultKey: 'public_token']]],
+  [path: 'secret/jenkins/npm', engineVersion: 2, secretValues: [
+    [envVar: 'NPM_TOKEN', vaultKey: 'token']]],
+]
+
+def configuration = [vaultUrl: "${env.VAULT_URL}",  vaultCredentialId: 'vault-app-role', engineVersion: 2]
+
+pipeline {
+  agent {
+    kubernetes {
+      label 'common-ui'
+      defaultContainer 'jnlp'
+      yamlFile 'jenkins/build-pod.yaml'
+    }
+  }
+  
+  environment {
+    MAIN_BRANCH = 'master'
+    WORKSPACE = "${env.WORKSPACE}"
+    BRANCH = "${env.BRANCH}"
+    PROJECT = "cloudify-ui-common"
+  }
+
+  options {
+    checkoutToSubdirectory('cloudify-ui-common')
+    buildDiscarder(logRotator(numToKeepStr:'30'))
+    timeout(time: 60, unit: 'MINUTES')
+    timestamps()
+  }
+  stages {
+    stage('Build') {
+      steps {
+        container('node'){
+          dir("${env.WORKSPACE}/${env.PROJECT}") {
+            echo "Install dependencies"
+            sh 'npm ci --prefer-offline'
+            
+            echo "Build application"
+            sh 'npm run build'
+
+            echo "Run static analysis and check code style"
+            sh 'npm run lint'
+
+            echo "Run tests with coverage check"
+            sh 'npm run test:coverage'
+
+            echo "Run documentation linter"
+            sh 'npm run lint:docs'
+
+            echo "Verify if documentation is up-to-date"
+            sh 'npm run test:docs'
+          }
+        }
+      }
+    }
+    stage('Deploy') {
+      when {
+        expression { return branch =~ /^publish-v.*/ }
+      }
+      steps {
+        container('node'){
+          dir("${env.WORKSPACE}/${env.PROJECT}") {
+            withVault([configuration: configuration, vaultSecrets: secrets]) {
+              echo "Authenticate with registry"
+              sh "echo '//registry.npmjs.org/:_authToken=${env.NPM_TOKEN}' > .npmrc"
+              
+              echo "Publish package"
+              sh 'npm publish'
+
+              echo "Setup git user"
+              sh '''
+                git config user.email "cosmo-admin@github.com"
+                git config user.name "cosmo-admin-CircleCI"
+              '''
+
+              echo "Update main branch"
+              sh """
+                git checkout ${env.MAIN_BRANCH}
+                git merge --ff-only ${env.BRANCH}
+                git push -q https://${env.GITHUB_TOKEN}@github.com/cloudify-cosmo/cloudify-ui-common.git ${env.MAIN_BRANCH}
+              """
+
+              echo "Remove publish branch"
+              sh "git push -q https://${env.GITHUB_TOKEN}@github.com/cloudify-cosmo/cloudify-ui-common.git --delete ${env.BRANCH}"
+            }
+          }
+        }
+      }
+    }
+    stage('Audit'){
+      when {
+        branch 'master'
+      }
+      steps {
+        container('node'){
+          dir("${env.WORKSPACE}/${env.PROJECT}") {
+            echo 'Run npm production dependencies security audit'
+            sh 'npm run audit'
+          }
+        }
+      }
+    }
+  }
+}

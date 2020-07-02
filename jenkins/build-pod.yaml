@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: node
+    image: node:12.16.1
+    resources:
+      requests:
+        cpu: 0.8
+    command:
+    - cat
+    tty: true
+  nodeSelector:
+    instance-type: spot
