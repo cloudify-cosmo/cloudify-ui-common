@@ -1,6 +1,6 @@
 def secrets = [
   [path: 'secret/jenkins/github', engineVersion: 2, secretValues: [
-    [envVar: 'PRIVATE_REPO_GITHUB_TOKEN', vaultKey: 'private_token']]],
+    [envVar: 'GITHUB_TOKEN', vaultKey: 'public_token']]],
   [path: 'secret/jenkins/npm', engineVersion: 2, secretValues: [
     [envVar: 'NPM_TOKEN', vaultKey: 'token']]],
 ]
@@ -46,9 +46,6 @@ pipeline {
             echo "Run tests with coverage check"
             sh 'npm run test:coverage'
 
-            echo "Run tests"
-            sh 'npm run test'
-            
             echo "Run documentation linter"
             sh 'npm run lint:docs'
 
@@ -82,11 +79,11 @@ pipeline {
               sh """
                 git checkout ${env.MAIN_BRANCH}
                 git merge --ff-only ${env.BRANCH}
-                git push -q https://${env.PRIVATE_REPO_GITHUB_TOKEN}@github.com/cloudify-cosmo/cloudify-ui-common.git ${env.MAIN_BRANCH}
+                git push -q https://${env.GITHUB_TOKEN}@github.com/cloudify-cosmo/cloudify-ui-common.git ${env.MAIN_BRANCH}
               """
 
               echo "Remove publish branch"
-              sh "git push -q https://${env.PRIVATE_REPO_GITHUB_TOKEN}@github.com/cloudify-cosmo/cloudify-ui-common.git --delete ${env.BRANCH}"
+              sh "git push -q https://${env.GITHUB_TOKEN}@github.com/cloudify-cosmo/cloudify-ui-common.git --delete ${env.BRANCH}"
             }
           }
         }
