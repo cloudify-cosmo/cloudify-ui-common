@@ -19,7 +19,7 @@ pipeline {
   environment {
     MAIN_BRANCH = 'master'
     WORKSPACE = "${env.WORKSPACE}"
-    BRANCH = "${env.BRANCH}"
+    BRANCH = "${env.BRANCH_NAME}"
     PROJECT = "cloudify-ui-common"
   }
 
