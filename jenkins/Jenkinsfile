@@ -57,7 +57,7 @@ pipeline {
     }
     stage('Deploy') {
       when {
-        expression { return branch =~ /^publish-v.*/ }
+        expression { return env.BRANCH =~ /^publish-v.*/ }
       }
       steps {
         container('node'){
@@ -91,7 +91,7 @@ pipeline {
     }
     stage('Audit'){
       when {
-        branch 'master'
+        expression { return env.BRANCH =~ /master/ }
       }
       steps {
         container('node'){
