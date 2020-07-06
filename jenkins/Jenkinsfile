@@ -91,7 +91,7 @@ pipeline {
     }
     stage('Audit'){
       when {
-        expression { return env.BRANCH =~ /master/ }
+        branch 'master'
       }
       steps {
         container('node'){
