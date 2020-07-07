@@ -77,8 +77,10 @@ pipeline {
 
               echo "Update main branch"
               sh """
+                git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+                git fetch --all
                 git checkout ${env.MAIN_BRANCH}
-                git merge --ff-only ${env.BRANCH}
+                git merge --ff-only origin/${env.BRANCH}
                 git push -q https://${env.GITHUB_TOKEN}@github.com/cloudify-cosmo/cloudify-ui-common.git ${env.MAIN_BRANCH}
               """
 
