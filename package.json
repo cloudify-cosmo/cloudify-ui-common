@@ -8,11 +8,7 @@
         "url": "git+https://github.com/cloudify-cosmo/cloudify-ui-common.git"
     },
     "license": "Apache-2.0",
-    "author": {
-        "name": "Jakub Niezgoda",
-        "email": "jakub.niezgoda@cloudify.co",
-        "url": "https://github.com/qooban"
-    },
+    "author": "Cloudify Platform Ltd. <cosmo-admin@cloudify.co>",
     "files": [
         "dist",
         "eslint",
