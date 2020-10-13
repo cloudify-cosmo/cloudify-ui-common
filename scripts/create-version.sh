@@ -66,7 +66,7 @@ createVersion() {
     git commit -m "Bump version to ${NEXT_VERSION}"
     git tag ${NEXT_VERSION}
 
-    log "This is the last step before CircleCI-based npm publish.";
+    log "This is the last step before CI-based npm publish.";
     log "Are you sure you want to trigger ${NPM_PACKAGE_NAME} ${NEXT_VERSION} version publish?";
     select choice in "Yes" "No"; do
     case "$choice" in
