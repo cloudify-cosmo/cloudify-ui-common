@@ -28,7 +28,7 @@
         "dev": "rollup -c -w",
         "docs": "documentation build src/index.js -c documentation.yml -f md > src/README.md",
         "lint": "npm run lint:code",
-        "lint:code": "eslint src test",
+        "lint:code": "eslint --cache --ignore-path .gitignore --max-warnings 10 .",
         "lint:docs": "documentation lint src/index.js",
         "publish:major": "bash ci/publish-version.sh major",
         "publish:minor": "bash ci/publish-version.sh minor",
