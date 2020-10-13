@@ -10,9 +10,12 @@ Once `cloudify-ui-common` is installed as a dependency it is required to modify 
   "extends": ["./node_modules/cloudify-ui-common/eslint/eslint-common.json"]
 }
 ```
-It is also required to install peer dependencies as specified in `package.json`. For react-based projects all specified dependencies need to be installed, whereas for non-react projects `eslint-plugin-react`, `eslint-plugin-react-hooks` and `eslint-plugin-jsx-a11y` are not necessary and can be skipped.
+It is also required to install peer dependencies as specified in `package.json`.
+There are three configuration files that can be extended. 
+The table below describes their purpose and dependencies necessary to be installed prior using each configuration file.  
 
-There are two configuration files that can be extended:
-
-* `eslint-common.json` - configuration file that should be extended by all non-react projects
-* `eslint-common-react.json` - configuration file that should be extended by all react-based projects
+| Configuration file         | Used for                  | Dependencies |
+|---                         |---                        |---|
+| `eslint-common.json`       | non-react common projects | `eslint`, `eslint-config-prettier`, `eslint-plugin-import`, `eslint-plugin-prettier`, `eslint-plugin-scanjs-rules`, `eslint-plugin-security` |
+| `eslint-common-react.json` | react-based projects      | all from `eslint-common.json` and `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y` |
+| `eslint-common-node.json`  | node-based projects       | all from `eslint-common.json`, `eslint-plugin-node` |

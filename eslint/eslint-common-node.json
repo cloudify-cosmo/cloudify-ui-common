@@ -1,0 +1,6 @@
+{
+    "extends": [
+        "./eslint-common.json",
+        "plugin:node/recommended"
+    ]
+}
