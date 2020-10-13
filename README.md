@@ -72,7 +72,7 @@ There is [Cloudify Brandbook](https://drive.google.com/file/d/1KimyHFey_AoK2nKop
 
 * [API](./src/README.md) - exposed JavaScript API 
 
-* [ESLint](./eslint/README.md) - shared common ESLint configs
+* [Configurations](./configs/README.md) - shared development tools configuration files
 * [Fonts](./fonts/README.md) - shared common fonts
 * [Images](./images/README.md) - shared common images 
 * [Styles](./styles/README.md) - shared CSS, SCSS stylesheets

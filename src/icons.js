@@ -37,7 +37,7 @@ export function getNodeIcon(hierarchy) {
     const defaultNodeType = 'cloudify.nodes.ApplicationModule';
 
     const typeHierarchy = Array.isArray(hierarchy) ? hierarchy : [hierarchy || ''];
-    const knownType = typeHierarchy.find((type) => !!nodeTypeToChar[type]);
+    const knownType = typeHierarchy.find(type => !!nodeTypeToChar[type]);
 
     return knownType ? nodeTypeToChar[knownType] : nodeTypeToChar[defaultNodeType];
 }
