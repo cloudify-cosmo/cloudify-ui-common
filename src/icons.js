@@ -32,12 +32,12 @@ export function getNodeIcon(hierarchy) {
         'cloudify.nodes.Volume': '\ue620',
         'cloudify.nodes.WebServer': '\ue622',
         'cloudify.nodes.Component': '\ue631',
-        'cloudify.nodes.SharedResource': '\ue632'
+        'cloudify.nodes.SharedResource': '\ue632',
     };
     const defaultNodeType = 'cloudify.nodes.ApplicationModule';
 
     const typeHierarchy = Array.isArray(hierarchy) ? hierarchy : [hierarchy || ''];
-    const knownType = typeHierarchy.find(type => !!nodeTypeToChar[type]);
+    const knownType = typeHierarchy.find((type) => !!nodeTypeToChar[type]);
 
     return knownType ? nodeTypeToChar[knownType] : nodeTypeToChar[defaultNodeType];
 }
@@ -54,7 +54,7 @@ export function getNodeStatusIcon(nodeStatus) {
         [nodeStatuses.ALERT]: '\ue629',
         [nodeStatuses.DONE]: '\ue62a',
         [nodeStatuses.FAILED]: '\ue62b',
-        [nodeStatuses.LOADING]: '\ue630'
+        [nodeStatuses.LOADING]: '\ue630',
     };
     const defaultChar = '';
     const knownType = !!nodeStatusToChar[nodeStatus];
@@ -87,7 +87,7 @@ export function getEventIcon(eventType) {
         workflow_received: '\ue60c',
         workflow_stage: '\ue60c',
         workflow_started: '\ue602',
-        workflow_succeeded: '\ue603'
+        workflow_succeeded: '\ue603',
     };
     const defaultChar = '\ue60a';
     const knownType = !!eventTypeToChar[eventType];
@@ -98,5 +98,5 @@ export function getEventIcon(eventType) {
 export default {
     getEventIcon,
     getNodeIcon,
-    getNodeStatusIcon
+    getNodeStatusIcon,
 };
