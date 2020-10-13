@@ -109,5 +109,5 @@ export default {
     toType,
     toCloudifyType,
     getStringValue,
-    getTypedValue,
+    getTypedValue
 };

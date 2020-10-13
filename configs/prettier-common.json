@@ -3,5 +3,6 @@
     "singleQuote": true,
     "endOfLine": "lf",
     "tabWidth": 4,
-    "arrowParens": "avoid"
+    "arrowParens": "avoid",
+    "trailingComma": "none"
 }

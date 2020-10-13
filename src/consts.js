@@ -9,7 +9,7 @@ export const nodeStatuses = {
     LOADING: 'loading',
     DONE: 'done',
     ALERT: 'alert',
-    FAILED: 'failed',
+    FAILED: 'failed'
 };
 
 export default { nodeStatuses };
