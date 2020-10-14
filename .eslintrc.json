@@ -5,13 +5,5 @@
     ],
     "rules": {
         "jsdoc/require-jsdoc": ["error"]
-    },
-    "overrides": [
-        {
-            "files": "test/**/*.js",
-            "env": {
-                "jest": true
-            }
-        }
-    ]
+    }
 }
