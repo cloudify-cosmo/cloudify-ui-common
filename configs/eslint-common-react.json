@@ -12,5 +12,8 @@
                 "props": false
             }
         ]
+    },
+    "env": {
+        "browser": true
     }
 }

@@ -2,5 +2,8 @@
     "extends": [
         "./eslint-common.json",
         "plugin:node/recommended"
-    ]
+    ],
+    "env": {
+        "node": true
+    }
 }
