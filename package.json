@@ -11,7 +11,7 @@
     "author": "Cloudify Platform Ltd. <cosmo-admin@cloudify.co>",
     "files": [
         "dist",
-        "eslint",
+        "configs",
         "fonts",
         "images",
         "scripts",
