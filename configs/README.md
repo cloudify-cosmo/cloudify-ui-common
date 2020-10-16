@@ -12,7 +12,7 @@ ESLint configs should be extended by every cloudify-ui project/module.
 Once `cloudify-ui-common` is installed as a dependency it is required to modify project's ESLint config (most probably `.eslintrc` or `.eslintrc.json` file) by adding the following entry (assuming ESLint config file is located in top level directory and it is a non-react project):
 ```json
 {
-  "extends": ["./node_modules/cloudify-ui-common/eslint/eslint-common.json"]
+  "extends": ["./node_modules/cloudify-ui-common/configs/eslint-common.json"]
 }
 ```
 It is also required to install peer dependencies as specified in `package.json`.
