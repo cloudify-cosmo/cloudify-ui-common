@@ -1,17 +1,9 @@
 {
     "extends": [
         "plugin:jsdoc/recommended",
-        "./eslint/eslint-common.json"
+        "./configs/eslint-common.json"
     ],
     "rules": {
         "jsdoc/require-jsdoc": ["error"]
-    },
-    "overrides": [
-        {
-            "files": "test/**/*.js",
-            "env": {
-                "jest": true
-            }
-        }
-    ]
+    }
 }

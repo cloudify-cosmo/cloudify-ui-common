@@ -15,7 +15,7 @@ pipeline {
       yamlFile 'jenkins/build-pod.yaml'
     }
   }
-  
+
   environment {
     MAIN_BRANCH = 'master'
     WORKSPACE = "${env.WORKSPACE}"
@@ -36,7 +36,7 @@ pipeline {
           dir("${env.WORKSPACE}/${env.PROJECT}") {
             echo "Install dependencies"
             sh 'npm ci --prefer-offline'
-            
+
             echo "Build application"
             sh 'npm run build'
 
@@ -65,14 +65,14 @@ pipeline {
             withVault([configuration: configuration, vaultSecrets: secrets]) {
               echo "Authenticate with registry"
               sh "echo '//registry.npmjs.org/:_authToken=${env.NPM_TOKEN}' > .npmrc"
-              
+
               echo "Publish package"
               sh 'npm publish'
 
               echo "Setup git user"
               sh '''
                 git config user.email "cosmo-admin@github.com"
-                git config user.name "cosmo-admin-CircleCI"
+                git config user.name "cosmo-admin-Jenkins"
               '''
 
               echo "Update main branch"

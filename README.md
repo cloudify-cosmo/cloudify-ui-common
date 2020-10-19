@@ -1,7 +1,6 @@
 # Cloudify UI Common
 
-[![npm](https://img.shields.io/npm/v/cloudify-ui-common.svg?style=flat)](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common)
-[![CircleCI](https://img.shields.io/circleci/project/github/cloudify-cosmo/cloudify-ui-common.svg?style=svg)](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common)
+[![npm](https://img.shields.io/npm/v/cloudify-ui-common.svg?style=flat)](https://www.npmjs.com/package/cloudify-ui-common)
 [![jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
 
 This repository contains common static assets (images, fonts, styles, etc.) as well as JS library with functions reusable across Cloudify UI applications.
@@ -73,7 +72,7 @@ There is [Cloudify Brandbook](https://drive.google.com/file/d/1KimyHFey_AoK2nKop
 
 * [API](./src/README.md) - exposed JavaScript API 
 
-* [ESLint](./eslint/README.md) - shared common ESLint configs
+* [Configurations](./configs/README.md) - shared development tools configuration files
 * [Fonts](./fonts/README.md) - shared common fonts
 * [Images](./images/README.md) - shared common images 
 * [Styles](./styles/README.md) - shared CSS, SCSS stylesheets
@@ -159,9 +158,9 @@ If you met all points from the checklist above, follow these steps:
    * `npm run publish:minor` for new minor version,
    * `npm run publish:major` for new major version,
 
-   which will create special branch, add commit to it containing version bump in `package*.json` files according to your choice, tag the commit and push branch to remote. That should trigger CircleCI jobs finalizing publish.
+   which will create special branch, add commit to it containing version bump in `package*.json` files according to your choice, tag the commit and push branch to remote. That should trigger Jenkins jobs finalizing publish.
 
-1. Check if [cloudify-ui-common @ CircleCI](https://circleci.com/gh/cloudify-cosmo/cloudify-ui-common) jobs were successful.
+1. Check if Jenkins jobs were successful.
 
 1. Verify [cloudify-ui-common @ NPM](https://www.npmjs.com/package/cloudify-ui-common) was updated properly.
 
