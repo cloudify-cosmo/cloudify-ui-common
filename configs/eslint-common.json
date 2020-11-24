@@ -52,5 +52,9 @@
         "security/detect-possible-timing-attacks": "error",
         "security/detect-pseudoRandomBytes": "error",
         "security/detect-unsafe-regex": "error"
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 2020
     }
 }
