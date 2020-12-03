@@ -3,7 +3,7 @@ jest.mock('umzug');
 
 const _ = require('lodash');
 const umzug = require('umzug');
-const runMigration = require('..');
+const { runMigration } = require('..');
 
 describe('migration', () => {
     function mockUmzug(executedMigrations = [], pendingMigrations = []) {
