@@ -2,6 +2,8 @@ const winston = require('winston');
 const _ = require('lodash');
 const fs = require('fs');
 
+require('events').EventEmitter.defaultMaxListeners = 30;
+
 function getArgsSupportedLogger(logger) {
     // This is workaround for no support for multi-arguments logging, e.g.: logger.info('Part 1', 'Part 2')
     // See: https://github.com/winstonjs/winston/issues/1614
@@ -63,10 +65,10 @@ function initLogging(config) {
     const transports = [
         new winston.transports.Console({
             format: winston.format.colorize({ all: true })
-        })
+        }),
+        new winston.transports.File({ filename: config.logsFile }),
+        new winston.transports.File({ filename: config.errorsFile, level: 'error' })
     ];
-    transports.push(new winston.transports.File({ filename: config.logsFile }));
-    transports.push(new winston.transports.File({ filename: config.errorsFile, level: 'error' }));
 
     const logFormat = winston.format.printf(
         ({ level, message, label, timestamp }) => `[${timestamp}][${label}] ${_.upperCase(level)}: ${message}`
