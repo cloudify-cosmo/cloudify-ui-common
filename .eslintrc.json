@@ -4,6 +4,15 @@
         "./configs/eslint-common.json"
     ],
     "rules": {
-        "jsdoc/require-jsdoc": ["error"]
+        "jsdoc/require-jsdoc": ["error", {
+            "publicOnly": true
+        }]
+    },
+    "settings": {
+        "jsdoc": {
+            "preferredTypes": {
+                "object": "Object"
+            }
+        }
     }
 }
