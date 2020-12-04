@@ -53,6 +53,7 @@ function initLogging(config, defaultMaxListeners = 30) {
         try {
             return _.chain(fs.readFileSync(config.logLevelConf))
                 .split('\n')
+                .map(_.trim)
                 .filter(fileEntry => !fileEntry.startsWith('#'))
                 .map(fileEntry => fileEntry.split(/\s+/))
                 .find(fileEntryWords => _.last(fileEntryWords) === config.serviceName)
