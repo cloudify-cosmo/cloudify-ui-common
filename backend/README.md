@@ -2,23 +2,24 @@
 
 ### Table of Contents
 
--   [db][1]
+-   [Database][1]
     -   [DbInitializer][2]
         -   [Parameters][3]
     -   [init][4]
--   [logger][5]
-    -   [initLogging][6]
-        -   [Parameters][7]
-    -   [getLogger][8]
-        -   [Parameters][9]
-    -   [logErrorsOnly][10]
--   [migration][11]
-    -   [runMigration][12]
-        -   [Parameters][13]
+    -   [db][5]
+-   [Logging][6]
+    -   [initLogging][7]
+        -   [Parameters][8]
+    -   [getLogger][9]
+        -   [Parameters][10]
+    -   [logErrorsOnly][11]
+-   [Database migration][12]
+    -   [runMigration][13]
+        -   [Parameters][14]
 
-## db
+## Database
 
-Database connection handling.
+
 
 
 ### DbInitializer
@@ -27,23 +28,27 @@ Constructs new object containing `init` function and `db` object
 
 #### Parameters
 
--   `dbConfig` **[object][14]** DB configuration object
-    -   `dbConfig.url` **([string][15] \| [Array][16])** DB connection URL or an array of URLs
-    -   `dbConfig.options` **[object][14]** DB connection options
--   `loggerFactory` **[object][14]** object containing `getLogger` function
--   `modelsDir` **[string][15]** directory for models lookup
--   `modelExcludes` **[Array][16]** list of files to be excluded from model definitions discovered by reading models
+-   `dbConfig` **[Object][15]** DB configuration object
+    -   `dbConfig.url` **([string][16] \| [Array][17])** DB connection URL or an array of URLs
+    -   `dbConfig.options` **[Object][15]** DB connection options
+-   `loggerFactory` **[Object][15]** object containing `getLogger` function
+-   `modelsDir` **[string][16]** directory for models lookup
+-   `modelExcludes` **[Array][17]** list of files to be excluded from model definitions discovered by reading models
     directory as specified by `modelsDir` argument (optional, default `[]`)
 
 ### init
 
 Initializes DB connection
 
-Returns **[Promise][17]&lt;void>** promise resolving once connection is established
+Returns **[Promise][18]&lt;void>** promise resolving once connection is established
 
-## logger
+### db
 
-Logging handling.
+Once initialized this object contains `sequelize` instance as well as all DB models, keyed by model name.
+
+## Logging
+
+
 
 
 ### initLogging
@@ -52,13 +57,17 @@ Initializes logging framework according to the given config
 
 #### Parameters
 
--   `config` **[object][14]** configuration object
-    -   `config.logLevelConf` **[string][15]** path to manager's logging.conf file
-    -   `config.logLevel` **[string][15]** default log level to be used when
-    -   `config.logsFile` **[string][15]** path to main log file
-    -   `config.errorsFile` **[string][15]** path to errors log file
+-   `config` **[Object][15]** configuration object
+    -   `config.logLevelConf` **[string][16]** path to manager's logging.conf file
+    -   `config.logLevel` **[string][16]** default log level to be used when `logLevelConf` is not set, file defined by
+        `logLevelConf` does not exist, or the file exists but contains no entry for the given `serviceName`
+    -   `config.logsFile` **[string][16]** path to main log file
+    -   `config.errorsFile` **[string][16]** path to errors log file
+    -   `config.serviceName` **[string][16]** service name to look for in file specified by \`logLevelConf
+-   `defaultMaxListeners` **[number][19]** optional number of default event listeners to be assigned to
+    EventEmitter.defaultMaxListeners, should be set to at least the number of logging categories to be used, defaults to 30 (optional, default `30`)
 
-Returns **[object][14]** object containing `getLogger` and `logErrorsOnly` functions
+Returns **[Object][15]** object containing `getLogger` and `logErrorsOnly` functions
 
 ### getLogger
 
@@ -66,17 +75,17 @@ Returns logger for given category
 
 #### Parameters
 
--   `category` **[string][15]** category
+-   `category` **[string][16]** category
 
-Returns **[object][14]** winston logger instance
+Returns **[Object][15]** winston logger instance
 
 ### logErrorsOnly
 
 Sets threshold log level to `error`
 
-## migration
+## Database migration
 
-Database migration handling.
+
 
 
 ### runMigration
@@ -85,10 +94,10 @@ Runs migration script
 
 #### Parameters
 
--   `loggerFactory` **[object][14]** initialized logger factory
--   `dbModule` **[object][14]** DB module, an object containing `init` function and `db` object
+-   `loggerFactory` **[Object][15]** initialized logger factory, see [initLogging][7]
+-   `dbModule` **[Object][15]** DB module, an object containing `init` function and `db` object, see [DbInitializer][2]
 
-[1]: #db
+[1]: #database
 
 [2]: #dbinitializer
 
@@ -96,28 +105,32 @@ Runs migration script
 
 [4]: #init
 
-[5]: #logger
+[5]: #db
 
-[6]: #initlogging
+[6]: #logging
 
-[7]: #parameters-1
+[7]: #initlogging
 
-[8]: #getlogger
+[8]: #parameters-1
 
-[9]: #parameters-2
+[9]: #getlogger
 
-[10]: #logerrorsonly
+[10]: #parameters-2
 
-[11]: #migration
+[11]: #logerrorsonly
 
-[12]: #runmigration
+[12]: #database-migration
 
-[13]: #parameters-3
+[13]: #runmigration
 
-[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[14]: #parameters-3
 
-[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

@@ -21,8 +21,8 @@ function getArg(n) {
 /**
  * Runs migration script
  *
- * @param {Object} loggerFactory initialized logger factory
- * @param {Object} dbModule DB module, an object containing `init` function and `db` object
+ * @param {Object} loggerFactory initialized logger factory, see {@link initLogging}
+ * @param {Object} dbModule DB module, an object containing `init` function and `db` object, see {@link DbInitializer}
  */
 function runMigration(loggerFactory, dbModule) {
     const { db, init } = dbModule;

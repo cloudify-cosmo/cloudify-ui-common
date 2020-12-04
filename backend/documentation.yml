@@ -1,20 +1,15 @@
 toc:
-  - name: db
-    description: |
-      Database connection handling.
+  - name: Database
     children:
       - DbInitializer
       - init
-  - name: logger
-    description: |
-      Logging handling.
+      - db
+  - name: Logging
     children:
       - initLogging
       - getLogger
       - logErrorsOnly
-  - name: migration
-    description: |
-      Database migration handling.
+  - name: Database migration
     children:
       - runMigration
 

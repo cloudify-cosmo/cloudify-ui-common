@@ -4,7 +4,10 @@ const path = require('path');
 const request = require('request');
 const Sequelize = require('sequelize');
 
-const db = { Sequelize };
+/**
+ * Once initialized this object contains `sequelize` instance as well as all DB models, keyed by model name.
+ */
+const db = {};
 
 function wait(seconds) {
     return new Promise(resolve => setTimeout(resolve, 1000 * seconds));
