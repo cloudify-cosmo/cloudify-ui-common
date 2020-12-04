@@ -158,6 +158,22 @@ describe('migration', () => {
         });
     });
 
+    it('should handle missing command', () => {
+        const umzugInstance = mockUmzug();
+        const logger = mockLogger();
+        setArgs();
+        return new Promise(done => {
+            process.exit = returnCode => {
+                expect(logger.logErrorsOnly).not.toHaveBeenCalled();
+                expect(umzugInstance.pending).not.toHaveBeenCalled();
+                expect(umzugInstance.executed).not.toHaveBeenCalled();
+                expect(returnCode).toBe(1);
+                done();
+            };
+            runMigration(logger, mockDb());
+        });
+    });
+
     it('should execute `downTo` command when already at initial state', () => {
         mockUmzug([], ['dummy']);
         const logger = mockLogger();

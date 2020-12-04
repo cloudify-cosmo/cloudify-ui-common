@@ -11,6 +11,13 @@ function getCurrent(executed) {
     return _.chain(executed).last().get('file').value() || '<NO_MIGRATIONS>';
 }
 
+function getArg(n) {
+    return _.chain(process.argv)
+        .nth(n + 2)
+        .trim()
+        .value();
+}
+
 /**
  * Runs migration script
  *
@@ -20,7 +27,7 @@ function getCurrent(executed) {
 function runMigration(loggerFactory, dbModule) {
     const { db, init } = dbModule;
 
-    const command = process.argv[2].trim();
+    const command = getArg(0);
     if (command === 'current') loggerFactory.logErrorsOnly();
     const logger = loggerFactory.getLogger('DBMigration');
 
@@ -103,7 +110,8 @@ function runMigration(loggerFactory, dbModule) {
             });
     }
 
-    function cmdDownTo(migrationName) {
+    function cmdDownTo() {
+        const migrationName = getArg(1);
         if (!migrationName || migrationName === '') {
             return Promise.reject(new Error('Migration name to down to has to be supplied'));
         }
@@ -161,12 +169,16 @@ function runMigration(loggerFactory, dbModule) {
         return umzug.down({ to: 0 });
     }
 
-    function handleCommand(cmd) {
+    function handleCommand() {
+        if (!command) {
+            logger.error(`missing command`);
+            onMigrationEnd(1);
+        }
+
+        logger.info(`${command.toUpperCase()} BEGIN`);
+
         let executedCmd;
-
-        logger.info(`${cmd.toUpperCase()} BEGIN`);
-
-        switch (cmd) {
+        switch (command) {
             case 'current':
                 // eslint-disable-next-line no-console
                 executedCmd = cmdCurrent().then(console.log);
@@ -182,7 +194,7 @@ function runMigration(loggerFactory, dbModule) {
                 break;
 
             case 'downTo':
-                executedCmd = cmdDownTo(process.argv[3].trim());
+                executedCmd = cmdDownTo();
                 break;
 
             case 'reset':
@@ -192,26 +204,26 @@ function runMigration(loggerFactory, dbModule) {
                 executedCmd = cmdClear();
                 break;
             default:
-                logger.error(`invalid cmd: ${cmd}`);
+                logger.error(`invalid command: ${command}`);
                 onMigrationEnd(1);
         }
 
         if (executedCmd)
             executedCmd
                 .then(() => {
-                    const doneStr = `${cmd.toUpperCase()} DONE`;
+                    const doneStr = `${command.toUpperCase()} DONE`;
                     logger.info(doneStr);
                     logger.info('='.repeat(doneStr.length));
                 })
                 .then(() => {
-                    if (cmd !== 'status' && cmd !== 'reset-hard') {
+                    if (command !== 'status' && command !== 'reset-hard') {
                         return cmdStatus();
                     }
                     return Promise.resolve();
                 })
                 .then(() => onMigrationEnd(0))
                 .catch(err => {
-                    const errorStr = `${cmd.toUpperCase()} ERROR`;
+                    const errorStr = `${command.toUpperCase()} ERROR`;
                     logger.error(errorStr);
                     logger.error('='.repeat(errorStr.length));
                     logger.error(err);
@@ -222,7 +234,7 @@ function runMigration(loggerFactory, dbModule) {
 
     init().then(() => {
         initUmzug();
-        handleCommand(command);
+        handleCommand();
     });
 }
 
