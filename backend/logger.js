@@ -80,11 +80,7 @@ function initLogging(config, defaultMaxListeners = 30) {
         ({ level, message, label, timestamp }) => `[${timestamp}][${label}] ${_.upperCase(level)}: ${message}`
     );
 
-    let level;
-
-    if (config.logLevelConf) level = getLevelFromLoggingConf();
-
-    level = level || config.logLevel;
+    const level = (config.logLevelConf && getLevelFromLoggingConf()) || config.logLevel;
 
     /**
      * Returns logger for given category
