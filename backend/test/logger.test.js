@@ -16,6 +16,7 @@ describe('logger', () => {
         fs.readFileSync.mockReturnValue(`silly cloudify-composer`);
         const logger = initLogging({
             logLevelConf: 'dummy_but_not_empty',
+            serviceName: 'cloudify-composer',
             ...commonConfig
         }).getLogger('silly');
         expect(logger.level).toBe('silly');
@@ -25,6 +26,7 @@ describe('logger', () => {
         fs.readFileSync.mockReturnValue(`warning cloudify-composer`);
         const logger = initLogging({
             logLevelConf: 'dummy_but_not_empty',
+            serviceName: 'cloudify-composer',
             ...commonConfig
         }).getLogger('warning');
         expect(logger.level).toBe('warn');
