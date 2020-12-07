@@ -1,0 +1,15 @@
+toc:
+  - name: Database
+    children:
+      - DbInitializer
+      - init
+      - db
+  - name: Logging
+    children:
+      - initLogging
+      - getLogger
+      - logErrorsOnly
+  - name: Database migration
+    children:
+      - runMigration
+

@@ -10,6 +10,7 @@
     "license": "Apache-2.0",
     "author": "Cloudify Platform Ltd. <cosmo-admin@cloudify.co>",
     "files": [
+        "backend/*.{js,md}",
         "dist",
         "configs",
         "fonts",
@@ -24,12 +25,13 @@
         "audit": "npm audit --production",
         "build": "npm run build:code && npm run build:docs",
         "build:code": "rollup -c",
-        "build:docs": "npm run docs && cp src/README.md dist",
+        "build:docs": "npm run docs && npm run docs:backend && cp src/README.md dist",
         "dev": "rollup -c -w",
         "docs": "documentation build src/index.js -c documentation.yml -f md > src/README.md",
+        "docs:backend": "cd backend && documentation build index.js -c documentation.yml -f md > README.md",
         "lint": "npm run lint:code",
         "lint:code": "eslint --cache --ignore-path .gitignore --max-warnings 10 .",
-        "lint:docs": "documentation lint src/index.js",
+        "lint:docs": "documentation lint src/index.js && documentation lint backend/index.js",
         "publish:major": "bash ci/publish-version.sh major",
         "publish:minor": "bash ci/publish-version.sh minor",
         "publish:patch": "bash ci/publish-version.sh patch",
@@ -42,7 +44,12 @@
     "dependencies": {
         "eslint-config-airbnb": "^18.2.0",
         "eslint-config-airbnb-base": "^14.2.0",
-        "eslint-config-prettier": "^6.12.0"
+        "eslint-config-prettier": "^6.12.0",
+        "lodash": "^4.17.20",
+        "request": "^2.88.2",
+        "sequelize": "^5.22.3",
+        "umzug": "^1.12.0",
+        "winston": "^3.3.3"
     },
     "devDependencies": {
         "@babel/core": "^7.11.6",
@@ -53,6 +60,7 @@
         "eslint-plugin-import": "^2.22.1",
         "eslint-plugin-jest": "^24.1.0",
         "eslint-plugin-jsdoc": "^30.6.4",
+        "eslint-plugin-node": "^11.1.0",
         "eslint-plugin-prettier": "^3.1.4",
         "eslint-plugin-scanjs-rules": "^0.2.1",
         "eslint-plugin-security": "^1.4.0",
@@ -62,7 +70,8 @@
         "rollup-plugin-babel": "^4.4.0",
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-node-resolve": "^5.2.0",
-        "rollup-plugin-terser": "^7.0.2"
+        "rollup-plugin-terser": "^7.0.2",
+        "tmp": "^0.2.1"
     },
     "peerDependencies": {
         "eslint": "^7.11.0",
@@ -75,5 +84,8 @@
         "eslint-plugin-react": "^7.21.4",
         "eslint-plugin-react-hooks": "^4.1.2",
         "eslint-plugin-node": "^11.1.0"
+    },
+    "engines": {
+        "node": ">=12"
     }
 }
