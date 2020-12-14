@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+echo Installing dependencies to run system tests...
+npm run beforebuild
+
+echo Starting update of package on Manager...
+echo Creating package...
+npm run build:coverage
+npm run zip
+
+echo Uploading package...
+npm run upload
+
+echo Starting system tests...
+npm run e2e
+
+echo Starting unit tests...
+export NODE_OPTIONS="--max-old-space-size=8192"
+npm run test:frontend:coverage
+
+echo Checking coverage...
+npm run coverageCheck
