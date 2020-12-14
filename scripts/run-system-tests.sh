@@ -1,6 +1,25 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+#===================================================================================
+# Usage:
+#   run-system-tests.sh
+#
+# Description:
+#   Executes common flow for lanuching system tests build
+#
+# Globals:
+#   MANAGER_USER - (optional) Cloudify Manager SSH username (default: centos)
+#   MANAGER_IP   - (required) Cloudify Manager IP address
+#   SSH_KEY_PATH - (required) Cloudify Manager SSH key path
+#
+# Arguments:
+#   None
+#
+# Returns:
+#   None
+#===================================================================================
+
 echo Installing dependencies to run system tests...
 npm run beforebuild
 
