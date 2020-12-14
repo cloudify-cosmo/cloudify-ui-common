@@ -3,7 +3,7 @@ set -eo pipefail
 
 #===================================================================================
 # Usage:
-#   run-system-tests.sh
+#   run-system-tests.sh <test_to_run>
 #
 # Description:
 #   Executes common flow for lanuching system tests build
@@ -14,7 +14,8 @@ set -eo pipefail
 #   SSH_KEY_PATH - (required) Cloudify Manager SSH key path
 #
 # Arguments:
-#   None
+#   $1 (test_to_run) - optional test specifier to be passed to cypress runner if
+#                      only selected test has to be run
 #
 # Returns:
 #   None
@@ -32,7 +33,7 @@ echo Uploading package...
 npm run upload
 
 echo Starting system tests...
-npm run e2e
+npm run e2e -- $1
 
 echo Starting unit tests...
 export NODE_OPTIONS="--max-old-space-size=8192"
