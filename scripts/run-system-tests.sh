@@ -21,9 +21,6 @@ set -eo pipefail
 #   None
 #===================================================================================
 
-echo Installing dependencies to run system tests...
-npm run beforebuild
-
 echo Starting update of package on Manager...
 echo Creating package...
 npm run build:coverage
