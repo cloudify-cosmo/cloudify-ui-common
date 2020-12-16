@@ -1,6 +1,6 @@
 {
     "name": "cloudify-ui-common",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "description": "Common Cloudify UI library",
     "homepage": "https://github.com/cloudify-cosmo/cloudify-ui-common#readme",
     "repository": {
@@ -18,7 +18,9 @@
         "scripts",
         "styles"
     ],
-    "bin": { "run-system-tests": "scripts/run-system-tests.sh" },
+    "bin": {
+        "run-system-tests": "scripts/run-system-tests.sh"
+    },
     "main": "dist/cloudify-ui-common.cjs.js",
     "module": "dist/cloudify-ui-common.esm.js",
     "browser": "dist/cloudify-ui-common.min.js",
