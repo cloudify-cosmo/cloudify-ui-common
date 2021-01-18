@@ -11,6 +11,13 @@ function getArgsSupportedLogger(logger) {
             for (let index = 0; index < args.length; index += 1) {
                 if (args[index] instanceof Error) {
                     args[index] = args[index].stack;
+                } else if (_.isPlainObject(args[index]) || _.isArray(args[index])) {
+                    try {
+                        const stringifiedObject = JSON.stringify(args[index]);
+                        args[index] = stringifiedObject;
+                    } catch (error) {
+                        /* stringify not possible, so not overriding this argument */
+                    }
                 }
             }
             original(args.join(' '));

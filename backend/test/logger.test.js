@@ -69,4 +69,23 @@ describe('logger', () => {
         // eslint-disable-next-line no-console
         expect(console.log).toHaveBeenCalledWith(expect.stringMatching(`${arg1} ${arg2.stack}`));
     });
+
+    it('should handle plain objects and array arguments', () => {
+        const logger = initLogging(commonConfig).getLogger('objects');
+        global.console = { log: jest.fn() };
+
+        /* eslint-disable no-console */
+        logger.info({});
+        expect(console.log).toHaveBeenLastCalledWith(expect.stringMatching('{}'));
+
+        logger.info({ a: 'b' });
+        expect(console.log).toHaveBeenLastCalledWith(expect.stringMatching('{"a":"b"}'));
+
+        logger.info([1, 'a', { b: 'c' }, true]);
+        expect(console.log).toHaveBeenLastCalledWith(expect.stringMatching('[1,"a",{"a":"b"},true]'));
+
+        logger.info(new Set());
+        expect(console.log).toHaveBeenLastCalledWith(expect.stringMatching('[object Set]'));
+        /* eslint-enable no-console */
+    });
 });
