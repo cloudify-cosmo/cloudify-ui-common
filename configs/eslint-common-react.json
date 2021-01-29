@@ -1,10 +1,5 @@
 {
-    "extends": [
-        "./eslint-common.json",
-        "airbnb",
-        "prettier/react",
-        "plugin:prettier/recommended"
-    ],
+    "extends": ["./eslint-common.json", "airbnb", "prettier/react", "plugin:prettier/recommended"],
     "rules": {
         "no-param-reassign": [
             "error",

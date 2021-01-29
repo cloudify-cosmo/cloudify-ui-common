@@ -1,12 +1,12 @@
 {
-    "extends": [
-        "plugin:jsdoc/recommended",
-        "./configs/eslint-common.json"
-    ],
+    "extends": ["plugin:jsdoc/recommended", "./configs/eslint-common.json"],
     "rules": {
-        "jsdoc/require-jsdoc": ["error", {
-            "publicOnly": true
-        }]
+        "jsdoc/require-jsdoc": [
+            "error",
+            {
+                "publicOnly": true
+            }
+        ]
     },
     "settings": {
         "jsdoc": {
@@ -14,5 +14,15 @@
                 "object": "Object"
             }
         }
-    }
+    },
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "rules": {
+                // NOTE: covered by TypeScript
+                "jsdoc/require-returns": "off",
+                "jsdoc/require-param-type": "off"
+            }
+        }
+    ]
 }
