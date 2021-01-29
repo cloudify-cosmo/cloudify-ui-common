@@ -1,8 +1,16 @@
-import resolve from 'rollup-plugin-node-resolve';
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import { babel } from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
+
+const extensions = ['.js', '.ts'];
+const getBabelPluginConfig = transpile => ({
+    presets: [transpile && '@babel/preset-env', '@babel/preset-typescript'].filter(Boolean),
+    exclude: 'node_modules/**',
+    extensions,
+    babelHelpers: 'bundled'
+});
 
 export default [
     // browser-friendly UMD build - ES5
@@ -14,12 +22,7 @@ export default [
             format: 'umd',
             sourcemap: true
         },
-        plugins: [
-            resolve(),
-            commonjs(),
-            babel({ presets: ['@babel/preset-env'], exclude: 'node_modules/**' }),
-            terser()
-        ]
+        plugins: [commonjs(), babel(getBabelPluginConfig(true)), resolve({ extensions }), terser()]
     },
 
     // CommonJS (for Node) and ES module (for bundlers) build.
@@ -33,6 +36,7 @@ export default [
         output: [
             { file: pkg.main, format: 'cjs' },
             { file: pkg.module, format: 'es' }
-        ]
+        ],
+        plugins: [babel(getBabelPluginConfig(false)), resolve({ extensions })]
     }
 ];
