@@ -1,0 +1,7 @@
+{
+    "extends": "../tsconfig.composite.json",
+    "compilerOptions": {
+        "declarationDir": "./typings"
+    },
+    "exclude": ["./test", "./typings"]
+}
