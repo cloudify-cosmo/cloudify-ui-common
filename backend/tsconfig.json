@@ -1,6 +1,7 @@
 {
     "extends": "../configs/tsconfig.composite.json",
     "compilerOptions": {
+        "module": "CommonJS",
         "declarationDir": "./typings"
     },
     "exclude": ["./test", "./typings"]
