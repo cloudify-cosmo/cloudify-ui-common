@@ -1,0 +1,57 @@
+{
+    "extends": "plugin:@typescript-eslint/recommended",
+    "rules": {
+        // see https://stackoverflow.com/a/59268871
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "mjs": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
+
+        // see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-use-before-define.md#how-to-use
+        "no-use-before-define": "off",
+        // https://github.com/airbnb/javascript/blob/master/packages/eslint-config-airbnb-base/rules/variables.js#L54
+        "@typescript-eslint/no-use-before-define": [
+            "error",
+            // Functions are hoisted, so it is safe
+            { "functions": false, "classes": true, "variables": true }
+        ],
+
+        "@typescript-eslint/no-empty-function": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
+    },
+    "overrides": [
+        {
+            "files": ["*.{js,jsx}"],
+            "rules": {
+                "@typescript-eslint/explicit-module-boundary-types": "off"
+            }
+        },
+        {
+            "files": ["*.js"],
+            "rules": {
+                "@typescript-eslint/no-var-requires": "off"
+            }
+        },
+        {
+            "files": ["*.{ts,tsx}"],
+            "rules": {
+                // NOTE: covered by TypeScript
+                "jsdoc/require-returns-type": "off",
+                "jsdoc/require-param-type": "off"
+            }
+        }
+    ]
+}

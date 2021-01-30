@@ -4,7 +4,7 @@
         "airbnb-base",
         "plugin:prettier/recommended",
         "plugin:security/recommended",
-        "plugin:@typescript-eslint/recommended"
+        "./eslint-ts-overrides.json"
     ],
     "plugins": ["scanjs-rules", "@typescript-eslint"],
     "rules": {
@@ -51,48 +51,6 @@
         "security/detect-object-injection": "off",
         "security/detect-possible-timing-attacks": "error",
         "security/detect-pseudoRandomBytes": "error",
-        "security/detect-unsafe-regex": "error",
-
-        // see https://stackoverflow.com/a/59268871
-        "import/extensions": [
-            "error",
-            "ignorePackages",
-            {
-                "js": "never",
-                "mjs": "never",
-                "jsx": "never",
-                "ts": "never",
-                "tsx": "never"
-            }
-        ],
-
-        // see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-use-before-define.md#how-to-use
-        "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": "error",
-
-        "@typescript-eslint/no-empty-function": "off"
-    },
-    "settings": {
-        "import/resolver": {
-            "node": {
-                "extensions": [".js", ".jsx", ".ts", ".tsx"]
-            }
-        }
-    },
-    "overrides": [
-        {
-            "files": ["*.{js,jsx}"],
-            "rules": {
-                "@typescript-eslint/explicit-module-boundary-types": "off"
-            }
-        },
-        {
-            "files": ["*.{ts,tsx}"],
-            "rules": {
-                // NOTE: covered by TypeScript
-                "jsdoc/require-returns-type": "off",
-                "jsdoc/require-param-type": "off"
-            }
-        }
-    ]
+        "security/detect-unsafe-regex": "error"
+    }
 }

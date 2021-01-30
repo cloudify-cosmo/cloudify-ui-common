@@ -2,13 +2,5 @@
     "extends": ["plugin:node/recommended", "./eslint-common.json"],
     "env": {
         "node": true
-    },
-    "overrides": [
-        {
-            "files": ["*.js"],
-            "rules": {
-                "@typescript-eslint/no-var-requires": "off"
-            }
-        }
-    ]
+    }
 }
