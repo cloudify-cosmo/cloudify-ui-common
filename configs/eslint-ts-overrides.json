@@ -50,7 +50,8 @@
             "rules": {
                 // NOTE: covered by TypeScript
                 "jsdoc/require-returns-type": "off",
-                "jsdoc/require-param-type": "off"
+                "jsdoc/require-param-type": "off",
+                "@typescript-eslint/no-unused-vars": "off"
             }
         }
     ]
