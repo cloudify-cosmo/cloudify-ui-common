@@ -16,11 +16,6 @@ describe('getNodeIcon', () => {
     test('handles array', () => {
         expect(getNodeIcon(['cloudify.nodes.Compute', 'cloudify.nodes.Root'])).toBe('\ue61b');
     });
-
-    test('handles invalid input', () => {
-        // @ts-expect-error The function expects strings, but test an invalid input just to be sure
-        expect(getNodeIcon(555)).toBe('\ue616');
-    });
 });
 
 describe('getNodeStatusIcon', () => {
@@ -44,10 +39,5 @@ describe('getEventIcon', () => {
 
     test('handles string', () => {
         expect(getEventIcon('task_succeeded')).toBe('\ue60b');
-    });
-
-    test('handles invalid input', () => {
-        // @ts-expect-error test an invalid input just to be sure
-        expect(getEventIcon(555)).toBe('\ue60a');
     });
 });
