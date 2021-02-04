@@ -1,0 +1,5 @@
+{
+    "extends": [
+        "../configs/eslint-common-cypress.json"
+    ]
+}

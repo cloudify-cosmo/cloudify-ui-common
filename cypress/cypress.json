@@ -1,0 +1,23 @@
+{
+    "integrationFolder": "test/cypress/integration",
+    "fixturesFolder": "test/cypress/fixtures",
+    "screenshotsFolder": "test/cypress/screenshots",
+    "videosFolder": "test/cypress/videos",
+    "supportFile": "test/cypress/support/index.js",
+    "pluginsFile": "node_modules/cloudify-ui-common/cypress/plugins/index.js",
+
+    "defaultCommandTimeout": 90000,
+    "video": true,
+    "reporter": "junit",
+    "reporterOptions": {
+        "mochaFile": "test/cypress/results/test-results-[hash].xml",
+        "testCaseSwitchClassnameAndName": true
+    },
+    "videoUploadOnPasses": false,
+    "watchForFileChanges": false,
+
+    "retries": {
+        "runMode": 2,
+        "openMode": 0
+    }
+}
