@@ -18,6 +18,7 @@
         "fonts",
         "images",
         "scripts",
+        "src",
         "styles",
         "typings"
     ],
