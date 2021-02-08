@@ -1,12 +1,12 @@
 {
-    "extends": [
-        "plugin:jsdoc/recommended",
-        "./configs/eslint-common.json"
-    ],
+    "extends": ["plugin:jsdoc/recommended", "./configs/eslint-common.json"],
     "rules": {
-        "jsdoc/require-jsdoc": ["error", {
-            "publicOnly": true
-        }]
+        "jsdoc/require-jsdoc": [
+            "error",
+            {
+                "publicOnly": true
+            }
+        ]
     },
     "settings": {
         "jsdoc": {

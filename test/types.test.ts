@@ -41,6 +41,6 @@ describe('types.js', () => {
         expect(getTypedValue('6.4')).toEqual(6.4);
         expect(getTypedValue('null')).toEqual(null);
         expect(getTypedValue('undefined')).toEqual(undefined);
-        expect(getTypedValue([])).toEqual([]);
+        expect(getTypedValue(([] as unknown) as string)).toEqual([]);
     });
 });

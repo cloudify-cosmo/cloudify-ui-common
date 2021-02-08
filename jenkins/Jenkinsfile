@@ -42,6 +42,9 @@ pipeline {
             echo "Run static analysis and check code style"
             sh 'npm run lint'
 
+            echo "Check TypeScript types"
+            sh 'npm run check-types'
+
             echo "Run tests with coverage check"
             sh 'npm run test:coverage'
 

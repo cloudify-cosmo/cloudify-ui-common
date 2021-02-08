@@ -1,0 +1,6 @@
+{
+    "types": "./typings/index.d.ts",
+    "engines": {
+        "node": ">=12"
+    }
+}

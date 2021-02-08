@@ -1,0 +1,10 @@
+{
+    // tsconfig for projects that will be used in other packages and need to emit declarations
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "noEmit": false,
+        "emitDeclarationOnly": true,
+        "declaration": true,
+        "declarationMap": true
+    }
+}
