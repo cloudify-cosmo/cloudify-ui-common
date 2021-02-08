@@ -16,10 +16,6 @@ describe('getNodeIcon', () => {
     test('handles array', () => {
         expect(getNodeIcon(['cloudify.nodes.Compute', 'cloudify.nodes.Root'])).toBe('\ue61b');
     });
-
-    test('handles invalid input', () => {
-        expect(getNodeIcon(555)).toBe('\ue616');
-    });
 });
 
 describe('getNodeStatusIcon', () => {
@@ -43,9 +39,5 @@ describe('getEventIcon', () => {
 
     test('handles string', () => {
         expect(getEventIcon('task_succeeded')).toBe('\ue60b');
-    });
-
-    test('handles invalid input', () => {
-        expect(getEventIcon(555)).toBe('\ue60a');
     });
 });
