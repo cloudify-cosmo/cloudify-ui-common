@@ -4,7 +4,7 @@
     "screenshotsFolder": "test/cypress/screenshots",
     "videosFolder": "test/cypress/videos",
     "supportFile": "test/cypress/support/index.js",
-    "pluginsFile": "node_modules/cloudify-ui-common/cypress/plugins/index.js",
+    "pluginsFile": "test/cypress/plugins/index.js",
 
     "defaultCommandTimeout": 90000,
     "video": true,
