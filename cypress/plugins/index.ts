@@ -10,7 +10,7 @@
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Could not find a declaration file for module
-import * as coverageTask from '@cypress/code-coverage/task';
+import coverageTask from '@cypress/code-coverage/task';
 
 /**
  * Performs common plugin and configuration setup - registers coverage plugin and sets `baseUrl` property if MANAGER_IP
