@@ -1,7 +1,6 @@
 {
     "extends": "../configs/tsconfig.composite.json",
     "compilerOptions": {
-        "declarationDir": "../typings",
-        "checkJs": false
+        "declarationDir": "../typings"
     }
 }
