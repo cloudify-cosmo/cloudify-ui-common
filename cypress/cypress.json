@@ -3,8 +3,8 @@
     "fixturesFolder": "test/cypress/fixtures",
     "screenshotsFolder": "test/cypress/screenshots",
     "videosFolder": "test/cypress/videos",
-    "supportFile": "test/cypress/support/index.js",
-    "pluginsFile": "test/cypress/plugins/index.js",
+    "supportFile": "test/cypress/support/index.ts",
+    "pluginsFile": "test/cypress/plugins/index.ts",
 
     "defaultCommandTimeout": 90000,
     "video": true,
