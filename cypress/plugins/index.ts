@@ -7,9 +7,6 @@
 // You can read more here:
 // https://on.cypress.io/plugins-guide
 // ***********************************************************
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore: Could not find a declaration file for module
 import coverageTask from '@cypress/code-coverage/task';
 
 /**
@@ -22,10 +19,7 @@ import coverageTask from '@cypress/code-coverage/task';
  * @param config Cypress configuration object to be updated
  * @returns Updated configuration
  */
-function setupPluginsAndConfig(
-    on: Cypress.Actions,
-    config: Cypress.ResolvedConfigOptions
-): Cypress.ResolvedConfigOptions {
+const setupPluginsAndConfig: Cypress.PluginConfig = (on, config) => {
     coverageTask(on, config);
 
     if (process.env.MANAGER_IP) {
@@ -35,6 +29,6 @@ function setupPluginsAndConfig(
     console.info(`Testing on: ${config.baseUrl}`);
 
     return config;
-}
+};
 
 export default setupPluginsAndConfig;
