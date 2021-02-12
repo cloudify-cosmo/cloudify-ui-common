@@ -13,7 +13,7 @@
     "files": [
         "backend/*.{js,md}",
         "backend/typings",
-        "cypress/**/*",
+        "cypress",
         "dist",
         "configs",
         "fonts",

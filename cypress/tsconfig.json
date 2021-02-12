@@ -1,6 +1,8 @@
 {
     "extends": "../configs/tsconfig.composite.json",
     "compilerOptions": {
+        "allowJs": false,
+        "checkJs": false,
         "emitDeclarationOnly": false,
         "module": "CommonJS",
         "types": [

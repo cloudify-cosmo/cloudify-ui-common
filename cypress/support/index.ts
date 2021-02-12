@@ -1,4 +1,4 @@
-type CustomCypressCommands = Record<string, (...args: any[]) => Cypress.CanReturnChainable>;
+type CustomCypressCommands = Record<string, (...args: unknown[]) => Cypress.CanReturnChainable>;
 
 /**
  * Returns an object that contains custom Cypress commands with correct return types
@@ -17,7 +17,7 @@ declare global {
     }
 }
 
-export const addCommands = (commands: CustomCypressCommands) =>
+export const addCommands = (commands: CustomCypressCommands): void =>
     Object.entries(commands).forEach(([name, command]) => {
         Cypress.Commands.add(name, command);
     });
