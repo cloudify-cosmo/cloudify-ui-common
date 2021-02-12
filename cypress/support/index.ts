@@ -1,4 +1,5 @@
-type CustomCypressCommands = Record<string, (...args: unknown[]) => Cypress.CanReturnChainable>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type CustomCypressCommands = Record<string, (...args: any[]) => Cypress.CanReturnChainable>;
 
 /**
  * Returns an object that contains custom Cypress commands with correct return types

@@ -23,7 +23,6 @@
         "noEmit": true,
 
         // Enabled while there are still JS files
-        "allowJs": true,
-        "checkJs": true
+        "allowJs": true
     }
 }
