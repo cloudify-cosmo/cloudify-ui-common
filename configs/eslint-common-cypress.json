@@ -1,0 +1,16 @@
+{
+    "extends": ["plugin:chai-friendly/recommended", "plugin:cypress/recommended"],
+
+    "env": {
+        "cypress/globals": true
+    },
+    "overrides": [
+        {
+            "files": ["./support/*.ts"],
+            "rules": {
+                // NOTE: used for declaring custom Cypress commands
+                "@typescript-eslint/no-namespace": "off"
+            }
+        }
+    ]
+}

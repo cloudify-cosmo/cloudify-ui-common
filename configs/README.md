@@ -19,12 +19,13 @@ It is also required to install peer dependencies as specified in `package.json`.
 There are three configuration files that can be extended.
 The table below describes their purpose and dependencies necessary to be installed prior using each configuration file.  
 
-| Configuration file         | Used for                  | Dependencies |
-|---                         |---                        |---|
-| `eslint-ts-overrides.json` | TypeScript-based projects | `@typescript-eslint/eslint-plugin`, `@typescript-eslint/parser` |
-| `eslint-common.json`       | non-react common projects | `eslint`, `eslint-config-prettier`, `eslint-plugin-import`, `eslint-plugin-prettier`, `eslint-plugin-scanjs-rules`, `eslint-plugin-security`, all from `eslint-ts-overrides.json` |
-| `eslint-common-react.json` | react-based projects      | all from `eslint-common.json` and `eslint-ts-overrides.json`, and `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y` |
-| `eslint-common-node.json`  | node-based projects       | all from `eslint-common.json`, `eslint-plugin-node` |
+| Configuration file           | Used for                  | Dependencies |
+|---                           |---                        |---|
+| `eslint-ts-overrides.json`   | TypeScript-based projects | `@typescript-eslint/eslint-plugin`, `@typescript-eslint/parser` |
+| `eslint-common.json`         | non-react common projects | `eslint`, `eslint-config-prettier`, `eslint-plugin-import`, `eslint-plugin-prettier`, `eslint-plugin-scanjs-rules`, `eslint-plugin-security` |
+| `eslint-common-react.json`   | react-based projects      | all from `eslint-common.json` and `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y` |
+| `eslint-common-node.json`    | node-based projects       | all from `eslint-common.json`, `eslint-plugin-node` |
+| `eslint-common-cypress.json` | Cypress subprojects       | `eslint`, `eslint-plugin-cypress`, `eslint-plugin-chai-friendly` |
 
 
 ### TypeScript
