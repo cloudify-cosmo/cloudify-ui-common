@@ -4,6 +4,5 @@ dist
 node_modules
 coverage
 typings
-cypress/*/*.js
-cypress/*/*.d.ts
-cypress/*/*.map
+cypress/plugins
+cypress/support
