@@ -1,10 +1,11 @@
 {
+    "exclude": ["plugins", "support"],
     "extends": "../configs/tsconfig.composite.json",
     "compilerOptions": {
         "allowJs": false,
-        "checkJs": false,
         "emitDeclarationOnly": false,
         "module": "CommonJS",
+        "outDir": ".",
         "types": [
             "cypress",
             "node"
