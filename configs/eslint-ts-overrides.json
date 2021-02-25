@@ -53,6 +53,7 @@
                 "jsdoc/require-param-type": "off",
                 "@typescript-eslint/no-unused-vars": "off",
                 "@typescript-eslint/no-use-before-define": "off",
+                "react/jsx-no-undef": "off",
 
                 /**
                  * NOTE: Default props for functional components are to be deprecated (https://github.com/reactjs/rfcs/pull/107)
