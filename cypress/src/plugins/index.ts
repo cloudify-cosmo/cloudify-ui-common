@@ -22,8 +22,9 @@ import coverageTask from '@cypress/code-coverage/task';
 const setupPluginsAndConfig: Cypress.PluginConfig = (on, config) => {
     coverageTask(on, config);
 
-    if (process.env.MANAGER_IP) {
-        config.baseUrl = `http://${process.env.MANAGER_IP}`;
+    const { MANAGER_IP, MANAGER_PROTOCOL } = process.env;
+    if (MANAGER_IP) {
+        config.baseUrl = `${MANAGER_PROTOCOL ?? 'http'}://${MANAGER_IP}`;
     }
 
     console.info(`Testing on: ${config.baseUrl}`);
