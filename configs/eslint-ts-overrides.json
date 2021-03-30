@@ -23,7 +23,11 @@
             { "functions": false, "classes": true, "variables": true }
         ],
 
-        "@typescript-eslint/no-empty-function": "off"
+        "@typescript-eslint/no-empty-function": "off",
+
+        // See https://github.com/typescript-eslint/typescript-eslint/issues/2483
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": "error"
     },
     "settings": {
         "import/resolver": {
@@ -51,7 +55,15 @@
                 // NOTE: covered by TypeScript
                 "jsdoc/require-returns-type": "off",
                 "jsdoc/require-param-type": "off",
-                "@typescript-eslint/no-unused-vars": "off"
+                "@typescript-eslint/no-unused-vars": "off",
+                "@typescript-eslint/no-use-before-define": "off",
+                "react/jsx-no-undef": "off",
+
+                /**
+                 * NOTE: Default props for functional components are to be deprecated (https://github.com/reactjs/rfcs/pull/107)
+                 * and are optional for class components due to TypeScript
+                 */
+                "react/require-default-props": "off"
             }
         }
     ]
