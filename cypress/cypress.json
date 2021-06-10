@@ -6,7 +6,7 @@
     "supportFile": "test/cypress/support/index.ts",
     "pluginsFile": "test/cypress/plugins/index.ts",
 
-    "defaultCommandTimeout": 90000,
+    "defaultCommandTimeout": 15000,
     "video": true,
     "reporter": "junit",
     "reporterOptions": {
@@ -14,10 +14,5 @@
         "testCaseSwitchClassnameAndName": true
     },
     "videoUploadOnPasses": false,
-    "watchForFileChanges": false,
-
-    "retries": {
-        "runMode": 2,
-        "openMode": 0
-    }
+    "watchForFileChanges": false
 }
