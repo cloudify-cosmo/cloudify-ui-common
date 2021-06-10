@@ -1,14 +1,24 @@
 #!/usr/bin/env bash
-set -e
 
-git diff --exit-code ./src/README.md
-EXIT_CODE=$?
+checkReadmeFile() {
+    NPM_SCRIPT_SUFFIX=$1
+    README_DIRECTORY=$2
+    DOCS_CONFIG_FILE=$3
 
-if [ "$EXIT_CODE" != "0" ]; then
-  echo "ERROR: JS API documentation not up-to-date with the source code. Follow these steps:"
-  echo " - verify if 'documentation.yml' configuration is up-to-date with the 'src' folder content,"
-  echo " - run 'npm run docs',"
-  echo " - check output 'src/README.md' file,"
-  echo " - commit updated 'src/README.md' file."
-  exit 1
-fi;
+    git diff --exit-code "./${README_DIRECTORY}/README.md"
+    EXIT_CODE=$?
+
+    if [ "$EXIT_CODE" != "0" ]; then
+        echo "ERROR: JS ${NPM_SCRIPT_SUFFIX} API documentation not up-to-date with the source code. Follow these steps:"
+        echo " - verify if '${DOCS_CONFIG_FILE}' configuration file is up-to-date with '${README_DIRECTORY}' folder content,"
+        echo " - run 'npm run docs:${NPM_SCRIPT_SUFFIX}',"
+        echo " - check and commit updated README.md file."
+    fi
+
+    return $EXIT_CODE
+}
+
+checkReadmeFile "frontend" "src" "documentation.yml"; FRONTEND_CHECK_EXIT_CODE=$?
+checkReadmeFile "backend" "backend" "backend/documentation.yml"; BACKEND_CHECK_EXIT_CODE=$?
+
+! (( $FRONTEND_CHECK_EXIT_CODE || $BACKEND_CHECK_EXIT_CODE ))
