@@ -43,7 +43,7 @@
         "docs:backend": "cd backend && documentation build index.js -c documentation.yml -f md > README.md",
         "generate-type-declarations": "tsc -p src --checkJs false && tsc -p backend --checkJs false",
         "lint": "npm run lint:code",
-        "lint:code": "eslint --cache --ignore-path .gitignore --max-warnings 10 .",
+        "lint:code": "eslint --cache --ignore-path .gitignore .",
         "lint:docs": "documentation lint src/index.js && documentation lint backend/index.js",
         "publish:major": "bash ci/publish-version.sh major",
         "publish:minor": "bash ci/publish-version.sh minor",
