@@ -76,16 +76,16 @@ describe('logger', () => {
 
         /* eslint-disable no-console */
         logger.info({});
-        expect(console.log).toHaveBeenLastCalledWith(expect.stringMatching('{}'));
+        expect(console.log).toHaveBeenLastCalledWith(expect.stringContaining('{}'));
 
         logger.info({ a: 'b' });
-        expect(console.log).toHaveBeenLastCalledWith(expect.stringMatching('{"a":"b"}'));
+        expect(console.log).toHaveBeenLastCalledWith(expect.stringContaining('{"a":"b"}'));
 
         logger.info([1, 'a', { b: 'c' }, true]);
-        expect(console.log).toHaveBeenLastCalledWith(expect.stringMatching('[1,"a",{"a":"b"},true]'));
+        expect(console.log).toHaveBeenLastCalledWith(expect.stringContaining('[1,"a",{"b":"c"},true]'));
 
         logger.info(new Set());
-        expect(console.log).toHaveBeenLastCalledWith(expect.stringMatching('[object Set]'));
+        expect(console.log).toHaveBeenLastCalledWith(expect.stringContaining('[object Set]'));
         /* eslint-enable no-console */
     });
 });
