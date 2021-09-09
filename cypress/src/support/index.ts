@@ -28,10 +28,7 @@ const commands = {
         cy
             .request({
                 method: 'GET',
-                url: '/console/sp',
-                qs: {
-                    su: '/tokens'
-                },
+                url: '/console/sp/tokens',
                 headers: {
                     Authorization: `Basic ${btoa('admin:admin')}`,
                     'Content-Type': 'application/json'
