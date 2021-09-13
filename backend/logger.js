@@ -96,6 +96,10 @@ function initLogging(config, defaultMaxListeners = 30) {
      * @returns {Object} winston logger instance
      */
     function getLogger(category) {
+        if (winston.loggers.has(category)) {
+            return winston.loggers.get(category);
+        }
+
         const logger = winston.loggers.add(category, {
             level,
             transports,

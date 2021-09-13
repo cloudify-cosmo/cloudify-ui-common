@@ -108,4 +108,12 @@ describe('logger', () => {
         logger.info(bigInt);
         expect(console.log).toHaveBeenLastCalledWith(expect.stringContaining('<NotParsable>'));
     });
+
+    it('should have consistent instances when obtained multiple times', () => {
+        const loggerFactory = initLogging(commonConfig);
+        const loggingFunction = loggerFactory.getLogger('sample').info;
+        const loggingFunctionSameLoggerDifferentGet = loggerFactory.getLogger('sample').info;
+
+        expect(loggingFunction).toBe(loggingFunctionSameLoggerDifferentGet);
+    });
 });
