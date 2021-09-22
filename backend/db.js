@@ -40,14 +40,14 @@ function addHooks(sequelize, restart) {
  * @param {string | Array} dbConfig.url DB connection URL or an array of URLs
  * @param {Object} dbConfig.options DB connection options
  * @param {Object} loggerFactory object containing `getLogger` function
- * @param {(function(Sequelize, Sequelize.DataTypes): Sequelize.Model)[]} models array of functions returning sequelize model
+ * @param {(function(Sequelize, Sequelize.DataTypes): Sequelize.Model)[]} modelFactories array of factory functions returning sequelize model
  */
-function DbInitializer(dbConfig, loggerFactory, models) {
+function DbInitializer(dbConfig, loggerFactory, modelFactories) {
     const logger = loggerFactory.getLogger('DBConnection');
 
     function addModels(sequelize) {
-        models.forEach(getModel => {
-            const model = getModel(sequelize, Sequelize.DataTypes);
+        modelFactories.forEach(modelFactory => {
+            const model = modelFactory(sequelize, Sequelize.DataTypes);
             db[model.name] = model;
         });
     }
