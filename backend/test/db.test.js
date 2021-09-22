@@ -14,10 +14,10 @@ fs.readFileSync.mockImplementation(_.constant(fileContent));
 
 describe('db init', () => {
     const model = { name: 'modelName' };
+    const models = [() => model];
 
     function mockSequelize() {
         const sequelizeMock = {
-            import: _.constant(model),
             afterDisconnect: jest.fn(),
             beforeQuery: jest.fn(),
             close: jest.fn(),
@@ -58,7 +58,7 @@ describe('db init', () => {
         const initializer = new DbInitializer(
             getOptions('postgres://url', { cert: 'certPath', ca: 'caPath' }),
             logger,
-            '.'
+            models
         );
         return initializer.init().then(() => {
             expect(sequelizeMock.beforeQuery).toHaveBeenCalled();
@@ -83,7 +83,7 @@ describe('db init', () => {
 
     it('should handle string url and connection success', () => {
         const sequelizeMock = mockSequelize();
-        const initializer = new DbInitializer(getOptions('postgres://url', { ca: 'caPath' }), mockLogger(), '.');
+        const initializer = new DbInitializer(getOptions('postgres://url', { ca: 'caPath' }), mockLogger(), models);
         return initializer.init().then(() => {
             expect(sequelizeMock.beforeQuery).toHaveBeenCalled();
             expect(sequelizeMock.afterDisconnect).toHaveBeenCalled();
@@ -93,7 +93,7 @@ describe('db init', () => {
 
     it('should restart after disconnection', () => {
         const sequelizeMock = mockSequelize();
-        const initializer = new DbInitializer(getOptions('postgres://url', { ca: 'caPath' }), mockLogger(), '.');
+        const initializer = new DbInitializer(getOptions('postgres://url', { ca: 'caPath' }), mockLogger(), models);
         return initializer
             .init()
             .then(() => {
@@ -109,7 +109,7 @@ describe('db init', () => {
 
     it('should restart when PG is in recovery', () => {
         const sequelizeMock = mockSequelize();
-        const initializer = new DbInitializer(getOptions('postgres://url', { ca: 'caPath' }), mockLogger(), '.');
+        const initializer = new DbInitializer(getOptions('postgres://url', { ca: 'caPath' }), mockLogger(), models);
         return initializer
             .init()
             .then(() => {
@@ -133,7 +133,7 @@ describe('db init', () => {
     it('should handle array of URLs', () => {
         const sequelizeMock = mockSequelize();
         const url = 'postgres://url';
-        const initializer = new DbInitializer(getOptions([url], { ca: 'caPath' }), mockLogger(), '.');
+        const initializer = new DbInitializer(getOptions([url], { ca: 'caPath' }), mockLogger(), models);
         request.mockImplementationOnce((options, handler) => handler(true));
         request.mockImplementationOnce((options, handler) => handler(false, { statusCode: 200 }));
         return initializer.init().then(() => {

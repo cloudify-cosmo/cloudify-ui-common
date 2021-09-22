@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const fs = require('fs');
-const path = require('path');
 const request = require('request');
 const Sequelize = require('sequelize');
 
@@ -41,21 +40,15 @@ function addHooks(sequelize, restart) {
  * @param {string | Array} dbConfig.url DB connection URL or an array of URLs
  * @param {Object} dbConfig.options DB connection options
  * @param {Object} loggerFactory object containing `getLogger` function
- * @param {(function(Sequelize, Sequelize.DataTypes): Sequelize.Model)[]} modelFns array of functions returning sequelize model
+ * @param {(function(Sequelize, Sequelize.DataTypes): Sequelize.Model)[]} models array of functions returning sequelize model
  */
-function DbInitializer(dbConfig, loggerFactory, modelFns) {
+function DbInitializer(dbConfig, loggerFactory, models) {
     const logger = loggerFactory.getLogger('DBConnection');
 
-    function getModelName(model) {
-        const modelTableName = model.getTableName();
-        return typeof modelTableName === 'string' ? modelTableName : modelTableName.tableName;
-    }
-
     function addModels(sequelize) {
-        modelFns.forEach(modelFn => {
-            const model = modelFn(sequelize, Sequelize.DataTypes);
-            const name = getModelName(model);
-            db[name] = model;
+        models.forEach(getModel => {
+            const model = getModel(sequelize, Sequelize.DataTypes);
+            db[model.name] = model;
         });
     }
 

@@ -32,7 +32,7 @@ Constructs new object containing `init` function and `db` object
     *   `dbConfig.url` **([string][16] | [Array][17])** DB connection URL or an array of URLs
     *   `dbConfig.options` **[Object][15]** DB connection options
 *   `loggerFactory` **[Object][15]** object containing `getLogger` function
-*   `modelFns` **[Array][17]<(function (Sequelize, Sequelize.DataTypes): Sequelize.Model)>** array of functions returning sequelize model
+*   `models` **[Array][17]<(function (Sequelize, Sequelize.DataTypes): Sequelize.Model)>** array of functions returning sequelize model
 
 ### init
 
