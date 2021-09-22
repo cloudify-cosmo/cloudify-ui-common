@@ -32,9 +32,7 @@ Constructs new object containing `init` function and `db` object
     *   `dbConfig.url` **([string][16] | [Array][17])** DB connection URL or an array of URLs
     *   `dbConfig.options` **[Object][15]** DB connection options
 *   `loggerFactory` **[Object][15]** object containing `getLogger` function
-*   `modelsDir` **[string][16]** directory for models lookup
-*   `modelExcludes` **[Array][17]** list of files to be excluded from model definitions discovered by reading models
-    directory as specified by `modelsDir` argument (optional, default `[]`)
+*   `modelFns` **[Array][17]<(function (Sequelize, Sequelize.DataTypes): Sequelize.Model)>** array of functions returning sequelize model
 
 ### init
 

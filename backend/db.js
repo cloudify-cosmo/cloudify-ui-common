@@ -41,22 +41,22 @@ function addHooks(sequelize, restart) {
  * @param {string | Array} dbConfig.url DB connection URL or an array of URLs
  * @param {Object} dbConfig.options DB connection options
  * @param {Object} loggerFactory object containing `getLogger` function
- * @param {string} modelsDir directory for models lookup
- * @param {Array} modelExcludes list of files to be excluded from model definitions discovered by reading models
- * directory as specified by `modelsDir` argument
+ * @param {(function(Sequelize, Sequelize.DataTypes): Sequelize.Model)[]} modelFns array of functions returning sequelize model
  */
-function DbInitializer(dbConfig, loggerFactory, modelsDir, modelExcludes = []) {
+function DbInitializer(dbConfig, loggerFactory, modelFns) {
     const logger = loggerFactory.getLogger('DBConnection');
 
-    function addModels(sequelize) {
-        const excludes = ['.', ...modelExcludes];
+    function getModelName(model) {
+        const modelTableName = model.getTableName();
+        return typeof modelTableName === 'string' ? modelTableName : modelTableName.tableName;
+    }
 
-        fs.readdirSync(modelsDir)
-            .filter(file => _.indexOf(excludes, file) < 0)
-            .forEach(file => {
-                const model = sequelize.import(path.join(modelsDir, file));
-                db[model.name] = model;
-            });
+    function addModels(sequelize) {
+        modelFns.forEach(modelFn => {
+            const model = modelFn(sequelize, Sequelize.DataTypes);
+            const name = getModelName(model);
+            db[name] = model;
+        });
     }
 
     function getDbOptions(configOptions) {
