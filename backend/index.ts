@@ -1,3 +1,3 @@
-module.exports.DbInitializer = require('./db');
-module.exports.initLogging = require('./logger');
-module.exports.runMigration = require('./migration');
+export { default as getDbModule } from './db';
+export { default as initLogging } from './logger';
+export { default as runMigration } from './migration';

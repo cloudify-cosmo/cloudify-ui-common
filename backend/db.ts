@@ -1,31 +1,38 @@
-const _ = require('lodash');
-const fs = require('fs');
-const request = require('request');
-const Sequelize = require('sequelize');
+import _ from 'lodash';
+import fs from 'fs';
+import request from 'request';
+import { DataTypes, Model, Options, Sequelize, QueryTypes, QueryOptionsWithType } from 'sequelize';
+
+import type { LoggerFactory } from './logger';
+
+type Db = { sequelize?: Sequelize } & Record<string, Model>;
+type RestartFunction = (reason: string) => void;
+export type DbModule = { db: Db; init: () => Promise<void> };
 
 /**
  * Once initialized this object contains `sequelize` instance as well as all DB models, keyed by model name.
  */
-const db = {};
+const db: Db = {};
 
-function wait(seconds) {
+function wait(seconds: number) {
     return new Promise(resolve => setTimeout(resolve, 1000 * seconds));
 }
 
-function addHooks(sequelize, restart) {
-    sequelize.afterDisconnect(async ({ _invalid: unexpectedDisconnection }) => {
+function addHooks(sequelize: Sequelize, restart: RestartFunction) {
+    sequelize.afterDisconnect(async ({ _invalid: unexpectedDisconnection }: { _invalid: boolean }) => {
         if (unexpectedDisconnection) {
             restart('Unexpected disconnection occured.');
         }
     });
 
-    sequelize.beforeQuery(async ({ isRecoveryCheck }) => {
+    sequelize.beforeQuery(async ({ isRecoveryCheck }: { isRecoveryCheck: boolean }) => {
         if (!isRecoveryCheck) {
+            // eslint-disable-next-line camelcase
             const result = await sequelize.query('SELECT pg_is_in_recovery();', {
                 plain: true,
-                type: Sequelize.QueryTypes.SELECT,
+                type: QueryTypes.SELECT,
                 isRecoveryCheck: true
-            });
+            } as QueryOptionsWithType<QueryTypes.SELECT>);
             if (result && result.pg_is_in_recovery) {
                 restart('DB is in recovery.');
             }
@@ -41,26 +48,34 @@ function addHooks(sequelize, restart) {
  * @param {Object} dbConfig.options DB connection options
  * @param {Object} loggerFactory object containing `getLogger` function
  * @param {(function(Sequelize, Sequelize.DataTypes): Sequelize.Model)[]} modelFactories array of factory functions returning sequelize model
+ *
+ * @returns {DbModule} DB module
  */
-function DbInitializer(dbConfig, loggerFactory, modelFactories) {
+function getDbModule(
+    dbConfig: { url: string | string[]; options: Pick<Options, 'dialectOptions'> },
+    loggerFactory: LoggerFactory,
+    modelFactories: ((sequelize: Sequelize, dataTypes: typeof DataTypes) => Model)[]
+): DbModule {
     const logger = loggerFactory.getLogger('DBConnection');
 
-    function addModels(sequelize) {
+    function addModels(sequelize: Sequelize) {
         modelFactories.forEach(modelFactory => {
-            const model = modelFactory(sequelize, Sequelize.DataTypes);
+            const model = modelFactory(sequelize, DataTypes);
             db[model.name] = model;
         });
     }
 
-    function getDbOptions(configOptions) {
+    function getDbOptions(configOptions: {
+        dialectOptions?: { ssl?: { ca: string; cert: string; key: string } };
+    }): Options {
         const options = _.merge(
             {
-                logging: (message /* , sequelize */) => logger.debug(message)
+                logging: (message: string) => logger.debug(message)
             },
             configOptions
         );
 
-        if (options.dialectOptions.ssl) {
+        if (options.dialectOptions?.ssl) {
             options.dialectOptions.ssl.ca = fs.readFileSync(options.dialectOptions.ssl.ca, { encoding: 'utf8' });
             if (options.dialectOptions.ssl.cert) {
                 // If the cert is provided, the key will also be provided by the installer.
@@ -75,10 +90,10 @@ function DbInitializer(dbConfig, loggerFactory, modelFactories) {
     }
 
     async function selectDbUrl() {
-        function getHostname(dbUrl) {
+        function getHostname(dbUrl: string) {
             return new URL(dbUrl).hostname;
         }
-        function isResponding(url) {
+        function isResponding(url: string) {
             const patroniUrl = `https://${getHostname(url)}:8008`;
             return new Promise(resolve =>
                 request(
@@ -97,7 +112,7 @@ function DbInitializer(dbConfig, loggerFactory, modelFactories) {
                 )
             );
         }
-        async function findRespondingHost(urls) {
+        async function findRespondingHost(urls: string[]) {
             let respondingHost = null;
 
             /* eslint-disable no-await-in-loop */
@@ -142,7 +157,7 @@ function DbInitializer(dbConfig, loggerFactory, modelFactories) {
         return selectedDbUrl;
     }
 
-    async function connect(sequelize, restart) {
+    async function connect(sequelize: Sequelize, restart: RestartFunction) {
         try {
             await sequelize.authenticate();
             logger.info('DB connection has been established successfully.');
@@ -158,14 +173,14 @@ function DbInitializer(dbConfig, loggerFactory, modelFactories) {
      * @returns {Promise<void>} promise resolving once connection is established
      */
     async function init() {
-        const { options, url } = dbConfig;
+        const { options } = dbConfig;
         const dbOptions = getDbOptions(options);
-        const dbUrl = await selectDbUrl(url);
+        const dbUrl = await selectDbUrl();
         const sequelize = new Sequelize(dbUrl, dbOptions);
         db.sequelize = sequelize;
 
         let isRestarting = false;
-        async function restart(reason) {
+        async function restart(reason: string) {
             if (!isRestarting) {
                 isRestarting = true;
                 logger.info(reason);
@@ -182,7 +197,7 @@ function DbInitializer(dbConfig, loggerFactory, modelFactories) {
         await connect(sequelize, restart);
     }
 
-    Object.assign(this, { init, db });
+    return { init, db };
 }
 
-module.exports = DbInitializer;
+export default getDbModule;

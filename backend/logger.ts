@@ -1,13 +1,19 @@
-const winston = require('winston');
-const _ = require('lodash');
-const fs = require('fs');
-const events = require('events');
+import winston from 'winston';
+import _ from 'lodash';
+import fs from 'fs';
+import events from 'events';
 
-function getArgsSupportedLogger(logger) {
+type ArgsSupportedLogger =
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Record<'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly' | 'log', (...args: any[]) => winston.Logger>;
+export type LoggerFactory = { getLogger: (category: string) => ArgsSupportedLogger; logErrorsOnly: () => void };
+
+function getArgsSupportedLogger(logger: winston.Logger): ArgsSupportedLogger {
     // This is workaround for no support for multi-arguments logging, e.g.: logger.info('Part 1', 'Part 2')
     // See: https://github.com/winstonjs/winston/issues/1614
-    const wrapper = original => {
-        return (...args) => {
+    const wrapper = (original: winston.LeveledLogMethod) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return (...args: any[]) => {
             for (let index = 0; index < args.length; index += 1) {
                 if (args[index] instanceof Error) {
                     args[index] = args[index].stack;
@@ -20,7 +26,7 @@ function getArgsSupportedLogger(logger) {
                     }
                 }
             }
-            original(args.join(' '));
+            return original(args.join(' '));
         };
     };
 
@@ -49,7 +55,10 @@ function getArgsSupportedLogger(logger) {
  * EventEmitter.defaultMaxListeners, should be set to at least the number of logging categories to be used, defaults to 30
  * @returns {Object} object containing `getLogger` and `logErrorsOnly` functions
  */
-function initLogging(config, defaultMaxListeners = 30) {
+function initLogging(
+    config: { logLevelConf?: string; logLevel?: string; logsFile?: string; errorsFile?: string; serviceName?: string },
+    defaultMaxListeners = 30
+): LoggerFactory {
     events.EventEmitter.defaultMaxListeners = defaultMaxListeners;
 
     /*
@@ -58,7 +67,7 @@ function initLogging(config, defaultMaxListeners = 30) {
      */
     function getLevelFromLoggingConf() {
         try {
-            return _.chain(fs.readFileSync(config.logLevelConf))
+            return _.chain(fs.readFileSync(config.logLevelConf as string))
                 .split('\n')
                 .map(_.trim)
                 .filter(fileEntry => !fileEntry.startsWith('#'))
@@ -95,7 +104,7 @@ function initLogging(config, defaultMaxListeners = 30) {
      * @param {string} category category
      * @returns {Object} winston logger instance
      */
-    function getLogger(category) {
+    function getLogger(category: string): ArgsSupportedLogger {
         if (winston.loggers.has(category)) {
             return winston.loggers.get(category);
         }
@@ -128,4 +137,4 @@ function initLogging(config, defaultMaxListeners = 30) {
     };
 }
 
-module.exports = initLogging;
+export default initLogging;
