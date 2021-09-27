@@ -3,9 +3,14 @@
     "fixturesFolder": "test/cypress/fixtures",
     "screenshotsFolder": "test/cypress/screenshots",
     "videosFolder": "test/cypress/videos",
+    "componentFolder": "test/cypress/components",
     "supportFile": "test/cypress/support/index.ts",
     "pluginsFile": "test/cypress/plugins/index.ts",
-
+    "testFiles": "**/*_spec.{ts,tsx}",
+    "component": {
+        "viewportWidth": 1600,
+        "viewportHeight": 900
+    },
     "defaultCommandTimeout": 15000,
     "video": true,
     "reporter": "junit",
@@ -14,5 +19,7 @@
         "testCaseSwitchClassnameAndName": true
     },
     "videoUploadOnPasses": false,
-    "watchForFileChanges": false
+    "watchForFileChanges": false,
+
+    "nodeVersion": "system"
 }
