@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const fs = require('fs');
-const path = require('path');
 const request = require('request');
 const Sequelize = require('sequelize');
 
@@ -41,22 +40,16 @@ function addHooks(sequelize, restart) {
  * @param {string | Array} dbConfig.url DB connection URL or an array of URLs
  * @param {Object} dbConfig.options DB connection options
  * @param {Object} loggerFactory object containing `getLogger` function
- * @param {string} modelsDir directory for models lookup
- * @param {Array} modelExcludes list of files to be excluded from model definitions discovered by reading models
- * directory as specified by `modelsDir` argument
+ * @param {(function(Sequelize, Sequelize.DataTypes): Sequelize.Model)[]} modelFactories array of factory functions returning sequelize model
  */
-function DbInitializer(dbConfig, loggerFactory, modelsDir, modelExcludes = []) {
+function DbInitializer(dbConfig, loggerFactory, modelFactories) {
     const logger = loggerFactory.getLogger('DBConnection');
 
     function addModels(sequelize) {
-        const excludes = ['.', ...modelExcludes];
-
-        fs.readdirSync(modelsDir)
-            .filter(file => _.indexOf(excludes, file) < 0)
-            .forEach(file => {
-                const model = sequelize.import(path.join(modelsDir, file));
-                db[model.name] = model;
-            });
+        modelFactories.forEach(modelFactory => {
+            const model = modelFactory(sequelize, Sequelize.DataTypes);
+            db[model.name] = model;
+        });
     }
 
     function getDbOptions(configOptions) {
