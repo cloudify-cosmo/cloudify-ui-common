@@ -9,7 +9,7 @@ jest.mock('fs');
 jest.mock('request');
 
 const fileContent = 'fileContent';
-(<jest.Mock>fs.readdirSync).mockImplementation(_.constant(fileContent));
+(<jest.Mock>fs.readFileSync).mockImplementation(_.constant(fileContent));
 
 describe('db init', () => {
     const model = { name: 'modelName' };
