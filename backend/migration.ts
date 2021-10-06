@@ -69,9 +69,13 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
         function logUmzugEvent(eventName: string) {
             return (name: string /* , migration */) => logger.info(`${name} ${eventName}`);
         }
+        // @ts-ignore There are no typings available for Umzug v1 and there is no `on` method in Umzug >v1
         (<Umzug>umzug).on('migrating', logUmzugEvent('migrating'));
+        // @ts-ignore There are no typings available for Umzug v1 and there is no `on` method in Umzug >v1
         (<Umzug>umzug).on('migrated', logUmzugEvent('migrated'));
+        // @ts-ignore There are no typings available for Umzug v1 and there is no `on` method in Umzug >v1
         (<Umzug>umzug).on('reverting', logUmzugEvent('reverting'));
+        // @ts-ignore There are no typings available for Umzug v1 and there is no `on` method in Umzug >v1
         (<Umzug>umzug).on('reverted', logUmzugEvent('reverted'));
     }
 
