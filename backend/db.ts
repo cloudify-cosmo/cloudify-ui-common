@@ -19,20 +19,25 @@ function wait(seconds: number) {
 }
 
 function addHooks(sequelize: Sequelize, restart: RestartFunction) {
-    sequelize.afterDisconnect(async ({ _invalid: unexpectedDisconnection }: { _invalid: boolean }) => {
+    // @ts-ignore afterDisconnect is static method
+    sequelize.afterDisconnect(async (connection: unknown) => {
+        const { _invalid: unexpectedDisconnection } = connection as { _invalid: boolean };
         if (unexpectedDisconnection) {
             restart('Unexpected disconnection occured.');
         }
     });
 
+    // @ts-ignore beforeQuery is not included in TypeScript declaration for sequelize,
+    // See: https://github.com/sequelize/sequelize/issues/11441
     sequelize.beforeQuery(async ({ isRecoveryCheck }: { isRecoveryCheck: boolean }) => {
+        // eslint-disable-next-line camelcase
+        type PgIsInRecoveryQueryResponse = { pg_is_in_recovery: boolean };
         if (!isRecoveryCheck) {
-            // eslint-disable-next-line camelcase
-            const result = await sequelize.query('SELECT pg_is_in_recovery();', {
+            const result = (await sequelize.query('SELECT pg_is_in_recovery();', {
                 plain: true,
                 type: QueryTypes.SELECT,
                 isRecoveryCheck: true
-            } as QueryOptionsWithType<QueryTypes.SELECT>);
+            } as QueryOptionsWithType<QueryTypes.SELECT> & { plain: true })) as PgIsInRecoveryQueryResponse;
             if (result && result.pg_is_in_recovery) {
                 restart('DB is in recovery.');
             }
@@ -46,8 +51,8 @@ function addHooks(sequelize: Sequelize, restart: RestartFunction) {
  * @param {Object} dbConfig DB configuration object
  * @param {string | Array} dbConfig.url DB connection URL or an array of URLs
  * @param {Object} dbConfig.options DB connection options
- * @param {Object} loggerFactory object containing `getLogger` function
- * @param {(function(Sequelize, Sequelize.DataTypes): Sequelize.Model)[]} modelFactories array of factory functions returning sequelize model
+ * @param {LoggerFactory} loggerFactory object containing `getLogger` function
+ * @param {((sequelize: Sequelize, dataTypes: typeof DataTypes) => Model)[]} modelFactories array of factory functions returning sequelize model
  *
  * @returns {DbModule} DB module
  */
@@ -61,6 +66,7 @@ function getDbModule(
     function addModels(sequelize: Sequelize) {
         modelFactories.forEach(modelFactory => {
             const model = modelFactory(sequelize, DataTypes);
+            // @ts-ignore Typings for sequelize are missing name in Model instance
             db[model.name] = model;
         });
     }
