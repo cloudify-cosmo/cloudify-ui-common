@@ -3,9 +3,10 @@ import _ from 'lodash';
 import fs from 'fs';
 import events from 'events';
 
-type ArgsSupportedLogger =
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Record<'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly' | 'log', (...args: any[]) => winston.Logger>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type LoggerArgs = any[];
+type ArgsSupportedLogger = winston.Logger &
+    Record<'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly' | 'log', (...args: LoggerArgs) => winston.Logger>;
 export type LoggerFactory = { getLogger: (category: string) => ArgsSupportedLogger; logErrorsOnly: () => void };
 
 function getArgsSupportedLogger(logger: winston.Logger): ArgsSupportedLogger {
@@ -13,7 +14,7 @@ function getArgsSupportedLogger(logger: winston.Logger): ArgsSupportedLogger {
     // See: https://github.com/winstonjs/winston/issues/1614
     const wrapper = (original: winston.LeveledLogMethod) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return (...args: any[]) => {
+        return (...args: LoggerArgs) => {
             for (let index = 0; index < args.length; index += 1) {
                 if (args[index] instanceof Error) {
                     args[index] = args[index].stack;
@@ -41,24 +42,23 @@ function getArgsSupportedLogger(logger: winston.Logger): ArgsSupportedLogger {
     return logger;
 }
 
+type LoggerConfig = {
+    logLevelConf?: string;
+    logLevel?: string;
+    logsFile?: string;
+    errorsFile?: string;
+    serviceName?: string;
+};
 /**
  * Initializes logging framework according to the given config
  *
- * @param {Object} config configuration object
- * @param {string} config.logLevelConf path to manager's logging.conf file
- * @param {string} config.logLevel default log level to be used when `logLevelConf` is not set, file defined by
- * `logLevelConf` does not exist, or the file exists but contains no entry for the given `serviceName`
- * @param {string} config.logsFile path to main log file
- * @param {string} config.errorsFile path to errors log file
- * @param {string} config.serviceName service name to look for in file specified by `logLevelConf
+ * @param {LoggerConfig} config configuration object
  * @param {number} defaultMaxListeners optional number of default event listeners to be assigned to
  * EventEmitter.defaultMaxListeners, should be set to at least the number of logging categories to be used, defaults to 30
- * @returns {Object} object containing `getLogger` and `logErrorsOnly` functions
+ *
+ * @returns {LoggerFactory} object containing `getLogger` and `logErrorsOnly` functions
  */
-function initLogging(
-    config: { logLevelConf?: string; logLevel?: string; logsFile?: string; errorsFile?: string; serviceName?: string },
-    defaultMaxListeners = 30
-): LoggerFactory {
+function initLogging(config: LoggerConfig, defaultMaxListeners = 30): LoggerFactory {
     events.EventEmitter.defaultMaxListeners = defaultMaxListeners;
 
     /*
