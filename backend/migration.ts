@@ -30,6 +30,7 @@ function getArg(n: number) {
 function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
     const { db, init } = dbModule;
 
+    const migrationFileExtension = '.ts';
     const command = getArg(0);
     if (command === 'current') loggerFactory.logErrorsOnly();
     const logger = loggerFactory.getLogger('DBMigration');
@@ -58,7 +59,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
                     }
                 ],
                 path: './migrations',
-                pattern: /\.ts$/
+                pattern: RegExp(`${migrationFileExtension}$`)
             },
 
             logging(...args: string[]) {
@@ -96,8 +97,8 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
             .then(res => {
                 let { executed, pending }: Result = res;
 
-                executed = executed.map(m => ({ ...m, name: path.basename(m.file, '.ts') }));
-                pending = pending.map(m => ({ ...m, name: path.basename(m.file, '.ts') }));
+                executed = executed.map(m => ({ ...m, name: path.basename(m.file, migrationFileExtension) }));
+                pending = pending.map(m => ({ ...m, name: path.basename(m.file, migrationFileExtension) }));
 
                 const current = getCurrent(executed);
                 const status = {
