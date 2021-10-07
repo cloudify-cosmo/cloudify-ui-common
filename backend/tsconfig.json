@@ -1,8 +1,13 @@
 {
+    "exclude": ["test"],
     "extends": "../configs/tsconfig.composite.json",
     "compilerOptions": {
+        "target": "es2019",
+        "allowJs": false,
+        "emitDeclarationOnly": false,
         "module": "CommonJS",
-        "declarationDir": "./typings"
+        "outDir": "./",
+        "declarationDir": "./"
     },
-    "exclude": ["./test", "./typings"]
+
 }
