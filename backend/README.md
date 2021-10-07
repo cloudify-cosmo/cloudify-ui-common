@@ -3,7 +3,7 @@
 ### Table of Contents
 
 *   [Database][1]
-    *   [DbInitializer][2]
+    *   [getDbModule][2]
         *   [Parameters][3]
     *   [init][4]
     *   [db][5]
@@ -21,28 +21,29 @@
 
 
 
-### DbInitializer
+### getDbModule
 
 Constructs new object containing `init` function and `db` object
 
 #### Parameters
 
-*   `dbConfig` **[Object][15]** DB configuration object
+*   `dbConfig` **DbConfig** DB configuration object
+*   `loggerFactory` **LoggerFactory** object containing `getLogger` function
+*   `modelFactories` **ModelFactories** array of factory functions returning sequelize model
 
-    *   `dbConfig.url` **([string][16] | [Array][17])** DB connection URL or an array of URLs
-    *   `dbConfig.options` **[Object][15]** DB connection options
-*   `loggerFactory` **[Object][15]** object containing `getLogger` function
-*   `modelFactories` **[Array][17]<(function (Sequelize, Sequelize.DataTypes): Sequelize.Model)>** array of factory functions returning sequelize model
+Returns **DbModule** DB module
 
 ### init
 
 Initializes DB connection
 
-Returns **[Promise][18]\<void>** promise resolving once connection is established
+Returns **[Promise][15]\<void>** promise resolving once connection is established
 
 ### db
 
 Once initialized this object contains `sequelize` instance as well as all DB models, keyed by model name.
+
+Type: Db
 
 ## Logging
 
@@ -54,18 +55,11 @@ Initializes logging framework according to the given config
 
 #### Parameters
 
-*   `config` **[Object][15]** configuration object
-
-    *   `config.logLevelConf` **[string][16]** path to manager's logging.conf file
-    *   `config.logLevel` **[string][16]** default log level to be used when `logLevelConf` is not set, file defined by
-        `logLevelConf` does not exist, or the file exists but contains no entry for the given `serviceName`
-    *   `config.logsFile` **[string][16]** path to main log file
-    *   `config.errorsFile` **[string][16]** path to errors log file
-    *   `config.serviceName` **[string][16]** service name to look for in file specified by \`logLevelConf
-*   `defaultMaxListeners` **[number][19]** optional number of default event listeners to be assigned to
+*   `config` **LoggerConfig** configuration object
+*   `defaultMaxListeners` **[number][16]** optional number of default event listeners to be assigned to
     EventEmitter.defaultMaxListeners, should be set to at least the number of logging categories to be used, defaults to 30 (optional, default `30`)
 
-Returns **[Object][15]** object containing `getLogger` and `logErrorsOnly` functions
+Returns **LoggerFactory** object containing `getLogger` and `logErrorsOnly` functions
 
 ### getLogger
 
@@ -73,9 +67,9 @@ Returns logger for given category
 
 #### Parameters
 
-*   `category` **[string][16]** category
+*   `category` **[string][17]** category
 
-Returns **[Object][15]** winston logger instance
+Returns **[Object][18]** winston logger instance
 
 ### logErrorsOnly
 
@@ -91,12 +85,14 @@ Runs migration script
 
 #### Parameters
 
-*   `loggerFactory` **[Object][15]** initialized logger factory, see [initLogging][7]
-*   `dbModule` **[Object][15]** DB module, an object containing `init` function and `db` object, see [DbInitializer][2]
+*   `loggerFactory` **[Object][18]** initialized logger factory, see [initLogging][7]
+*   `dbModule` **DbModule** DB module, an object containing `init` function and `db` object, see [DbModule][19]
+
+Returns **void** 
 
 [1]: #database
 
-[2]: #dbinitializer
+[2]: #getdbmodule
 
 [3]: #parameters
 
@@ -122,12 +118,12 @@ Runs migration script
 
 [14]: #parameters-3
 
-[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[19]: DbModule
