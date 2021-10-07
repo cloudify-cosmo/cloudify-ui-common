@@ -5,11 +5,11 @@ import events from 'events';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LoggerArgs = any[];
-type ArgsSupportedLogger = winston.Logger &
+export type Logger = winston.Logger &
     Record<'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly' | 'log', (...args: LoggerArgs) => winston.Logger>;
-export type LoggerFactory = { getLogger: (category: string) => ArgsSupportedLogger; logErrorsOnly: () => void };
+export type LoggerFactory = { getLogger: (category: string) => Logger; logErrorsOnly: () => void };
 
-function getArgsSupportedLogger(logger: winston.Logger): ArgsSupportedLogger {
+function getArgsSupportedLogger(logger: winston.Logger): Logger {
     // This is workaround for no support for multi-arguments logging, e.g.: logger.info('Part 1', 'Part 2')
     // See: https://github.com/winstonjs/winston/issues/1614
     const wrapper = (original: winston.LeveledLogMethod) => {
@@ -102,9 +102,10 @@ function initLogging(config: LoggerConfig, defaultMaxListeners = 30): LoggerFact
      * Returns logger for given category
      *
      * @param {string} category category
-     * @returns {Object} winston logger instance
+     *
+     * @returns {Logger} enhanced winston logger instance
      */
-    function getLogger(category: string): ArgsSupportedLogger {
+    function getLogger(category: string): Logger {
         if (winston.loggers.has(category)) {
             return winston.loggers.get(category);
         }

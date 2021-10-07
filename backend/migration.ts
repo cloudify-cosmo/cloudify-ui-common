@@ -2,8 +2,8 @@ import path from 'path';
 import UmzugClass, { Umzug, Migration } from 'umzug';
 import _ from 'lodash';
 import type { Sequelize } from 'sequelize';
-import { LoggerFactory } from './logger';
-import { DbModule } from './db';
+import type { LoggerFactory } from './logger';
+import type { DbModule } from './db';
 
 function onMigrationEnd(exitCode: number) {
     // eslint-disable-next-line no-process-exit

@@ -69,7 +69,7 @@ Returns logger for given category
 
 *   `category` **[string][17]** category
 
-Returns **[Object][18]** winston logger instance
+Returns **Logger** enhanced winston logger instance
 
 ### logErrorsOnly
 
