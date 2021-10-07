@@ -45,22 +45,18 @@ function addHooks(sequelize: Sequelize, restart: RestartFunction) {
     });
 }
 
+export type DbConfig = { url: string | string[]; options: Pick<Options, 'dialectOptions'> };
+export type ModelFactories = ((sequelize: Sequelize, dataTypes: typeof DataTypes) => Model)[];
 /**
  * Constructs new object containing `init` function and `db` object
  *
- * @param {Object} dbConfig DB configuration object
- * @param {string | Array} dbConfig.url DB connection URL or an array of URLs
- * @param {Object} dbConfig.options DB connection options
+ * @param {DbConfig} dbConfig DB configuration object
  * @param {LoggerFactory} loggerFactory object containing `getLogger` function
- * @param {((sequelize: Sequelize, dataTypes: typeof DataTypes) => Model)[]} modelFactories array of factory functions returning sequelize model
+ * @param {ModelFactories} modelFactories array of factory functions returning sequelize model
  *
  * @returns {DbModule} DB module
  */
-function getDbModule(
-    dbConfig: { url: string | string[]; options: Pick<Options, 'dialectOptions'> },
-    loggerFactory: LoggerFactory,
-    modelFactories: ((sequelize: Sequelize, dataTypes: typeof DataTypes) => Model)[]
-): DbModule {
+function getDbModule(dbConfig: DbConfig, loggerFactory: LoggerFactory, modelFactories: ModelFactories): DbModule {
     const logger = loggerFactory.getLogger('DBConnection');
 
     function addModels(sequelize: Sequelize) {
