@@ -11,7 +11,9 @@
     "author": "Cloudify Platform Ltd. <cosmo-admin@cloudify.co>",
     "types": "./typings/index.d.ts",
     "files": [
-        "backend",
+        "backend/lib",
+        "backend/typings",
+        "backend/*.{ts,md}",
         "cypress",
         "dist",
         "configs",
