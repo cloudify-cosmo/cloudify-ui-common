@@ -1,5 +1,5 @@
 {
-    "types": "./index.d.ts",
+    "types": "./typings/index.d.ts",
     "engines": {
         "node": ">=12"
     }
