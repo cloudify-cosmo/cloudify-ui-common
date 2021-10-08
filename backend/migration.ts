@@ -80,7 +80,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
         (<Umzug>umzug).on('reverted', logUmzugEvent('reverted'));
     }
 
-    async function cmdStatus() {
+    function cmdStatus() {
         type Result = { executed: Migration[]; pending: Migration[] };
         const result: Result = { executed: [], pending: [] };
 
@@ -113,7 +113,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
             });
     }
 
-    async function cmdDownTo() {
+    function cmdDownTo() {
         const migrationName = getArg(1);
         if (!migrationName || migrationName === '') {
             return Promise.reject(new Error('Migration name to down to has to be supplied'));
@@ -140,7 +140,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
         });
     }
 
-    async function cmdClear() {
+    function cmdClear() {
         const { sequelize } = db;
         return (<Sequelize>sequelize)
             .getQueryInterface()
@@ -158,17 +158,17 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
             });
     }
 
-    async function cmdMigrate() {
+    function cmdMigrate() {
         return (<Umzug>umzug).up();
     }
 
-    async function cmdCurrent() {
+    function cmdCurrent() {
         return (<Umzug>umzug).executed().then(executed => {
             return Promise.resolve(getCurrent(executed));
         });
     }
 
-    async function cmdReset() {
+    function cmdReset() {
         return (<Umzug>umzug).down({ to: '0' });
     }
 
