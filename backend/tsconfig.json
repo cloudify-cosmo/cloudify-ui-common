@@ -6,8 +6,8 @@
         "allowJs": false,
         "emitDeclarationOnly": false,
         "module": "CommonJS",
-        "outDir": "./",
-        "declarationDir": "./"
+        "outDir": "./lib",
+        "declarationDir": "./typings"
     },
 
 }
