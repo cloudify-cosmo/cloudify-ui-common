@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import fs from 'fs';
 import request from 'request';
-import { DataTypes, Model, Options, Sequelize, QueryTypes, QueryOptionsWithType } from 'sequelize';
+import { DataTypes, Model, ModelCtor, Options, Sequelize, QueryTypes, QueryOptionsWithType } from 'sequelize';
 
 import type { LoggerFactory } from './logger';
 
@@ -46,7 +46,7 @@ function addHooks(sequelize: Sequelize, restart: RestartFunction) {
 }
 
 export type DbConfig = { url: string | string[]; options: Pick<Options, 'dialectOptions'> };
-export type ModelFactories = ((sequelize: Sequelize, dataTypes: typeof DataTypes) => Model)[];
+export type ModelFactories = ((sequelize: Sequelize, dataTypes: typeof DataTypes) => ModelCtor<any>)[];
 /**
  * Constructs new object containing `init` function and `db` object
  *
