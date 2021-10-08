@@ -46,7 +46,7 @@
         "generate-type-declarations": "tsc -p src",
         "lint": "npm run lint:code",
         "lint:code": "eslint --cache --ignore-path .gitignore .",
-        "lint:docs": "documentation lint src/index.js && documentation lint backend/index.ts",
+        "lint:docs": "documentation lint src/index.js",
         "publish:major": "bash ci/publish-version.sh major",
         "publish:minor": "bash ci/publish-version.sh minor",
         "publish:patch": "bash ci/publish-version.sh patch",
