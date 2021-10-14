@@ -1,6 +1,6 @@
 import path from 'path';
 import UmzugClass, { Umzug, Migration } from 'umzug';
-import _ from 'lodash';
+import { each, chain, escapeRegExp } from 'lodash';
 import type { Sequelize } from 'sequelize';
 import type { LoggerFactory } from './logger';
 import type { DbModule } from './db';
@@ -11,11 +11,11 @@ function onMigrationEnd(exitCode: number) {
 }
 
 function getCurrent(executed: Migration[] | undefined) {
-    return _.chain(executed).last().get('file').value() || '<NO_MIGRATIONS>';
+    return chain(executed).last().get('file').value() || '<NO_MIGRATIONS>';
 }
 
 function getArg(n: number) {
-    return _.chain(process.argv)
+    return chain(process.argv)
         .nth(n + 2)
         .trim()
         .value();
@@ -59,7 +59,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
                     }
                 ],
                 path: './migrations',
-                pattern: RegExp(`${migrationFileExtension}$`)
+                pattern: RegExp(`${escapeRegExp(migrationFileExtension)}$`)
             },
 
             logging(...args: string[]) {
@@ -147,7 +147,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
             .showAllTables()
             .then(tableNames => {
                 const promises: Promise<[unknown[], unknown]>[] = [];
-                _.each(tableNames, tableName => {
+                each(tableNames, tableName => {
                     if (tableName !== 'SequelizeMeta') {
                         logger.info(`Clearing table ${tableName}`);
                         promises.push(sequelize.query(`truncate "${tableName}"`));
