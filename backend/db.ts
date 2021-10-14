@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import fs from 'fs';
 import request from 'request';
-import { DataTypes, Model, ModelCtor, Options, Sequelize, QueryTypes, QueryOptionsWithType } from 'sequelize';
+import { DataTypes, ModelCtor, Options, Sequelize, QueryTypes, QueryOptionsWithType } from 'sequelize';
 
 import type { LoggerFactory } from './logger';
 
-type Db = { sequelize?: Sequelize } & Record<string, Model>;
+type Db = { sequelize?: Sequelize } & Record<string, ModelCtor<any>>;
 type RestartFunction = (reason: string) => void;
 export type DbModule = { db: Db; init: () => Promise<void> };
 
@@ -62,7 +62,6 @@ function getDbModule(dbConfig: DbConfig, loggerFactory: LoggerFactory, modelFact
     function addModels(sequelize: Sequelize) {
         modelFactories.forEach(modelFactory => {
             const model = modelFactory(sequelize, DataTypes);
-            // @ts-ignore Typings for sequelize are missing name in Model instance
             db[model.name] = model;
         });
     }

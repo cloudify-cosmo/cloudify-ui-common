@@ -38,7 +38,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
     let umzug: Umzug | undefined;
 
     function initUmzug() {
-        const { sequelize } = db;
+        const sequelize = db.sequelize as Sequelize;
         umzug = new UmzugClass({
             storage: 'sequelize',
             storageOptions: {
@@ -48,8 +48,8 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
             // see: https://github.com/sequelize/umzug/issues/17
             migrations: {
                 params: [
-                    (<Sequelize>sequelize).getQueryInterface(), // queryInterface
-                    (<Sequelize>sequelize).constructor, // DataTypes
+                    sequelize.getQueryInterface(), // queryInterface
+                    sequelize.constructor, // DataTypes
                     logger,
                     // eslint-disable-next-line func-names
                     function () {
@@ -71,24 +71,24 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
             return (name: string /* , migration */) => logger.info(`${name} ${eventName}`);
         }
         // @ts-ignore There are no typings available for Umzug v1 and there is no `on` method in Umzug >v1
-        (<Umzug>umzug).on('migrating', logUmzugEvent('migrating'));
+        umzug.on('migrating', logUmzugEvent('migrating'));
         // @ts-ignore There are no typings available for Umzug v1 and there is no `on` method in Umzug >v1
-        (<Umzug>umzug).on('migrated', logUmzugEvent('migrated'));
+        umzug.on('migrated', logUmzugEvent('migrated'));
         // @ts-ignore There are no typings available for Umzug v1 and there is no `on` method in Umzug >v1
-        (<Umzug>umzug).on('reverting', logUmzugEvent('reverting'));
+        umzug.on('reverting', logUmzugEvent('reverting'));
         // @ts-ignore There are no typings available for Umzug v1 and there is no `on` method in Umzug >v1
-        (<Umzug>umzug).on('reverted', logUmzugEvent('reverted'));
+        umzug.on('reverted', logUmzugEvent('reverted'));
     }
 
     function cmdStatus() {
         type Result = { executed: Migration[]; pending: Migration[] };
         const result: Result = { executed: [], pending: [] };
 
-        return (<Umzug>umzug)
+        return umzug!
             .executed()
             .then(executed => {
                 result.executed = executed;
-                return (<Umzug>umzug).pending();
+                return umzug!.pending();
             })
             .then(pending => {
                 result.pending = pending;
@@ -136,13 +136,13 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
                 return Promise.resolve([]);
             }
             const migrationToMigrateTo = executed[migrationIndex + 1];
-            return (<Umzug>umzug).down({ to: migrationToMigrateTo });
+            return umzug!.down({ to: migrationToMigrateTo });
         });
     }
 
     function cmdClear() {
-        const { sequelize } = db;
-        return (<Sequelize>sequelize)
+        const sequelize = db.sequelize as Sequelize;
+        return sequelize
             .getQueryInterface()
             .showAllTables()
             .then(tableNames => {
@@ -150,7 +150,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
                 _.each(tableNames, tableName => {
                     if (tableName !== 'SequelizeMeta') {
                         logger.info(`Clearing table ${tableName}`);
-                        promises.push((<Sequelize>sequelize).query(`truncate "${tableName}"`));
+                        promises.push(sequelize.query(`truncate "${tableName}"`));
                     }
                 });
 
@@ -159,17 +159,17 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
     }
 
     function cmdMigrate() {
-        return (<Umzug>umzug).up();
+        return umzug!.up();
     }
 
     function cmdCurrent() {
-        return (<Umzug>umzug).executed().then(executed => {
+        return umzug!.executed().then(executed => {
             return Promise.resolve(getCurrent(executed));
         });
     }
 
     function cmdReset() {
-        return (<Umzug>umzug).down({ to: '0' });
+        return umzug!.down({ to: '0' });
     }
 
     function handleCommand() {
