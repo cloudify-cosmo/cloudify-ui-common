@@ -1,9 +1,10 @@
 import request from 'request';
 import fs from 'fs';
 import _ from 'lodash';
-import Sequelize from 'sequelize';
+import Sequelize, { ModelCtor } from 'sequelize';
 import { getDbModule } from '..';
 import { DbConfig } from '../db';
+import { LoggerFactory } from '../logger';
 
 jest.mock('sequelize');
 jest.mock('fs');
@@ -13,7 +14,7 @@ const fileContent = 'fileContent';
 (<jest.Mock>fs.readFileSync).mockImplementation(_.constant(fileContent));
 
 describe('db init', () => {
-    const model = { name: 'modelName' };
+    const model = { name: 'modelName' } as ModelCtor<never>;
 
     function mockSequelize() {
         const sequelizeMock = {
@@ -46,8 +47,7 @@ describe('db init', () => {
     }
 
     function getDbModuleWithMockedLogger(dbConfig: DbConfig, mockedLogger: ReturnType<typeof mockLogger>) {
-        // @ts-ignore Passing mocked logger intentionally
-        return getDbModule(dbConfig, mockedLogger, [() => model]);
+        return getDbModule(dbConfig, <LoggerFactory>(<unknown>mockedLogger), [() => model]);
     }
 
     it('should handle invalid url gracefully', () => {
@@ -130,7 +130,7 @@ describe('db init', () => {
             })
             .then(() => {
                 expect(sequelizeMock.close).not.toHaveBeenCalled();
-                sequelizeMock.query.mockImplementation(_.constant({ pg_is_in_recovery: true }));
+                sequelizeMock.query.mockReturnValue({ pg_is_in_recovery: true });
                 return sequelizeMock.beforeQuery.mock.calls[0][0]({});
             })
             .then(() => sequelizeMock.beforeQuery.mock.calls[0][0]({}))

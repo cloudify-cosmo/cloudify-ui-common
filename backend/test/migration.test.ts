@@ -2,6 +2,8 @@
 import _ from 'lodash';
 import umzug from 'umzug';
 import { runMigration } from '..';
+import type { LoggerFactory } from '../logger';
+import type { DbModule } from '../db';
 
 jest.mock('umzug');
 
@@ -54,8 +56,7 @@ describe('migration', () => {
     }
 
     function testMigration(logger: ReturnType<typeof mockLogger>, db: ReturnType<typeof mockDb>) {
-        // @ts-ignore Passing mocked logger and mocked db
-        runMigration(logger, db);
+        runMigration(<LoggerFactory>(<unknown>logger), <DbModule>(<unknown>db));
     }
 
     it('should execute `current` command', () => {

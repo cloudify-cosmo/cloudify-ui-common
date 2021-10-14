@@ -14,9 +14,7 @@ const commonConfig = Object.freeze({
 
 describe('logger', () => {
     function mockConsoleLog() {
-        // @ts-ignore Neither using jest.spyOn(console, 'log') nor global.console = { ...global.console, log: jest.fn() }
-        // works with Winston logger
-        global.console = { log: jest.fn() };
+        global.console = <typeof console>(<unknown>{ log: jest.fn() });
     }
 
     it('should read log level configuration from logging.conf', () => {
