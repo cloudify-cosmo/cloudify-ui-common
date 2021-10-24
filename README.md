@@ -66,7 +66,7 @@ Check [jsDelivr home page](https://www.jsdelivr.com/) for details about the URL 
 
 ### External
 
-There is [Cloudify Brandbook](https://drive.google.com/file/d/1KimyHFey_AoK2nKopRoo_CK-emZs7Pr_/view) containing Cloudify Brand Guidelines we should follow creating new resources.
+There is [Cloudify Brandbook](https://drive.google.com/drive/folders/1ELapf6idy50n5R2uqWzhWXJrvL4mx6e3) containing Cloudify Brand Guidelines we should follow creating new resources.
 
 ### Internal
 
