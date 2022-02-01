@@ -10,7 +10,7 @@
 import coverageTask from '@cypress/code-coverage/task';
 import { startDevServer } from '@cypress/webpack-dev-server';
 import type { StartDevServer } from '@cypress/webpack-dev-server';
-import removeVideosForPassedTests from './removeVideosForPassedTests';
+import setRemovingVideosForPassedTestsTask from './setRemovingVideosForPassedTestsTask';
 /**
  * Performs common plugin and configuration setup - registers coverage plugin and sets `baseUrl` property if MANAGER_IP
  * environment variable is set
@@ -45,7 +45,7 @@ const setupPluginsAndConfig = (
         );
     }
 
-    removeVideosForPassedTests(on, config);
+    setRemovingVideosForPassedTestsTask(on);
 
     return config;
 };

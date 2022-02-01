@@ -1,6 +1,6 @@
 import del from 'del';
 
-const removeVideosForPassedTests = (on: Cypress.PluginEvents, _config: Cypress.PluginConfigOptions): void => {
+const setRemovingVideosForPassedTestsTask = (on: Cypress.PluginEvents): void => {
     // Delete the recorded video for specs that had no retry attempts
     // https://github.com/cypress-io/cypress/issues/16377
     on('after:spec', async (_spec, results) => {
@@ -13,4 +13,4 @@ const removeVideosForPassedTests = (on: Cypress.PluginEvents, _config: Cypress.P
     });
 };
 
-export default removeVideosForPassedTests;
+export default setRemovingVideosForPassedTestsTask;
