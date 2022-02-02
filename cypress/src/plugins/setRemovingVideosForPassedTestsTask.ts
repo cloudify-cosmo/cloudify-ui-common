@@ -1,4 +1,4 @@
-import del from 'del';
+import { promises as fs } from 'fs';
 
 const setRemovingVideosForPassedTestsTask = (on: Cypress.PluginEvents): void => {
     // Delete the recorded video for specs that had no retry attempts
@@ -6,8 +6,8 @@ const setRemovingVideosForPassedTestsTask = (on: Cypress.PluginEvents): void => 
     on('after:spec', async (_spec, results) => {
         if (results && results.video) {
             const failedTests = results.tests?.some(test => test.attempts.some(attempt => attempt?.state === 'failed'));
-            if (!failedTests) {
-                await del(results.video);
+            if (!failedTests && results.video) {
+                await fs.unlink(results.video);
             }
         }
     });

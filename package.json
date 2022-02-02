@@ -56,7 +56,6 @@
         "verify:docs": "bash ci/verify-docs.sh"
     },
     "dependencies": {
-        "del": "^6.0.0",
         "eslint-config-airbnb": "^18.2.1",
         "eslint-config-airbnb-base": "^14.2.1",
         "eslint-config-prettier": "^6.12.0",
