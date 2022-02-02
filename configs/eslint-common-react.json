@@ -7,6 +7,9 @@
         "./eslint-ts-overrides.json"
     ],
     "rules": {
+        "react/jsx-props-no-spreading": "off",
+        "no-void": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
         "no-param-reassign": [
             "error",
             {
