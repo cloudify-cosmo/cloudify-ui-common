@@ -1,8 +1,8 @@
 /**
  * Get type name of provided variable.
  *
- * @returns {string} variable type name
  * @param {any} value any variable
+ * @returns {string} variable type name
  */
 export function toType(value: any): string {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -15,8 +15,8 @@ export function toType(value: any): string {
 /**
  * Get type, used in Cloudify core, of provided variable.
  *
- * @returns {string} variable Cloudify type name
  * @param {any} value any variable
+ * @returns {string} variable Cloudify type name
  */
 export function toCloudifyType(value: any): string | undefined {
     const type = toType(value);

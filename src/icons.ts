@@ -1,4 +1,6 @@
-import { nodeStatuses } from './consts';
+import { nodeStatuses, NodeStatusValue } from './consts';
+
+type StringRecord = Record<string, string>;
 
 /**
  * Get node type icon character to be used with cloudify font.
@@ -9,8 +11,8 @@ import { nodeStatuses } from './consts';
  *
  * @returns {string} character from cloudify font
  */
-export function getNodeIcon(hierarchy: string | string[]) {
-    const nodeTypeToChar = {
+export function getNodeIcon(hierarchy: string | string[]): string {
+    const nodeTypeToChar: StringRecord = {
         'cloudify.nodes.ApplicationModule': '\ue616',
         'cloudify.nodes.ApplicationServer': '\ue61e',
         'cloudify.nodes.Compute': '\ue61b',
@@ -45,11 +47,11 @@ export function getNodeIcon(hierarchy: string | string[]) {
 /**
  * Get node status icon character to be used with cloudify font.
  *
- * @param {nodeStatuses} nodeStatus - node status value.
+ * @param {NodeStatusValue} nodeStatus - node status value.
  *
  * @returns {string} character from cloudify font or empty string for not {@link nodeStatuses} value
  */
-export function getNodeStatusIcon(nodeStatus) {
+export function getNodeStatusIcon(nodeStatus: NodeStatusValue): string {
     const nodeStatusToChar = {
         [nodeStatuses.ALERT]: '\ue629',
         [nodeStatuses.DONE]: '\ue62a',
@@ -69,8 +71,8 @@ export function getNodeStatusIcon(nodeStatus) {
  *
  * @returns {string} character from cloudify font
  */
-export function getEventIcon(eventType) {
-    const eventTypeToChar = {
+export function getEventIcon(eventType: string): string {
+    const eventTypeToChar: StringRecord = {
         policy_failed: '\ue605',
         policy_success: '\ue606',
         sending_task: '\ue62c',
