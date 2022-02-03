@@ -1,9 +1,6 @@
 {
     "extends": ["plugin:jsdoc/recommended", "./configs/eslint-common.json"],
     "rules": {
-        "react/jsx-props-no-spreading": "off",
-        "no-void": "off",
-        "@typescript-eslint/no-non-null-assertion": "off",
         "jsdoc/require-jsdoc": [
             "error",
             {
@@ -17,13 +14,5 @@
                 "object": "Object"
             }
         }
-    },
-    "overrides": [
-        {
-            "files": ["*.tsx"],
-            "rules": {
-                "react/prop-types": "off"
-            }
-        }
-    ]
+    }
 }
