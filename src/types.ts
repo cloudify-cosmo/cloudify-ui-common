@@ -2,12 +2,13 @@
  * Get type name of provided variable.
  *
  * @returns {string} variable type name
- * @param {any} obj any variable
+ * @param {any} value any variable
  */
-export function toType(obj) {
+export function toType(value: any): string {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return {}.toString
-        .call(obj)
-        .match(/\s([a-zA-Z]+)/)[1]
+        .call(value)
+        .match(/\s([a-zA-Z]+)/)![1]
         .toLowerCase();
 }
 
@@ -15,17 +16,17 @@ export function toType(obj) {
  * Get type, used in Cloudify core, of provided variable.
  *
  * @returns {string} variable Cloudify type name
- * @param {any} obj any variable
+ * @param {any} value any variable
  */
-export function toCloudifyType(obj) {
-    const type = toType(obj);
+export function toCloudifyType(value: any): string | undefined {
+    const type = toType(value);
 
     switch (type) {
         case 'boolean':
         case 'string':
             return type;
         case 'number':
-            return Number.isInteger(obj) ? 'integer' : 'float';
+            return Number.isInteger(value) ? 'integer' : 'float';
         case 'array':
             return 'list';
         case 'object':
@@ -41,23 +42,23 @@ export function toCloudifyType(obj) {
  * @param {any} value - any type variable
  * @returns {string} stringified value of provided variable
  */
-export function getStringValue(value) {
-    let ret = null;
+export function getStringValue(value: any): string {
+    let stringValue = null;
 
     switch (toType(value)) {
         case 'array':
         case 'object':
-            ret = JSON.stringify(value);
+            stringValue = JSON.stringify(value);
             break;
         case 'boolean':
         case 'string':
         case 'number':
         default:
-            ret = String(value);
+            stringValue = String(value);
             break;
     }
 
-    return ret;
+    return stringValue;
 }
 
 /**
@@ -66,7 +67,7 @@ export function getStringValue(value) {
  * @param {string} value - any string value
  * @returns {any} typed value of provided string
  */
-export function getTypedValue(value) {
+export function getTypedValue(value: string): any {
     const initialType = toType(value);
 
     if (initialType === 'string') {
