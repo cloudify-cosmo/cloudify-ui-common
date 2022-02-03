@@ -9,7 +9,7 @@ import { nodeStatuses } from './consts';
  *
  * @returns {string} character from cloudify font
  */
-export function getNodeIcon(hierarchy) {
+export function getNodeIcon(hierarchy: string | string[]) {
     const nodeTypeToChar = {
         'cloudify.nodes.ApplicationModule': '\ue616',
         'cloudify.nodes.ApplicationServer': '\ue61e',
