@@ -1,6 +1,6 @@
 {
     "name": "cloudify-ui-common",
-    "version": "5.1.0",
+    "version": "5.1.1",
     "description": "Common Cloudify UI library",
     "homepage": "https://github.com/cloudify-cosmo/cloudify-ui-common#readme",
     "repository": {
