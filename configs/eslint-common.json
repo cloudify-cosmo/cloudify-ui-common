@@ -11,6 +11,9 @@
         "no-param-reassign": ["error", { "props": false }],
         "func-names": ["error", "always", { "generators": "never" }],
 
+        "no-void": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+
         "scanjs-rules/accidental_assignment": "warn",
         "scanjs-rules/assign_to_hostname": "error",
         "scanjs-rules/assign_to_href": "warn",
@@ -52,5 +55,13 @@
         "security/detect-possible-timing-attacks": "error",
         "security/detect-pseudoRandomBytes": "error",
         "security/detect-unsafe-regex": "error"
-    }
+    },
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "rules": {
+                "import/prefer-default-export": "off"
+            }
+        }
+    ]
 }
