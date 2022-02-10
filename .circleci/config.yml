@@ -30,12 +30,6 @@ jobs:
       - run:
           name: Run tests with coverage check
           command: npm run test:coverage
-      - run:
-          name: Run documentation linter
-          command: npm run lint:docs
-      - run:
-          name: Verify if documentation is up-to-date
-          command: npm run test:docs
       - persist_to_workspace:
           root: ~/
           paths:
