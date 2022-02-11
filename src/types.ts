@@ -5,7 +5,6 @@
  * @returns {string} variable type name
  */
 export function toType(value: any): string {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return {}.toString
         .call(value)
         .match(/\s([a-zA-Z]+)/)![1]
