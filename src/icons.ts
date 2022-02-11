@@ -1,4 +1,4 @@
-import { nodeStatuses, NodeStatusValue } from './consts';
+import { nodeStatuses, NodeStatus } from './consts';
 
 type StringRecord = Record<string, string>;
 
@@ -47,11 +47,11 @@ export function getNodeIcon(hierarchy: string | string[]): string {
 /**
  * Get node status icon character to be used with cloudify font.
  *
- * @param {NodeStatusValue} nodeStatus - node status value.
+ * @param {NodeStatus} nodeStatus - node status value.
  *
  * @returns {string} character from cloudify font or empty string for not {@link nodeStatuses} value
  */
-export function getNodeStatusIcon(nodeStatus: NodeStatusValue): string {
+export function getNodeStatusIcon(nodeStatus: NodeStatus): string {
     const nodeStatusToChar = {
         [nodeStatuses.ALERT]: '\ue629',
         [nodeStatuses.DONE]: '\ue62a',

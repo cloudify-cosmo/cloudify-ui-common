@@ -1,5 +1,5 @@
-export type NodeStatusValue = 'uninitialized' | 'loading' | 'done' | 'alert' | 'failed';
-export type NodeStatuses = Record<string, NodeStatusValue>;
+export type NodeStatus = 'uninitialized' | 'loading' | 'done' | 'alert' | 'failed';
+type NodeStatuses = Record<string, NodeStatus>;
 
 /**
  * Node statuses constants.
