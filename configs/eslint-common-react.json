@@ -1,10 +1,8 @@
 {
     "extends": [
-        "./eslint-common.json",
         "airbnb",
         "prettier/react",
-        "plugin:prettier/recommended",
-        "./eslint-ts-overrides.json"
+        "./eslint-common.json"
     ],
     "rules": {
         "react/jsx-props-no-spreading": "off",
