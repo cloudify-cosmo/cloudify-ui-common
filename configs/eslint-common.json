@@ -57,7 +57,7 @@
     },
     "overrides": [
         {
-            "files": ["*.ts", "*.tsx"],
+            "files": ["*.ts"],
             "rules": {
                 "import/prefer-default-export": "off"
             }
