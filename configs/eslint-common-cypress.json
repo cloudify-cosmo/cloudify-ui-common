@@ -1,6 +1,13 @@
 {
-    "extends": ["plugin:chai-friendly/recommended", "plugin:cypress/recommended"],
-
+    "extends": [
+        "airbnb-base",
+        "./eslint-common.json",
+        "plugin:chai-friendly/recommended",
+        "plugin:cypress/recommended"
+    ],
+    "rules": {
+        "import/no-extraneous-dependencies": "off"
+    },
     "env": {
         "cypress/globals": true
     },
