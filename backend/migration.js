@@ -1,5 +1,4 @@
-const path = require('path');
-const Umzug = require('umzug');
+const { Umzug, SequelizeStorage } = require('umzug');
 const _ = require('lodash');
 
 function onMigrationEnd(exitCode) {
@@ -7,8 +6,12 @@ function onMigrationEnd(exitCode) {
     process.exit(exitCode);
 }
 
+function toNames(migrations) {
+    return _.map(migrations, 'name');
+}
+
 function getCurrent(executed) {
-    return _.chain(executed).last().get('file').value() || '<NO_MIGRATIONS>';
+    return _.last(executed) || '<NO_MIGRATIONS>';
 }
 
 function getArg(n) {
@@ -36,26 +39,31 @@ function runMigration(loggerFactory, dbModule) {
     function initUmzug() {
         const { sequelize } = db;
         umzug = new Umzug({
-            storage: 'sequelize',
-            storageOptions: {
-                sequelize
-            },
+            storage: new SequelizeStorage({ sequelize }),
 
             // see: https://github.com/sequelize/umzug/issues/17
             migrations: {
-                params: [
-                    sequelize.getQueryInterface(), // queryInterface
-                    sequelize.constructor, // DataTypes
-                    logger,
-                    // eslint-disable-next-line func-names
-                    function () {
-                        throw new Error(
-                            'Migration tried to use old style "done" callback. Please upgrade to "umzug" and return a promise instead.'
-                        );
-                    }
-                ],
-                path: './migrations',
-                pattern: /\.js$/
+                glob: './migrations/*.js',
+                resolve({ name, path }) {
+                    // eslint-disable-next-line global-require,import/no-dynamic-require
+                    const migration = require(path);
+                    const params = [
+                        sequelize.getQueryInterface(), // queryInterface
+                        sequelize.constructor, // DataTypes
+                        logger,
+                        // eslint-disable-next-line func-names
+                        function () {
+                            throw new Error(
+                                'Migration tried to use old style "done" callback. Please upgrade to "umzug" and return a promise instead.'
+                            );
+                        }
+                    ];
+                    return {
+                        name,
+                        up: async () => migration.up(...params),
+                        down: async () => migration.down(...params)
+                    };
+                }
             },
 
             logging(...args) {
@@ -72,42 +80,19 @@ function runMigration(loggerFactory, dbModule) {
         umzug.on('reverted', logUmzugEvent('reverted'));
     }
 
-    function cmdStatus() {
-        const result = {};
+    async function cmdStatus() {
+        const executedMigrations = await umzug.executed();
+        const pendingMigrations = await umzug.pending();
+        const executedMigrationsNames = toNames(executedMigrations);
 
-        return umzug
-            .executed()
-            .then(executed => {
-                result.executed = executed;
-                return umzug.pending();
-            })
-            .then(pending => {
-                result.pending = pending;
-                return result;
-            })
-            .then(res => {
-                let { executed, pending } = res;
+        const status = {
+            current: getCurrent(executedMigrationsNames),
+            executed: executedMigrationsNames,
+            pending: toNames(pendingMigrations)
+        };
+        logger.info(JSON.stringify(status, null, 2));
 
-                executed = executed.map(m => {
-                    m.name = path.basename(m.file, '.js');
-                    return m;
-                });
-                pending = pending.map(m => {
-                    m.name = path.basename(m.file, '.js');
-                    return m;
-                });
-
-                const current = getCurrent(executed);
-                const status = {
-                    current,
-                    executed: executed.map(m => m.file),
-                    pending: pending.map(m => m.file)
-                };
-
-                logger.info(JSON.stringify(status, null, 2));
-
-                return { executed, pending };
-            });
+        return executedMigrationsNames;
     }
 
     function cmdDownTo() {
@@ -116,23 +101,22 @@ function runMigration(loggerFactory, dbModule) {
             return Promise.reject(new Error('Migration name to down to has to be supplied'));
         }
 
-        return cmdStatus().then(result => {
-            const executed = result.executed.map(m => m.file);
-            if (executed.length === 0) {
+        return cmdStatus().then(executedMigrationsNames => {
+            if (executedMigrationsNames.length === 0) {
                 return Promise.reject(new Error('Already at initial state'));
             }
 
-            const migrationIndex = executed.indexOf(migrationName);
+            const migrationIndex = executedMigrationsNames.indexOf(migrationName);
             if (migrationIndex < 0) {
                 // If its not found
                 return Promise.reject(new Error("Migration doesn't exist or was not executed"));
             }
-            if (migrationIndex + 1 >= executed.length) {
+            if (migrationIndex + 1 >= executedMigrationsNames.length) {
                 // Or if its the last one so we cannot migrate to it - or actually one after it, then ignore)
                 logger.info('Migration to downgrade to is the last migration, ignoring');
                 return Promise.resolve();
             }
-            const migrationToMigrateTo = executed[migrationIndex + 1];
+            const migrationToMigrateTo = executedMigrationsNames[migrationIndex + 1];
             return umzug.down({ to: migrationToMigrateTo });
         });
     }
@@ -161,7 +145,7 @@ function runMigration(loggerFactory, dbModule) {
 
     function cmdCurrent() {
         return umzug.executed().then(executed => {
-            return Promise.resolve(getCurrent(executed));
+            return Promise.resolve(getCurrent(toNames(executed)));
         });
     }
 
