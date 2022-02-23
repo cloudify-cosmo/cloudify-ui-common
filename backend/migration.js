@@ -41,7 +41,6 @@ function runMigration(loggerFactory, dbModule) {
         umzug = new Umzug({
             storage: new SequelizeStorage({ sequelize }),
 
-            // see: https://github.com/sequelize/umzug/issues/17
             migrations: {
                 glob: './migrations/*.js',
                 resolve({ name, path }) {
