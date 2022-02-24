@@ -11,6 +11,6 @@ export const nodeStatuses = {
     DONE: 'done',
     ALERT: 'alert',
     FAILED: 'failed'
-} as const;
+};
 
 export default { nodeStatuses };
