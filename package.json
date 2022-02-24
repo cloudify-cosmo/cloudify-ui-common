@@ -1,6 +1,6 @@
 {
     "name": "cloudify-ui-common",
-    "version": "5.1.2",
+    "version": "5.2.0",
     "description": "Common Cloudify UI library",
     "homepage": "https://github.com/cloudify-cosmo/cloudify-ui-common#readme",
     "repository": {
@@ -54,7 +54,7 @@
         "lodash": "^4.17.21",
         "request": "^2.88.2",
         "sequelize": "^6.6.5",
-        "umzug": "^1.12.0",
+        "umzug": "^3.0.0",
         "winston": "^3.3.3"
     },
     "devDependencies": {

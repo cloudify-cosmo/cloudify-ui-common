@@ -2,22 +2,22 @@
 jest.mock('umzug');
 
 const _ = require('lodash');
-const umzug = require('umzug');
+const { Umzug } = require('umzug');
 const { runMigration } = require('..');
 
 describe('migration', () => {
-    function mockUmzug(executedMigrations = [], pendingMigrations = []) {
-        function toMigrations(migrationFileNames) {
-            return migrationFileNames.map(migrationFile => ({ file: migrationFile }));
+    function mockUmzug(executedMigrationsNames = [], pendingMigrationsNames = []) {
+        function toMigrations(migrationsNames) {
+            return migrationsNames.map(migrationName => ({ name: migrationName }));
         }
         const umzugInstance = {
             on: _.noop,
-            executed: jest.fn(() => Promise.resolve(toMigrations(executedMigrations))),
-            pending: jest.fn(() => Promise.resolve(toMigrations(pendingMigrations))),
+            executed: jest.fn(() => Promise.resolve(toMigrations(executedMigrationsNames))),
+            pending: jest.fn(() => Promise.resolve(toMigrations(pendingMigrationsNames))),
             down: jest.fn(_.constant(Promise.resolve())),
             up: jest.fn(_.constant(Promise.resolve()))
         };
-        umzug.mockImplementation(() => umzugInstance);
+        Umzug.mockImplementation(() => umzugInstance);
         return umzugInstance;
     }
 
@@ -57,11 +57,10 @@ describe('migration', () => {
         return new Promise(done => {
             process.exit = () => {
                 expect(logger.logErrorsOnly).toHaveBeenCalled();
-                expect(umzug).toHaveBeenCalled();
-                expect(umzug.mock.calls[0][0].migrations.params[3]).toThrowError();
+                expect(Umzug).toHaveBeenCalled();
 
                 const logMessage = 'umzug logger test';
-                umzug.mock.calls[0][0].logging(logMessage);
+                Umzug.mock.calls[0][0].logging(logMessage);
                 expect(logger.getLogger().info).toHaveBeenCalledWith([logMessage]);
 
                 expect(console.log).toHaveBeenCalledWith('<NO_MIGRATIONS>');
