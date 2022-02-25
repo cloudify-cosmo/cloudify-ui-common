@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const fs = require('fs');
-const request = require('request');
+const axios = require('axios');
 const Sequelize = require('sequelize');
 
 /**
@@ -80,22 +80,12 @@ function DbInitializer(dbConfig, loggerFactory, modelFactories) {
         }
         function isResponding(url) {
             const patroniUrl = `https://${getHostname(url)}:8008`;
-            return new Promise(resolve =>
-                request(
-                    {
-                        url: patroniUrl,
-                        strictSSL: false
-                    },
-                    (error, response) => {
-                        if (error) {
-                            logger.debug(`Error occured when requesting: ${url}.`, error);
-                            resolve(false);
-                        } else {
-                            resolve(response.statusCode === 200);
-                        }
-                    }
-                )
-            );
+            return axios(patroniUrl)
+                .then(response => response.status === 200)
+                .catch(error => {
+                    logger.debug(`Error occured when requesting: ${url}.`, error);
+                    return false;
+                });
         }
         async function findRespondingHost(urls) {
             let respondingHost = null;
