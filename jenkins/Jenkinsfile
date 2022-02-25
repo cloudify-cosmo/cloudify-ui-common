@@ -47,12 +47,6 @@ pipeline {
 
             echo "Run tests with coverage check"
             sh 'npm run test:coverage'
-
-            echo "Run documentation linter"
-            sh 'npm run lint:docs'
-
-            echo "Verify if documentation is up-to-date"
-            sh 'npm run test:docs'
           }
         }
       }

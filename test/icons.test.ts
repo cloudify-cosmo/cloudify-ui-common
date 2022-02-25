@@ -19,16 +19,8 @@ describe('getNodeIcon', () => {
 });
 
 describe('getNodeStatusIcon', () => {
-    test('handles empty string', () => {
-        expect(getNodeStatusIcon('')).toBe('');
-    });
-
     test('handles string', () => {
         expect(getNodeStatusIcon('alert')).toBe('\ue629');
-    });
-
-    test('handles invalid input', () => {
-        expect(getNodeStatusIcon('abcd')).toBe('');
     });
 });
 

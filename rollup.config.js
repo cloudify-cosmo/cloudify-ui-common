@@ -15,7 +15,7 @@ const getBabelPluginConfig = transpile => ({
 export default [
     // browser-friendly UMD build - ES5
     {
-        input: 'src/index.js',
+        input: 'src/index.ts',
         output: {
             name: 'cloudifyUiCommon',
             file: pkg.browser,
@@ -32,7 +32,7 @@ export default [
     // an array for the `output` option, where we can specify
     // `file` and `format` for each target)
     {
-        input: 'src/index.js',
+        input: 'src/index.ts',
         output: [
             { file: pkg.main, format: 'cjs' },
             { file: pkg.module, format: 'es' }
