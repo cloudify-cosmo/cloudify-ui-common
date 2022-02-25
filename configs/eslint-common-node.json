@@ -1,5 +1,19 @@
 {
-    "extends": ["plugin:node/recommended", "./eslint-common.json"],
+    "extends": [
+        "airbnb-base",
+        "./eslint-common.json",
+        "plugin:node/recommended"
+    ],
+    "rules": {
+        "node/no-unsupported-features/es-syntax": "off",
+        // NOTE: handled by import/no-extraneous-dependencies
+        "node/no-extraneous-require": "off"
+    },
+    "settings": {
+        "node": {
+            "tryExtensions": [".js", ".json", ".ts"]
+        }
+    },
     "env": {
         "node": true
     }

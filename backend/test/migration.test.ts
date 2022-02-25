@@ -1,6 +1,5 @@
-/* eslint-disable no-console */
 import _ from 'lodash';
-import umzug from 'umzug';
+import { Umzug } from 'umzug';
 import { runMigration } from '..';
 import type { LoggerFactory } from '../logger';
 import type { DbModule } from '../db';
@@ -8,18 +7,18 @@ import type { DbModule } from '../db';
 jest.mock('umzug');
 
 describe('migration', () => {
-    function mockUmzug(executedMigrations: string[] = [], pendingMigrations: string[] = []) {
-        function toMigrations(migrationFileNames: string[]) {
-            return migrationFileNames.map(migrationFile => ({ file: migrationFile }));
+    function mockUmzug(executedMigrationsNames: string[] = [], pendingMigrationsNames: string[] = []) {
+        function toMigrations(migrationsNames: string[]) {
+            return migrationsNames.map(migrationName => ({ name: migrationName }));
         }
         const umzugInstance = {
             on: _.noop,
-            executed: jest.fn(() => Promise.resolve(toMigrations(executedMigrations))),
-            pending: jest.fn(() => Promise.resolve(toMigrations(pendingMigrations))),
+            executed: jest.fn(() => Promise.resolve(toMigrations(executedMigrationsNames))),
+            pending: jest.fn(() => Promise.resolve(toMigrations(pendingMigrationsNames))),
             down: jest.fn(_.constant(Promise.resolve())),
             up: jest.fn(_.constant(Promise.resolve()))
         };
-        (<jest.Mock>umzug).mockImplementation(() => umzugInstance);
+        (<jest.Mock>(<unknown>Umzug)).mockImplementation(() => umzugInstance);
         return umzugInstance;
     }
 
@@ -67,12 +66,7 @@ describe('migration', () => {
         return new Promise<void>(done => {
             mockProcessExit(() => {
                 expect(logger.logErrorsOnly).toHaveBeenCalled();
-                expect(<jest.Mock>umzug).toHaveBeenCalled();
-                expect((<jest.Mock>umzug).mock.calls[0][0].migrations.params[3]).toThrowError();
-
-                const logMessage = 'umzug logger test';
-                (<jest.Mock>umzug).mock.calls[0][0].logging(logMessage);
-                expect(logger.getLogger().info).toHaveBeenCalledWith([logMessage]);
+                expect(Umzug).toHaveBeenCalled();
 
                 expect(console.log).toHaveBeenCalledWith('<NO_MIGRATIONS>');
 

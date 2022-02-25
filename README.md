@@ -66,7 +66,7 @@ Check [jsDelivr home page](https://www.jsdelivr.com/) for details about the URL 
 
 ### External
 
-There is [Cloudify Brandbook](https://drive.google.com/file/d/1KimyHFey_AoK2nKopRoo_CK-emZs7Pr_/view) containing Cloudify Brand Guidelines we should follow creating new resources.
+There is [Cloudify Brandbook](https://drive.google.com/drive/folders/1ELapf6idy50n5R2uqWzhWXJrvL4mx6e3) containing Cloudify Brand Guidelines we should follow creating new resources.
 
 ### Internal
 
@@ -144,15 +144,15 @@ This section is divided into two parts:
 ##### Checklist
 
 * all your changes are merged to `master` branch, so that your local `master` branch is up-to-date,
-* you know and follow [Semantic Versioning 2.0.0](https://semver.org/#summary) rules when creating version (first step below),
-* you know and follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/#how) guiding principles when adding release notes (last step below),
+* you know and follow [Semantic Versioning](https://semver.org/#summary) rules when creating new version,
+* you know and follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/#how) guiding principles when adding release notes,
 * you have agreement with developers from _cloudify-rnd-ui_ group on publishing new version.
 
 ##### Steps
 
 If you met all points from the checklist above, follow these steps:
 
-1. Run one of the following scripts:  
+1. According to [Semantic Versioning](https://semver.org/#summary) run one of the following scripts:  
    
    * `npm run publish:patch` for new patch version,
    * `npm run publish:minor` for new minor version,
@@ -164,4 +164,7 @@ If you met all points from the checklist above, follow these steps:
 
 1. Verify [cloudify-ui-common @ NPM](https://www.npmjs.com/package/cloudify-ui-common) was updated properly.
 
-1. Go to [Create Release page @ GitHub](https://github.com/cloudify-cosmo/cloudify-ui-common/releases/new) to create release and add release notes.
+1. Go to [Create Release page @ GitHub](https://github.com/cloudify-cosmo/cloudify-ui-common/releases/new) to create 
+   release and add release notes according to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/#how) guiding 
+   principles (in addition to the types of changes described there, you can use `Internal` type for all non-user-facing 
+   changes).

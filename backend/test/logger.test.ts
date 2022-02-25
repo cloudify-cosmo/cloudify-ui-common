@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import fs from 'fs';
 import tmp from 'tmp';
 import { initLogging } from '..';

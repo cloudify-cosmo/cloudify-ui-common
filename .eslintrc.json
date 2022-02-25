@@ -1,5 +1,5 @@
 {
-    "extends": ["plugin:jsdoc/recommended", "./configs/eslint-common.json"],
+    "extends": ["plugin:jsdoc/recommended", "./configs/eslint-common-node.json"],
     "rules": {
         "jsdoc/require-jsdoc": [
             "error",

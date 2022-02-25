@@ -1,6 +1,6 @@
-import path from 'path';
-import UmzugClass, { Umzug, Migration } from 'umzug';
-import { each, chain, escapeRegExp } from 'lodash';
+import { Umzug, SequelizeStorage } from 'umzug';
+import { chain, each, map, last } from 'lodash';
+import type { MigrationMeta } from 'umzug';
 import type { Sequelize } from 'sequelize';
 import type { LoggerFactory } from './logger';
 import type { DbModule } from './db';
@@ -10,8 +10,12 @@ function onMigrationEnd(exitCode: number) {
     process.exit(exitCode);
 }
 
-function getCurrent(executed: Migration[] | undefined) {
-    return chain(executed).last().get('file').value() || '<NO_MIGRATIONS>';
+function toNames(migrations: MigrationMeta[] | undefined) {
+    return map(migrations, 'name');
+}
+
+function getCurrent(executed: string[]) {
+    return last(executed) || '<NO_MIGRATIONS>';
 }
 
 function getArg(n: number) {
@@ -30,7 +34,6 @@ function getArg(n: number) {
 function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
     const { db, init } = dbModule;
 
-    const migrationFileExtension = '.ts';
     const command = getArg(0);
     if (command === 'current') loggerFactory.logErrorsOnly();
     const logger = loggerFactory.getLogger('DBMigration');
@@ -39,78 +42,60 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
 
     function initUmzug() {
         const sequelize = db.sequelize as Sequelize;
-        umzug = new UmzugClass({
-            storage: 'sequelize',
-            storageOptions: {
-                sequelize
-            },
+        umzug = new Umzug({
+            storage: new SequelizeStorage({ sequelize }),
 
-            // see: https://github.com/sequelize/umzug/issues/17
             migrations: {
-                params: [
-                    sequelize.getQueryInterface(), // queryInterface
-                    sequelize.constructor, // DataTypes
-                    logger,
-                    // eslint-disable-next-line func-names
-                    function () {
-                        throw new Error(
-                            'Migration tried to use old style "done" callback. Please upgrade to "umzug" and return a promise instead.'
-                        );
-                    }
-                ],
-                path: './migrations',
-                pattern: RegExp(`${escapeRegExp(migrationFileExtension)}$`)
+                glob: './migrations/*.js',
+                resolve({ name, path }) {
+                    // eslint-disable-next-line global-require,import/no-dynamic-require,@typescript-eslint/no-var-requires
+                    const migration = require(path!);
+                    const params = [
+                        sequelize.getQueryInterface(), // queryInterface
+                        sequelize.constructor, // DataTypes
+                        logger,
+                        // eslint-disable-next-line func-names
+                        function () {
+                            throw new Error(
+                                'Migration tried to use old style "done" callback. Please upgrade to "umzug" and return a promise instead.'
+                            );
+                        }
+                    ];
+                    return {
+                        name,
+                        up: async () => migration.up(...params),
+                        down: async () => migration.down(...params)
+                    };
+                }
             },
 
-            logging(...args: string[]) {
-                logger.info(args);
-            }
+            logger
         });
 
         function logUmzugEvent(eventName: string) {
-            return (name: string /* , migration */) => logger.info(`${name} ${eventName}`);
+            return (eventData: any) => {
+                logger.info(`${eventName}: ${eventData}`);
+            };
         }
-        // @ts-ignore There are no typings available for Umzug v1 and there is no `on` method in Umzug >v1
         umzug.on('migrating', logUmzugEvent('migrating'));
-        // @ts-ignore There are no typings available for Umzug v1 and there is no `on` method in Umzug >v1
         umzug.on('migrated', logUmzugEvent('migrated'));
-        // @ts-ignore There are no typings available for Umzug v1 and there is no `on` method in Umzug >v1
         umzug.on('reverting', logUmzugEvent('reverting'));
-        // @ts-ignore There are no typings available for Umzug v1 and there is no `on` method in Umzug >v1
         umzug.on('reverted', logUmzugEvent('reverted'));
     }
 
-    function cmdStatus() {
-        type Result = { executed: Migration[]; pending: Migration[] };
-        const result: Result = { executed: [], pending: [] };
+    async function cmdStatus() {
+        const executedMigrations: MigrationMeta[] = await umzug!.executed();
+        const pendingMigrations: MigrationMeta[] = await umzug!.pending();
+        const executedMigrationsNames = toNames(executedMigrations);
 
-        return umzug!
-            .executed()
-            .then(executed => {
-                result.executed = executed;
-                return umzug!.pending();
-            })
-            .then(pending => {
-                result.pending = pending;
-                return result;
-            })
-            .then(res => {
-                let { executed, pending }: Result = res;
+        const status = {
+            current: getCurrent(executedMigrationsNames),
+            executed: executedMigrationsNames,
+            pending: toNames(pendingMigrations)
+        };
+        logger.info(JSON.stringify(status, null, 2));
 
-                executed = executed.map(m => ({ ...m, name: path.basename(m.file, migrationFileExtension) }));
-                pending = pending.map(m => ({ ...m, name: path.basename(m.file, migrationFileExtension) }));
-
-                const current = getCurrent(executed);
-                const status = {
-                    current,
-                    executed: executed?.map(m => m.file),
-                    pending: pending?.map(m => m.file)
-                };
-
-                logger.info(JSON.stringify(status, null, 2));
-
-                return { executed, pending };
-            });
+        return executedMigrationsNames;
     }
 
     function cmdDownTo() {
@@ -119,23 +104,22 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
             return Promise.reject(new Error('Migration name to down to has to be supplied'));
         }
 
-        return cmdStatus().then(result => {
-            const executed = result.executed.map(m => m.file);
-            if (executed.length === 0) {
+        return cmdStatus().then(executedMigrationsNames => {
+            if (executedMigrationsNames.length === 0) {
                 throw new Error('Already at initial state');
             }
 
-            const migrationIndex = executed.indexOf(migrationName);
+            const migrationIndex = executedMigrationsNames.indexOf(migrationName);
             if (migrationIndex < 0) {
                 // If its not found
                 throw new Error("Migration doesn't exist or was not executed");
             }
-            if (migrationIndex + 1 >= executed.length) {
+            if (migrationIndex + 1 >= executedMigrationsNames.length) {
                 // Or if its the last one so we cannot migrate to it - or actually one after it, then ignore)
                 logger.info('Migration to downgrade to is the last migration, ignoring');
                 return Promise.resolve([]);
             }
-            const migrationToMigrateTo = executed[migrationIndex + 1];
+            const migrationToMigrateTo = executedMigrationsNames[migrationIndex + 1];
             return umzug!.down({ to: migrationToMigrateTo });
         });
     }
@@ -164,7 +148,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
 
     function cmdCurrent() {
         return umzug!.executed().then(executed => {
-            return Promise.resolve(getCurrent(executed));
+            return Promise.resolve(getCurrent(toNames(executed)));
         });
     }
 

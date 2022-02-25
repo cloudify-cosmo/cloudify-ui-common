@@ -19,6 +19,7 @@ function wait(seconds: number) {
 }
 
 function addHooks(sequelize: Sequelize, restart: RestartFunction) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore afterDisconnect is static method
     sequelize.afterDisconnect(async (connection: unknown) => {
         const { _invalid: unexpectedDisconnection } = connection as { _invalid: boolean };
@@ -27,6 +28,7 @@ function addHooks(sequelize: Sequelize, restart: RestartFunction) {
         }
     });
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore beforeQuery is not included in TypeScript declaration for sequelize,
     // See: https://github.com/sequelize/sequelize/issues/11441
     sequelize.beforeQuery(async ({ isRecoveryCheck }: { isRecoveryCheck: boolean }) => {
