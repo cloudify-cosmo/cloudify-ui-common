@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import fs from 'fs';
-import request from 'request';
+import axios from 'axios';
 import { DataTypes, ModelCtor, Options, Sequelize, QueryTypes, QueryOptionsWithType } from 'sequelize';
 
 import type { LoggerFactory } from './logger';
@@ -98,22 +98,12 @@ function getDbModule(dbConfig: DbConfig, loggerFactory: LoggerFactory, modelFact
         }
         function isResponding(url: string) {
             const patroniUrl = `https://${getHostname(url)}:8008`;
-            return new Promise(resolve =>
-                request(
-                    {
-                        url: patroniUrl,
-                        strictSSL: false
-                    },
-                    (error, response) => {
-                        if (error) {
-                            logger.debug(`Error occured when requesting: ${url}.`, error);
-                            resolve(false);
-                        } else {
-                            resolve(response.statusCode === 200);
-                        }
-                    }
-                )
-            );
+            return axios(patroniUrl)
+                .then(response => response.status === 200)
+                .catch(error => {
+                    logger.debug(`Error occured when requesting: ${url}.`, error);
+                    return false;
+                });
         }
         async function findRespondingHost(urls: string[]) {
             let respondingHost = null;

@@ -1,4 +1,4 @@
-import request from 'request';
+import axios from 'axios';
 import fs from 'fs';
 import _ from 'lodash';
 import Sequelize, { ModelCtor } from 'sequelize';
@@ -8,7 +8,7 @@ import { LoggerFactory } from '../logger';
 
 jest.mock('sequelize');
 jest.mock('fs');
-jest.mock('request');
+jest.mock('axios');
 
 const fileContent = 'fileContent';
 (<jest.Mock>fs.readFileSync).mockImplementation(_.constant(fileContent));
@@ -141,14 +141,12 @@ describe('db init', () => {
         const sequelizeMock = mockSequelize();
         const url = 'postgres://url';
         const dbModule = getDbModuleWithMockedLogger(getOptions([url], { ca: 'caPath' }), mockLogger());
-        (<jest.Mock>(<unknown>request)).mockImplementationOnce((_options, handler) => handler(true));
-        (<jest.Mock>(<unknown>request)).mockImplementationOnce((_options, handler) =>
-            handler(false, { statusCode: 200 })
-        );
+        (<jest.Mock>(<unknown>axios)).mockRejectedValueOnce('');
+        (<jest.Mock>(<unknown>axios)).mockResolvedValueOnce({ status: 200 });
         return dbModule.init().then(() => {
-            expect(request).toHaveBeenCalledTimes(2);
-            expect((<jest.Mock>(<unknown>request)).mock.calls[0][0]).toMatchObject({ url: 'https://url:8008' });
-            expect((<jest.Mock>(<unknown>request)).mock.calls[1][0]).toMatchObject({ url: 'https://url:8008' });
+            expect(axios).toHaveBeenCalledTimes(2);
+            expect((<jest.Mock>(<unknown>axios)).mock.calls[0][0]).toEqual('https://url:8008');
+            expect((<jest.Mock>(<unknown>axios)).mock.calls[1][0]).toEqual('https://url:8008');
             expect((<jest.Mock>(<unknown>Sequelize)).mock.calls[0][0]).toBe(url);
             expect(sequelizeMock.authenticate).toHaveBeenCalled();
             expect(sequelizeMock.close).not.toHaveBeenCalled();
