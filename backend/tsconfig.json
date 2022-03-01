@@ -2,7 +2,7 @@
     "exclude": ["test", "lib", "typings"],
     "extends": "../configs/tsconfig.composite.json",
     "compilerOptions": {
-        "target": "es2019",
+        "target": "ESNext",
         "allowJs": false,
         "emitDeclarationOnly": false,
         "module": "CommonJS",

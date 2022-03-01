@@ -13,7 +13,7 @@
     "files": [
         "backend/lib",
         "backend/typings",
-        "backend/*.{ts,md}",
+        "backend/package.json",
         "cypress",
         "dist",
         "configs",
