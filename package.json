@@ -38,7 +38,7 @@
         "check-types:frontend": "tsc -p src --noEmit --emitDeclarationOnly false && tsc -p test --noEmit && tsc -p cypress --noEmit",
         "check-types:backend": "tsc -p backend --noEmit --emitDeclarationOnly false && tsc -p backend/test --noEmit",
         "compile-ts": "npm run compile-ts:frontend && npm run compile-ts:backend",
-        "compile-ts:frontend": "tsc -p cypress",
+        "compile-ts:frontend": "tsc -p src && tsc -p cypress",
         "compile-ts:backend": "tsc -p backend",
         "dev": "rollup -c -w",
         "generate-type-declarations": "tsc -p src && tsc -p backend",
