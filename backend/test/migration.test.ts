@@ -3,6 +3,7 @@ import { Umzug } from 'umzug';
 import runMigration from '../migration';
 import type { LoggerFactory } from '../logger';
 import type { DbModule } from '../db';
+import toMock from './toMock';
 
 jest.mock('umzug');
 
@@ -18,7 +19,7 @@ describe('migration', () => {
             down: jest.fn(_.constant(Promise.resolve())),
             up: jest.fn(_.constant(Promise.resolve()))
         };
-        (<jest.Mock>(<unknown>Umzug)).mockImplementation(() => umzugInstance);
+        toMock(Umzug).mockImplementation(() => umzugInstance);
         return umzugInstance;
     }
 
