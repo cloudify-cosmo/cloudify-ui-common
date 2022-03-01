@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import fs from 'fs';
+import { isArray, isString, merge } from 'lodash';
+import { readFileSync } from 'fs';
 import axios from 'axios';
 import { DataTypes, QueryTypes, Sequelize } from 'sequelize';
 import type { Model, ModelCtor, Options, QueryOptionsWithType } from 'sequelize';
@@ -72,7 +72,7 @@ function getDbModule(dbConfig: DbConfig, loggerFactory: LoggerFactory, modelFact
     function getDbOptions(configOptions: {
         dialectOptions?: { ssl?: { ca: string; cert: string; key: string } };
     }): Options {
-        const options = _.merge(
+        const options = merge(
             {
                 logging: (message: string) => logger.debug(message)
             },
@@ -80,13 +80,13 @@ function getDbModule(dbConfig: DbConfig, loggerFactory: LoggerFactory, modelFact
         );
 
         if (options.dialectOptions?.ssl) {
-            options.dialectOptions.ssl.ca = fs.readFileSync(options.dialectOptions.ssl.ca, { encoding: 'utf8' });
+            options.dialectOptions.ssl.ca = readFileSync(options.dialectOptions.ssl.ca, { encoding: 'utf8' });
             if (options.dialectOptions.ssl.cert) {
                 // If the cert is provided, the key will also be provided by the installer.
-                options.dialectOptions.ssl.cert = fs.readFileSync(options.dialectOptions.ssl.cert, {
+                options.dialectOptions.ssl.cert = readFileSync(options.dialectOptions.ssl.cert, {
                     encoding: 'utf8'
                 });
-                options.dialectOptions.ssl.key = fs.readFileSync(options.dialectOptions.ssl.key, { encoding: 'utf8' });
+                options.dialectOptions.ssl.key = readFileSync(options.dialectOptions.ssl.key, { encoding: 'utf8' });
             }
         }
 
@@ -136,9 +136,9 @@ function getDbModule(dbConfig: DbConfig, loggerFactory: LoggerFactory, modelFact
         const { url: dbUrls } = dbConfig;
         let selectedDbUrl = null;
 
-        if (dbUrls && _.isString(dbUrls)) {
+        if (dbUrls && isString(dbUrls)) {
             selectedDbUrl = dbUrls;
-        } else if (_.isArray(dbUrls)) {
+        } else if (isArray(dbUrls)) {
             logger.info('Selecting DB host...');
             selectedDbUrl = await findRespondingHost(dbUrls);
         } else {

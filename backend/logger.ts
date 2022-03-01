@@ -1,6 +1,6 @@
 import winston from 'winston';
-import _ from 'lodash';
-import fs from 'fs';
+import { chain, isString, last, trim, upperCase } from 'lodash';
+import { readFileSync } from 'fs';
 import events from 'events';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,7 +18,7 @@ function getArgsSupportedLogger(logger: winston.Logger): Logger {
             for (let index = 0; index < args.length; index += 1) {
                 if (args[index] instanceof Error) {
                     args[index] = args[index].stack;
-                } else if (!_.isString(args[index])) {
+                } else if (!isString(args[index])) {
                     try {
                         const stringifiedObject = JSON.stringify(args[index]);
                         args[index] = stringifiedObject;
@@ -67,12 +67,12 @@ function initLogging(config: LoggerConfig, defaultMaxListeners = 30): LoggerFact
      */
     function getLevelFromLoggingConf() {
         try {
-            return _.chain(fs.readFileSync(config.logLevelConf as string))
+            return chain(readFileSync(config.logLevelConf as string))
                 .split('\n')
-                .map(_.trim)
+                .map(trim)
                 .filter(fileEntry => !fileEntry.startsWith('#'))
                 .map(fileEntry => fileEntry.split(/\s+/))
-                .find(fileEntryWords => _.last(fileEntryWords) === config.serviceName)
+                .find(fileEntryWords => last(fileEntryWords) === config.serviceName)
                 .first()
                 .toLower()
                 .thru(l => (l === 'warning' ? 'warn' : l))
@@ -93,7 +93,7 @@ function initLogging(config: LoggerConfig, defaultMaxListeners = 30): LoggerFact
     ];
 
     const logFormat = winston.format.printf(
-        ({ level, message, label, timestamp }) => `[${timestamp}][${label}] ${_.upperCase(level)}: ${message}`
+        ({ level, message, label, timestamp }) => `[${timestamp}][${label}] ${upperCase(level)}: ${message}`
     );
 
     const level = (config.logLevelConf && getLevelFromLoggingConf()) || config.logLevel;

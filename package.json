@@ -14,6 +14,7 @@
         "backend/lib",
         "backend/typings",
         "backend/package.json",
+        "backend/*.ts",
         "cypress",
         "dist",
         "configs",
