@@ -196,16 +196,16 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
         }
 
         if (executedCmd)
-            (<Promise<void>>executedCmd)
+            (<Promise<string[]>>executedCmd)
                 .then(() => {
                     const doneStr = `${command.toUpperCase()} DONE`;
                     logger.info(doneStr);
                     logger.info('='.repeat(doneStr.length));
 
                     if (command !== 'status' && command !== 'reset-hard') {
-                        return (cmdStatus() as unknown) as Promise<void>;
+                        return cmdStatus();
                     }
-                    return Promise.resolve();
+                    return Promise.resolve([]);
                 })
                 .then(() => onMigrationEnd(0))
                 .catch((err: Error) => {
