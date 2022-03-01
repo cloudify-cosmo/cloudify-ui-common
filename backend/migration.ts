@@ -153,7 +153,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
     }
 
     function cmdReset() {
-        return umzug!.down({ to: '0' });
+        return umzug!.down({ to: 0 });
     }
 
     function handleCommand() {

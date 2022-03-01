@@ -43,10 +43,30 @@ function getArgsSupportedLogger(logger: winston.Logger): Logger {
 }
 
 type LoggerConfig = {
+    /**
+     * path to manager's logging.conf file
+     */
     logLevelConf?: string;
+
+    /**
+     * default log level to be used when `logLevelConf` is not set, file defined by
+     * `logLevelConf` does not exist, or the file exists but contains no entry for the given `serviceName`
+     */
     logLevel?: string;
+
+    /**
+     * path to main log file
+     */
     logsFile?: string;
+
+    /**
+     * path to errors log file
+     */
     errorsFile?: string;
+
+    /**
+     * service name to look for in file specified by `logLevelConf`
+     */
     serviceName?: string;
 };
 /**
