@@ -1,6 +1,6 @@
 import fs from 'fs';
 import tmp from 'tmp';
-import { initLogging } from '..';
+import initLogging from '../logger';
 
 jest.mock('fs', () => ({ ...jest.requireActual('fs'), readFileSync: jest.fn() }));
 

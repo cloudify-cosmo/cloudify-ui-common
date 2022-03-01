@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { Umzug } from 'umzug';
-import { runMigration } from '..';
+import runMigration from '../migration';
 import type { LoggerFactory } from '../logger';
 import type { DbModule } from '../db';
 

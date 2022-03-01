@@ -1,10 +1,11 @@
 import axios from 'axios';
 import fs from 'fs';
 import _ from 'lodash';
-import Sequelize, { ModelCtor } from 'sequelize';
-import { getDbModule } from '..';
-import { DbConfig } from '../db';
-import { LoggerFactory } from '../logger';
+import Sequelize from 'sequelize';
+import type { ModelCtor } from 'sequelize';
+import getDbModule from '../db';
+import type { DbConfig } from '../db';
+import type { LoggerFactory } from '../logger';
 
 jest.mock('sequelize');
 jest.mock('fs');
