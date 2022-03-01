@@ -1,5 +1,5 @@
 {
-    "exclude": ["test"],
+    "exclude": ["test", "lib", "typings"],
     "extends": "../configs/tsconfig.composite.json",
     "compilerOptions": {
         "target": "es2019",
