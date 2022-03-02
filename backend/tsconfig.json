@@ -1,8 +1,13 @@
 {
+    "exclude": ["test", "lib", "typings"],
     "extends": "../configs/tsconfig.composite.json",
     "compilerOptions": {
+        "target": "ESNext",
+        "allowJs": false,
+        "emitDeclarationOnly": false,
         "module": "CommonJS",
+        "outDir": "./lib",
         "declarationDir": "./typings"
     },
-    "exclude": ["./test", "./typings"]
+
 }

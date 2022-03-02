@@ -1,5 +1,14 @@
 {
+    "plugins": [
+        "jest"
+    ],
     "extends": [
         "plugin:jest/recommended"
-    ]
+    ],
+    "rules": {
+        "no-console": "off"
+    },
+    "env": {
+        "jest": true
+    }
 }

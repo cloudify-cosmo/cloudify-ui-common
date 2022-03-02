@@ -1,17 +1,24 @@
-const winston = require('winston');
-const _ = require('lodash');
-const fs = require('fs');
-const events = require('events');
+import winston from 'winston';
+import { chain, isString, last, trim, upperCase } from 'lodash';
+import { readFileSync } from 'fs';
+import events from 'events';
 
-function getArgsSupportedLogger(logger) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type LoggerArgs = any[];
+export type Logger = winston.Logger &
+    Record<'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly' | 'log', (...args: LoggerArgs) => winston.Logger>;
+export type LoggerFactory = { getLogger: (category: string) => Logger; logErrorsOnly: () => void };
+
+function getArgsSupportedLogger(logger: winston.Logger): Logger {
     // This is workaround for no support for multi-arguments logging, e.g.: logger.info('Part 1', 'Part 2')
     // See: https://github.com/winstonjs/winston/issues/1614
-    const wrapper = original => {
-        return (...args) => {
+    const wrapper = (original: winston.LeveledLogMethod) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return (...args: LoggerArgs) => {
             for (let index = 0; index < args.length; index += 1) {
                 if (args[index] instanceof Error) {
                     args[index] = args[index].stack;
-                } else if (!_.isString(args[index])) {
+                } else if (!isString(args[index])) {
                     try {
                         const stringifiedObject = JSON.stringify(args[index]);
                         args[index] = stringifiedObject;
@@ -20,7 +27,7 @@ function getArgsSupportedLogger(logger) {
                     }
                 }
             }
-            original(args.join(' '));
+            return original(args.join(' '));
         };
     };
 
@@ -35,21 +42,43 @@ function getArgsSupportedLogger(logger) {
     return logger;
 }
 
+type LoggerConfig = {
+    /**
+     * path to manager's logging.conf file
+     */
+    logLevelConf?: string;
+
+    /**
+     * default log level to be used when `logLevelConf` is not set, file defined by
+     * `logLevelConf` does not exist, or the file exists but contains no entry for the given `serviceName`
+     */
+    logLevel?: string;
+
+    /**
+     * path to main log file
+     */
+    logsFile?: string;
+
+    /**
+     * path to errors log file
+     */
+    errorsFile?: string;
+
+    /**
+     * service name to look for in file specified by `logLevelConf`
+     */
+    serviceName?: string;
+};
 /**
  * Initializes logging framework according to the given config
  *
- * @param {Object} config configuration object
- * @param {string} config.logLevelConf path to manager's logging.conf file
- * @param {string} config.logLevel default log level to be used when `logLevelConf` is not set, file defined by
- * `logLevelConf` does not exist, or the file exists but contains no entry for the given `serviceName`
- * @param {string} config.logsFile path to main log file
- * @param {string} config.errorsFile path to errors log file
- * @param {string} config.serviceName service name to look for in file specified by `logLevelConf
+ * @param {LoggerConfig} config configuration object
  * @param {number} defaultMaxListeners optional number of default event listeners to be assigned to
  * EventEmitter.defaultMaxListeners, should be set to at least the number of logging categories to be used, defaults to 30
- * @returns {Object} object containing `getLogger` and `logErrorsOnly` functions
+ *
+ * @returns {LoggerFactory} object containing `getLogger` and `logErrorsOnly` functions
  */
-function initLogging(config, defaultMaxListeners = 30) {
+function initLogging(config: LoggerConfig, defaultMaxListeners = 30): LoggerFactory {
     events.EventEmitter.defaultMaxListeners = defaultMaxListeners;
 
     /*
@@ -58,12 +87,12 @@ function initLogging(config, defaultMaxListeners = 30) {
      */
     function getLevelFromLoggingConf() {
         try {
-            return _.chain(fs.readFileSync(config.logLevelConf))
+            return chain(readFileSync(config.logLevelConf as string))
                 .split('\n')
-                .map(_.trim)
+                .map(trim)
                 .filter(fileEntry => !fileEntry.startsWith('#'))
                 .map(fileEntry => fileEntry.split(/\s+/))
-                .find(fileEntryWords => _.last(fileEntryWords) === config.serviceName)
+                .find(fileEntryWords => last(fileEntryWords) === config.serviceName)
                 .first()
                 .toLower()
                 .thru(l => (l === 'warning' ? 'warn' : l))
@@ -84,7 +113,7 @@ function initLogging(config, defaultMaxListeners = 30) {
     ];
 
     const logFormat = winston.format.printf(
-        ({ level, message, label, timestamp }) => `[${timestamp}][${label}] ${_.upperCase(level)}: ${message}`
+        ({ level, message, label, timestamp }) => `[${timestamp}][${label}] ${upperCase(level)}: ${message}`
     );
 
     const level = (config.logLevelConf && getLevelFromLoggingConf()) || config.logLevel;
@@ -93,9 +122,10 @@ function initLogging(config, defaultMaxListeners = 30) {
      * Returns logger for given category
      *
      * @param {string} category category
-     * @returns {Object} winston logger instance
+     *
+     * @returns {Logger} enhanced winston logger instance
      */
-    function getLogger(category) {
+    function getLogger(category: string): Logger {
         if (winston.loggers.has(category)) {
             return winston.loggers.get(category);
         }
@@ -128,4 +158,4 @@ function initLogging(config, defaultMaxListeners = 30) {
     };
 }
 
-module.exports = initLogging;
+export default initLogging;

@@ -4,5 +4,7 @@ dist
 node_modules
 coverage
 typings
+backend/lib
+backend/typings
 cypress/plugins
 cypress/support

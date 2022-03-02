@@ -1,9 +1,8 @@
-/* eslint-disable no-console */
-jest.mock('fs', () => ({ ...jest.requireActual('fs'), readFileSync: jest.fn() }));
+import fs from 'fs';
+import tmp from 'tmp';
+import initLogging from '../logger';
 
-const fs = require('fs');
-const tmp = require('tmp');
-const { initLogging } = require('..');
+jest.mock('fs', () => ({ ...jest.requireActual('fs'), readFileSync: jest.fn() }));
 
 const tmpFile = tmp.tmpNameSync();
 
@@ -13,8 +12,12 @@ const commonConfig = Object.freeze({
 });
 
 describe('logger', () => {
+    function mockConsoleLog() {
+        global.console = <typeof console>(<unknown>{ log: jest.fn() });
+    }
+
     it('should read log level configuration from logging.conf', () => {
-        fs.readFileSync.mockReturnValue(`silly cloudify-composer`);
+        (<jest.Mock>fs.readFileSync).mockReturnValue(`silly cloudify-composer`);
         const logger = initLogging({
             logLevelConf: 'dummy_but_not_empty',
             serviceName: 'cloudify-composer',
@@ -24,7 +27,7 @@ describe('logger', () => {
     });
 
     it('should read log level configuration from logging.conf and handle `warning` level', () => {
-        fs.readFileSync.mockReturnValue(`warning cloudify-composer`);
+        (<jest.Mock>fs.readFileSync).mockReturnValue(`warning cloudify-composer`);
         const logger = initLogging({
             logLevelConf: 'dummy_but_not_empty',
             serviceName: 'cloudify-composer',
@@ -40,7 +43,7 @@ describe('logger', () => {
     });
 
     it("should use default level when logging.conf can't be read", () => {
-        fs.readFileSync.mockImplementation(() => {
+        (<jest.Mock>fs.readFileSync).mockImplementation(() => {
             throw Error();
         });
         const logLevel = 'silly';
@@ -62,7 +65,7 @@ describe('logger', () => {
 
     it('should handle multiple log arguments', () => {
         const logger = initLogging(commonConfig).getLogger('multiple');
-        global.console = { log: jest.fn() };
+        mockConsoleLog();
         const arg1 = 'firstArg';
         const arg2 = Error();
         arg2.stack = 'secondArgStack';
@@ -72,7 +75,7 @@ describe('logger', () => {
 
     it('should handle plain objects and array arguments', () => {
         const logger = initLogging(commonConfig).getLogger('objects');
-        global.console = { log: jest.fn() };
+        mockConsoleLog();
 
         logger.info({});
         expect(console.log).toHaveBeenLastCalledWith(expect.stringContaining('{}'));
@@ -89,7 +92,7 @@ describe('logger', () => {
 
     it('should handle primitive arguments', () => {
         const logger = initLogging(commonConfig).getLogger('parsability');
-        global.console = { log: jest.fn() };
+        mockConsoleLog();
 
         logger.info(1.45, true, 'test', null, undefined);
         expect(console.log).toHaveBeenLastCalledWith(expect.stringContaining('1.45 true test null '));
@@ -97,9 +100,9 @@ describe('logger', () => {
 
     it('should handle arguments not parsable to string', () => {
         const logger = initLogging(commonConfig).getLogger('parsability');
-        global.console = { log: jest.fn() };
+        mockConsoleLog();
 
-        const circularObject = {};
+        const circularObject: { ref: unknown } = { ref: undefined };
         circularObject.ref = circularObject;
         logger.info(circularObject);
         expect(console.log).toHaveBeenLastCalledWith(expect.stringContaining('<NotParsable>'));
