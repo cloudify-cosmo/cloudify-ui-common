@@ -2,10 +2,10 @@ import { isArray, isString, merge } from 'lodash';
 import { readFileSync } from 'fs';
 import axios from 'axios';
 import { DataTypes, QueryTypes, Sequelize } from 'sequelize';
-import type { Model, ModelCtor, Options, QueryOptionsWithType } from 'sequelize';
+import type { Model, ModelStatic, Options, QueryOptionsWithType } from 'sequelize';
 import type { LoggerFactory } from './logger';
 
-type Db = { sequelize?: Sequelize } & Record<string, ModelCtor<any>>;
+type Db = { sequelize?: Sequelize } & Record<string, ModelStatic<any>>;
 type RestartFunction = (reason: string) => void;
 export type DbModule = { db: Db; init: () => Promise<void> };
 
@@ -48,7 +48,7 @@ function addHooks(sequelize: Sequelize, restart: RestartFunction) {
 }
 
 export type DbConfig = { url: string | string[]; options: Pick<Options, 'dialectOptions'> };
-export type ModelFactory<M extends Model = any> = (sequelize: Sequelize, dataTypes: typeof DataTypes) => ModelCtor<M>;
+export type ModelFactory<M extends Model = any> = (sequelize: Sequelize, dataTypes: typeof DataTypes) => ModelStatic<M>;
 export type ModelFactories = ModelFactory<any>[];
 /**
  * Constructs new object containing `init` function and `db` object

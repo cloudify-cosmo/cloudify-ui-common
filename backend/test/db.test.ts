@@ -2,7 +2,7 @@ import axios from 'axios';
 import fs from 'fs';
 import _ from 'lodash';
 import Sequelize from 'sequelize';
-import type { ModelCtor } from 'sequelize';
+import type { ModelStatic } from 'sequelize';
 import getDbModule from '../db';
 import type { DbConfig } from '../db';
 import type { LoggerFactory } from '../logger';
@@ -16,7 +16,7 @@ const fileContent = 'fileContent';
 (<jest.Mock>fs.readFileSync).mockImplementation(_.constant(fileContent));
 
 describe('db init', () => {
-    const model = { name: 'modelName' } as ModelCtor<never>;
+    const model = { name: 'modelName' } as ModelStatic<never>;
 
     function mockSequelize() {
         const sequelizeMock = {
