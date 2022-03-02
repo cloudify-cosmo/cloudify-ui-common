@@ -1,8 +1,9 @@
 import { Umzug, SequelizeStorage } from 'umzug';
 import { chain, each, map, last } from 'lodash';
+import { DataTypes } from 'sequelize';
 import type { MigrationMeta } from 'umzug';
-import type { Sequelize } from 'sequelize';
-import type { LoggerFactory } from './logger';
+import type { Sequelize, QueryInterface } from 'sequelize';
+import type { Logger, LoggerFactory } from './logger';
 import type { DbModule } from './db';
 
 function onMigrationEnd(exitCode: number) {
@@ -25,6 +26,9 @@ function getArg(n: number) {
         .value();
 }
 
+type DataTypes = typeof DataTypes;
+export type UpDownFunction = (queryInterface: QueryInterface, dataTypes: DataTypes, logger: Logger) => Promise<any>;
+
 /**
  * Runs migration script
  *
@@ -46,7 +50,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
             storage: new SequelizeStorage({ sequelize }),
 
             migrations: {
-                glob: './migrations/*.js',
+                glob: './migrations/*.ts',
                 resolve({ name, path }) {
                     // eslint-disable-next-line global-require,import/no-dynamic-require,@typescript-eslint/no-var-requires
                     const migration = require(path!);
