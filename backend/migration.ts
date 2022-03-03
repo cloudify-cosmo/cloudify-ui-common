@@ -11,8 +11,8 @@ function onMigrationEnd(exitCode: number) {
     process.exit(exitCode);
 }
 
-function withoutExtension(migrationName: string) {
-    return migrationName.replace(/\.(ts|js)$/, '');
+function changeExtensionToJs(migrationName: string) {
+    return migrationName.replace(/\.ts$/, '.js');
 }
 
 function toNames(migrations: MigrationMeta[] | undefined) {
@@ -70,7 +70,8 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
                         }
                     ];
                     return {
-                        name: withoutExtension(name),
+                        // NOTE: Always changing extension to .js to maintain backward compatibility
+                        name: changeExtensionToJs(name),
                         up: async () => migration.up(...params),
                         down: async () => migration.down(...params)
                     };
