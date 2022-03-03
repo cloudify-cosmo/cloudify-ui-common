@@ -11,6 +11,10 @@ function onMigrationEnd(exitCode: number) {
     process.exit(exitCode);
 }
 
+function withoutExtension(migrationName: string) {
+    return migrationName.replace(/\.(ts|js)$/, '');
+}
+
 function toNames(migrations: MigrationMeta[] | undefined) {
     return map(migrations, 'name');
 }
@@ -66,7 +70,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
                         }
                     ];
                     return {
-                        name,
+                        name: withoutExtension(name),
                         up: async () => migration.up(...params),
                         down: async () => migration.down(...params)
                     };
