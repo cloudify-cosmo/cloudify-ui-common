@@ -30,8 +30,11 @@ function getArg(n: number) {
         .value();
 }
 
-type DataTypes = typeof DataTypes;
-export type UpDownFunction = (queryInterface: QueryInterface, dataTypes: DataTypes, logger: Logger) => Promise<any>;
+export type UpDownFunction = (
+    queryInterface: QueryInterface,
+    dataTypes: typeof DataTypes,
+    logger: Logger
+) => Promise<any>;
 
 /**
  * Runs migration script
