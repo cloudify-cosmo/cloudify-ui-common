@@ -73,7 +73,11 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
                         }
                     ];
                     return {
-                        // NOTE: Always changing extension to .js to maintain backward compatibility
+                        // NOTE: Migration names are the same as migration filenames. These names are stored in
+                        // `SequelizeMeta` DB table. That table is used by Umzug to detect which migration files were
+                        // already executed. As many migrations were introduced before changing codebase to
+                        // TypeScript, they have ".js" ending. To maintain backward compatibility with old
+                        // DB snapshots, migration names are changed to have always ".js" ending.
                         name: changeExtensionToJs(name),
                         up: async () => migration.up(...params),
                         down: async () => migration.down(...params)
