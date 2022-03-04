@@ -1,13 +1,18 @@
 import { Umzug, SequelizeStorage } from 'umzug';
 import { chain, each, map, last } from 'lodash';
+import { DataTypes } from 'sequelize';
 import type { MigrationMeta } from 'umzug';
-import type { Sequelize } from 'sequelize';
-import type { LoggerFactory } from './logger';
+import type { Sequelize, QueryInterface } from 'sequelize';
+import type { Logger, LoggerFactory } from './logger';
 import type { DbModule } from './db';
 
 function onMigrationEnd(exitCode: number) {
     // eslint-disable-next-line no-process-exit
     process.exit(exitCode);
+}
+
+function changeExtensionToJs(migrationName: string) {
+    return migrationName.replace(/\.ts$/, '.js');
 }
 
 function toNames(migrations: MigrationMeta[] | undefined) {
@@ -24,6 +29,12 @@ function getArg(n: number) {
         .trim()
         .value();
 }
+
+export type UpDownFunction = (
+    queryInterface: QueryInterface,
+    dataTypes: typeof DataTypes,
+    logger: Logger
+) => Promise<any>;
 
 /**
  * Runs migration script
@@ -46,7 +57,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
             storage: new SequelizeStorage({ sequelize }),
 
             migrations: {
-                glob: './migrations/*.js',
+                glob: './migrations/*.ts',
                 resolve({ name, path }) {
                     // eslint-disable-next-line global-require,import/no-dynamic-require,@typescript-eslint/no-var-requires
                     const migration = require(path!);
@@ -62,7 +73,12 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
                         }
                     ];
                     return {
-                        name,
+                        // NOTE: Migration names are the same as migration filenames. These names are stored in
+                        // `SequelizeMeta` DB table. That table is used by Umzug to detect which migration files were
+                        // already executed. As many migrations were introduced before changing codebase to
+                        // TypeScript, they have ".js" ending. To maintain backward compatibility with old
+                        // DB snapshots, migration names are changed to have always ".js" ending.
+                        name: changeExtensionToJs(name),
                         up: async () => migration.up(...params),
                         down: async () => migration.down(...params)
                     };
