@@ -33,6 +33,7 @@ pipeline {
       steps {
         container('node'){
           dir("${env.WORKSPACE}/${env.PROJECT}") {
+            sh 'npm --v'
             echo "Install dependencies"
             sh 'npm ci --prefer-offline'
 
