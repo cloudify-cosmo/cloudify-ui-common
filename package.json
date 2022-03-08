@@ -25,9 +25,6 @@
         "styles",
         "typings"
     ],
-    "bin": {
-        "run-system-tests": "scripts/run-system-tests.sh"
-    },
     "main": "dist/cloudify-ui-common.cjs.js",
     "module": "dist/cloudify-ui-common.esm.js",
     "browser": "dist/cloudify-ui-common.min.js",
