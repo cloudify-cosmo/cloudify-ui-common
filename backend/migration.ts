@@ -90,7 +90,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
 
         function logUmzugEvent(eventName: string) {
             return (eventData: any) => {
-                logger.info(`${eventName}: ${eventData}`);
+                logger.info(`${eventName}:`, eventData);
             };
         }
         umzug.on('migrating', logUmzugEvent('migrating'));
