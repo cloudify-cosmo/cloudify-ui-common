@@ -27,11 +27,15 @@ const commands = {
     getAdminToken: () =>
         cy
             .request({
-                method: 'GET',
+                method: 'POST',
                 url: '/console/sp/tokens',
                 headers: {
                     Authorization: `Basic ${btoa('admin:admin')}`,
                     'Content-Type': 'application/json'
+                },
+                body: {
+                    description: 'UI tests authentication token',
+                    expiration_date: '+10h'
                 }
             })
             .then(response => response.body.value)
