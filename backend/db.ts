@@ -102,7 +102,7 @@ function getDbModule(dbConfig: DbConfig, loggerFactory: LoggerFactory, modelFact
             return axios(patroniUrl)
                 .then(response => response.status === 200)
                 .catch(error => {
-                    logger.debug(`Error occured when requesting: ${url}.`, error);
+                    logger.error(`Error occured when requesting: ${patroniUrl}.`, error);
                     return false;
                 });
         }
