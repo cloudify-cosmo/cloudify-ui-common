@@ -1,6 +1,7 @@
 import { isArray, isString, merge } from 'lodash';
 import { readFileSync } from 'fs';
 import axios from 'axios';
+import https from 'https';
 import { DataTypes, QueryTypes, Sequelize } from 'sequelize';
 import type { Model, ModelStatic, Options, QueryOptionsWithType } from 'sequelize';
 import type { LoggerFactory } from './logger';
@@ -47,7 +48,16 @@ function addHooks(sequelize: Sequelize, restart: RestartFunction) {
     });
 }
 
-export type DbConfig = { url: string | string[]; options: Pick<Options, 'dialectOptions'> };
+export type DbOptions = Options & {
+    dialectOptions?: {
+        ssl?: {
+            ca: string;
+            cert: string;
+            key: string;
+        };
+    };
+};
+export type DbConfig = { url: string | string[]; options: DbOptions };
 export type ModelFactory<M extends Model = any> = (sequelize: Sequelize, dataTypes: typeof DataTypes) => ModelStatic<M>;
 export type ModelFactories = ModelFactory<any>[];
 /**
@@ -69,9 +79,7 @@ function getDbModule(dbConfig: DbConfig, loggerFactory: LoggerFactory, modelFact
         });
     }
 
-    function getDbOptions(configOptions: {
-        dialectOptions?: { ssl?: { ca: string; cert: string; key: string } };
-    }): Options {
+    function getDbOptions(configOptions: DbOptions): DbOptions {
         const options = merge(
             {
                 logging: (message: string) => logger.debug(message)
@@ -97,9 +105,16 @@ function getDbModule(dbConfig: DbConfig, loggerFactory: LoggerFactory, modelFact
         function getHostname(dbUrl: string) {
             return new URL(dbUrl).hostname;
         }
+        function getCAFile() {
+            const { dialectOptions } = getDbOptions(dbConfig.options);
+            return dialectOptions?.ssl?.ca;
+        }
         function isResponding(url: string) {
             const patroniUrl = `https://${getHostname(url)}:8008`;
-            return axios(patroniUrl)
+            const caFile = getCAFile();
+            const config = caFile ? { httpsAgent: new https.Agent({ ca: caFile }) } : undefined;
+
+            return axios(patroniUrl, config)
                 .then(response => response.status === 200)
                 .catch(error => {
                     logger.error(`Error occured when requesting: ${patroniUrl}.`, error);
