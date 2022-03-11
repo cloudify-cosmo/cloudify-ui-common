@@ -3,7 +3,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import Sequelize from 'sequelize';
 import type { ModelStatic } from 'sequelize';
-import getDbModule from '../db';
+import getDbModule, { DialectOptions } from '../db';
 import type { DbConfig } from '../db';
 import type { LoggerFactory } from '../logger';
 import toMock from './toMock';
@@ -37,7 +37,7 @@ describe('db init', () => {
         };
     }
 
-    function getOptions(url: string | string[] = '', ssl = { ca: 'ca', cert: 'cert', key: 'key' }): DbConfig {
+    function getOptions(url: string | string[] = '', ssl: DialectOptions['ssl'] = { ca: 'ca' }): DbConfig {
         return {
             url,
             options: {
@@ -65,7 +65,10 @@ describe('db init', () => {
         const sequelizeMock = mockSequelize();
         sequelizeMock.authenticate.mockImplementation(async () => Promise.reject(new Error('Cannot connect')));
         const logger = mockLogger();
-        const dbModule = getDbModuleWithMockedLogger(getOptions('postgres://url'), logger);
+        const dbModule = getDbModuleWithMockedLogger(
+            getOptions('postgres://url', { ca: 'caPath', cert: 'certPath', key: 'keyPath' }),
+            logger
+        );
         return dbModule.init().then(() => {
             expect(sequelizeMock.beforeQuery).toHaveBeenCalled();
             expect(sequelizeMock.afterDisconnect).toHaveBeenCalled();
@@ -148,7 +151,7 @@ describe('db init', () => {
             })
         });
         const expectedSequelizeOptions = expect.objectContaining({
-            dialectOptions: { ssl: { ca: 'fileContent', cert: 'fileContent', key: 'fileContent' } },
+            dialectOptions: { ssl: { ca: 'fileContent' } },
             logging: expect.any(Function)
         });
 

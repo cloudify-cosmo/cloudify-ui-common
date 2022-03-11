@@ -48,16 +48,20 @@ function addHooks(sequelize: Sequelize, restart: RestartFunction) {
     });
 }
 
-export type DbOptions = Options & {
-    dialectOptions?: {
-        ssl?: {
-            ca: string;
-            cert: string;
-            key: string;
-        };
+export interface DialectOptions {
+    ssl?: {
+        ca: string;
+        cert?: string;
+        key?: string;
     };
-};
-export type DbConfig = { url: string | string[]; options: DbOptions };
+}
+export interface DbOptions extends Options {
+    dialectOptions?: DialectOptions;
+}
+export interface DbConfig {
+    url: string | string[];
+    options: DbOptions;
+}
 export type ModelFactory<M extends Model = any> = (sequelize: Sequelize, dataTypes: typeof DataTypes) => ModelStatic<M>;
 export type ModelFactories = ModelFactory<any>[];
 /**
@@ -89,7 +93,7 @@ function getDbModule(dbConfig: DbConfig, loggerFactory: LoggerFactory, modelFact
 
         if (options.dialectOptions?.ssl) {
             options.dialectOptions.ssl.ca = readFileSync(options.dialectOptions.ssl.ca, { encoding: 'utf8' });
-            if (options.dialectOptions.ssl.cert) {
+            if (options.dialectOptions.ssl.cert && options.dialectOptions.ssl.key) {
                 // If the cert is provided, the key will also be provided by the installer.
                 options.dialectOptions.ssl.cert = readFileSync(options.dialectOptions.ssl.cert, {
                     encoding: 'utf8'
@@ -106,8 +110,8 @@ function getDbModule(dbConfig: DbConfig, loggerFactory: LoggerFactory, modelFact
             return new URL(dbUrl).hostname;
         }
         function getCAFile() {
-            const { dialectOptions } = getDbOptions(dbConfig.options);
-            return dialectOptions?.ssl?.ca;
+            const { dialectOptions } = dbConfig.options;
+            return dialectOptions?.ssl ? readFileSync(dialectOptions.ssl.ca, { encoding: 'utf8' }) : undefined;
         }
         function isResponding(url: string) {
             const patroniUrl = `https://${getHostname(url)}:8008`;
