@@ -3,7 +3,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import Sequelize from 'sequelize';
 import type { ModelStatic } from 'sequelize';
-import getDbModule from '../db';
+import getDbModule, { DialectOptions } from '../db';
 import type { DbConfig } from '../db';
 import type { LoggerFactory } from '../logger';
 import toMock from './toMock';
@@ -37,7 +37,7 @@ describe('db init', () => {
         };
     }
 
-    function getOptions(url: string | string[] = '', ssl = {}): DbConfig {
+    function getOptions(url: string | string[] = '', ssl: DialectOptions['ssl'] = { ca: 'ca' }): DbConfig {
         return {
             url,
             options: {
@@ -66,7 +66,7 @@ describe('db init', () => {
         sequelizeMock.authenticate.mockImplementation(async () => Promise.reject(new Error('Cannot connect')));
         const logger = mockLogger();
         const dbModule = getDbModuleWithMockedLogger(
-            getOptions('postgres://url', { cert: 'certPath', ca: 'caPath' }),
+            getOptions('postgres://url', { ca: 'caPath', cert: 'certPath', key: 'keyPath' }),
             logger
         );
         return dbModule.init().then(() => {
@@ -92,7 +92,7 @@ describe('db init', () => {
 
     it('should handle string url and connection success', () => {
         const sequelizeMock = mockSequelize();
-        const dbModule = getDbModuleWithMockedLogger(getOptions('postgres://url', { ca: 'caPath' }), mockLogger());
+        const dbModule = getDbModuleWithMockedLogger(getOptions('postgres://url'), mockLogger());
         return dbModule.init().then(() => {
             expect(sequelizeMock.beforeQuery).toHaveBeenCalled();
             expect(sequelizeMock.afterDisconnect).toHaveBeenCalled();
@@ -102,7 +102,7 @@ describe('db init', () => {
 
     it('should restart after disconnection', () => {
         const sequelizeMock = mockSequelize();
-        const dbModule = getDbModuleWithMockedLogger(getOptions('postgres://url', { ca: 'caPath' }), mockLogger());
+        const dbModule = getDbModuleWithMockedLogger(getOptions('postgres://url'), mockLogger());
         return dbModule
             .init()
             .then(() => {
@@ -118,7 +118,7 @@ describe('db init', () => {
 
     it('should restart when PG is in recovery', () => {
         const sequelizeMock = mockSequelize();
-        const dbModule = getDbModuleWithMockedLogger(getOptions('postgres://url', { ca: 'caPath' }), mockLogger());
+        const dbModule = getDbModuleWithMockedLogger(getOptions('postgres://url'), mockLogger());
         return dbModule
             .init()
             .then(() => {
@@ -142,14 +142,26 @@ describe('db init', () => {
     it('should handle array of URLs', () => {
         const sequelizeMock = mockSequelize();
         const url = 'postgres://url';
-        const dbModule = getDbModuleWithMockedLogger(getOptions([url], { ca: 'caPath' }), mockLogger());
+        const dbModule = getDbModuleWithMockedLogger(getOptions([url]), mockLogger());
+        const expectedAxiosConfig = expect.objectContaining({
+            httpsAgent: expect.objectContaining({
+                options: expect.objectContaining({
+                    ca: expect.stringMatching('fileContent')
+                })
+            })
+        });
+        const expectedSequelizeOptions = expect.objectContaining({
+            dialectOptions: { ssl: { ca: 'fileContent' } },
+            logging: expect.any(Function)
+        });
+
         toMock(axios).mockRejectedValueOnce('');
         toMock(axios).mockResolvedValueOnce({ status: 200 });
         return dbModule.init().then(() => {
             expect(axios).toHaveBeenCalledTimes(2);
-            expect(toMock(axios).mock.calls[0][0]).toEqual('https://url:8008');
-            expect(toMock(axios).mock.calls[1][0]).toEqual('https://url:8008');
-            expect(toMock(Sequelize).mock.calls[0][0]).toBe(url);
+            expect(axios).toHaveBeenNthCalledWith(1, 'https://url:8008', expectedAxiosConfig);
+            expect(axios).toHaveBeenNthCalledWith(2, 'https://url:8008', expectedAxiosConfig);
+            expect(Sequelize).toHaveBeenCalledWith(url, expectedSequelizeOptions);
             expect(sequelizeMock.authenticate).toHaveBeenCalled();
             expect(sequelizeMock.close).not.toHaveBeenCalled();
         });
