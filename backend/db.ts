@@ -109,14 +109,14 @@ function getDbModule(dbConfig: DbConfig, loggerFactory: LoggerFactory, modelFact
         function getHostname(dbUrl: string) {
             return new URL(dbUrl).hostname;
         }
-        function getCAFile() {
+        function getCertificateAuthority() {
             const { dialectOptions } = dbConfig.options;
             return dialectOptions?.ssl ? readFileSync(dialectOptions.ssl.ca, { encoding: 'utf8' }) : undefined;
         }
         function isResponding(url: string) {
             const patroniUrl = `https://${getHostname(url)}:8008`;
-            const caFile = getCAFile();
-            const config = caFile ? { httpsAgent: new https.Agent({ ca: caFile }) } : undefined;
+            const ca = getCertificateAuthority();
+            const config = ca ? { httpsAgent: new https.Agent({ ca }) } : undefined;
 
             return axios(patroniUrl, config)
                 .then(response => response.status === 200)
