@@ -35,7 +35,8 @@ TOTAL_FILES_COUNT=$(($JS_FILES_COUNT+$TS_FILES_COUNT))
 function print_summary {
     local name=$1
     local files_count=$2
-    echo "$name: $files_count / $TOTAL_FILES_COUNT (`bc <<< "scale=2; $files_count * 100 / $TOTAL_FILES_COUNT"`%)"
+    local percentage=`awk -- 'BEGIN{printf "%.2f\n", ARGV[1]/ARGV[2]*100}' "$files_count" "$TOTAL_FILES_COUNT"`
+    echo "$name: $files_count / $TOTAL_FILES_COUNT ($percentage%)"
 }
 
 TS_FULLY_MIGRATED_COUNT=$(($TS_FILES_COUNT - $TS_NOCHECK_COUNT))
