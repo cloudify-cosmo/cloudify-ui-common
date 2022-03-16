@@ -1,23 +1,25 @@
-/* eslint-disable no-console */
+import _ from 'lodash';
+import { Umzug } from 'umzug';
+import runMigration from '../migration';
+import type { LoggerFactory } from '../logger';
+import type { DbModule } from '../db';
+import toMock from './toMock';
+
 jest.mock('umzug');
 
-const _ = require('lodash');
-const umzug = require('umzug');
-const { runMigration } = require('..');
-
 describe('migration', () => {
-    function mockUmzug(executedMigrations = [], pendingMigrations = []) {
-        function toMigrations(migrationFileNames) {
-            return migrationFileNames.map(migrationFile => ({ file: migrationFile }));
+    function mockUmzug(executedMigrationsNames: string[] = [], pendingMigrationsNames: string[] = []) {
+        function toMigrations(migrationsNames: string[]) {
+            return migrationsNames.map(migrationName => ({ name: migrationName }));
         }
         const umzugInstance = {
             on: _.noop,
-            executed: jest.fn(() => Promise.resolve(toMigrations(executedMigrations))),
-            pending: jest.fn(() => Promise.resolve(toMigrations(pendingMigrations))),
+            executed: jest.fn(() => Promise.resolve(toMigrations(executedMigrationsNames))),
+            pending: jest.fn(() => Promise.resolve(toMigrations(pendingMigrationsNames))),
             down: jest.fn(_.constant(Promise.resolve())),
             up: jest.fn(_.constant(Promise.resolve()))
         };
-        umzug.mockImplementation(() => umzugInstance);
+        toMock(Umzug).mockImplementation(() => umzugInstance);
         return umzugInstance;
     }
 
@@ -45,8 +47,16 @@ describe('migration', () => {
         };
     }
 
-    function setArgs(...args) {
-        process.argv = [null, null, ...args];
+    function mockProcessExit(mockImplementation: (code?: number | undefined) => void) {
+        process.exit = mockImplementation as never;
+    }
+
+    function setArgs(...args: string[]) {
+        process.argv = ['', '', ...args];
+    }
+
+    function testMigration(logger: ReturnType<typeof mockLogger>, db: ReturnType<typeof mockDb>) {
+        runMigration(<LoggerFactory>(<unknown>logger), <DbModule>(<unknown>db));
     }
 
     it('should execute `current` command', () => {
@@ -54,22 +64,17 @@ describe('migration', () => {
         const logger = mockLogger();
         console.log = jest.fn();
         setArgs('current');
-        return new Promise(done => {
-            process.exit = () => {
+        return new Promise<void>(done => {
+            mockProcessExit(() => {
                 expect(logger.logErrorsOnly).toHaveBeenCalled();
-                expect(umzug).toHaveBeenCalled();
-                expect(umzug.mock.calls[0][0].migrations.params[3]).toThrowError();
-
-                const logMessage = 'umzug logger test';
-                umzug.mock.calls[0][0].logging(logMessage);
-                expect(logger.getLogger().info).toHaveBeenCalledWith([logMessage]);
+                expect(Umzug).toHaveBeenCalled();
 
                 expect(console.log).toHaveBeenCalledWith('<NO_MIGRATIONS>');
 
                 done();
-            };
+            });
 
-            runMigration(logger, mockDb());
+            testMigration(logger, mockDb());
         });
     });
 
@@ -77,8 +82,8 @@ describe('migration', () => {
         const umzugInstance = mockUmzug();
         const logger = mockLogger();
         setArgs('status');
-        return new Promise(done => {
-            process.exit = returnCode => {
+        return new Promise<void>(done => {
+            mockProcessExit(returnCode => {
                 expect(logger.logErrorsOnly).not.toHaveBeenCalled();
                 expect(umzugInstance.pending).toHaveBeenCalledTimes(1);
                 expect(umzugInstance.executed).toHaveBeenCalledTimes(1);
@@ -87,8 +92,8 @@ describe('migration', () => {
                     '{\n  "current": "<NO_MIGRATIONS>",\n  "executed": [],\n  "pending": []\n}'
                 );
                 done();
-            };
-            runMigration(logger, mockDb());
+            });
+            testMigration(logger, mockDb());
         });
     });
 
@@ -96,15 +101,15 @@ describe('migration', () => {
         const umzugInstance = mockUmzug(['dummy']);
         const logger = mockLogger();
         setArgs('up');
-        return new Promise(done => {
-            process.exit = () => {
+        return new Promise<void>(done => {
+            mockProcessExit(() => {
                 expect(logger.logErrorsOnly).not.toHaveBeenCalled();
                 expect(umzugInstance.up).toHaveBeenCalled();
                 expect(umzugInstance.pending).toHaveBeenCalled();
                 expect(umzugInstance.executed).toHaveBeenCalled();
                 done();
-            };
-            runMigration(logger, mockDb());
+            });
+            testMigration(logger, mockDb());
         });
     });
 
@@ -112,15 +117,15 @@ describe('migration', () => {
         const umzugInstance = mockUmzug(['dummy']);
         const logger = mockLogger();
         setArgs('reset');
-        return new Promise(done => {
-            process.exit = () => {
+        return new Promise<void>(done => {
+            mockProcessExit(() => {
                 expect(logger.logErrorsOnly).not.toHaveBeenCalled();
                 expect(umzugInstance.down).toHaveBeenCalled();
                 expect(umzugInstance.pending).toHaveBeenCalled();
                 expect(umzugInstance.executed).toHaveBeenCalled();
                 done();
-            };
-            runMigration(logger, mockDb());
+            });
+            testMigration(logger, mockDb());
         });
     });
 
@@ -129,16 +134,16 @@ describe('migration', () => {
         const logger = mockLogger();
         const db = mockDb();
         setArgs('clear');
-        return new Promise(done => {
-            process.exit = () => {
+        return new Promise<void>(done => {
+            mockProcessExit(() => {
                 expect(logger.logErrorsOnly).not.toHaveBeenCalled();
                 expect(umzugInstance.pending).toHaveBeenCalled();
                 expect(umzugInstance.executed).toHaveBeenCalled();
                 expect(db.db.sequelize.query).toHaveBeenCalledTimes(1);
                 expect(db.db.sequelize.query).toHaveBeenCalledWith(`truncate "${tableName}"`);
                 done();
-            };
-            runMigration(logger, db);
+            });
+            testMigration(logger, db);
         });
     });
 
@@ -146,15 +151,15 @@ describe('migration', () => {
         const umzugInstance = mockUmzug();
         const logger = mockLogger();
         setArgs('invalid');
-        return new Promise(done => {
-            process.exit = returnCode => {
+        return new Promise<void>(done => {
+            mockProcessExit(returnCode => {
                 expect(logger.logErrorsOnly).not.toHaveBeenCalled();
                 expect(umzugInstance.pending).not.toHaveBeenCalled();
                 expect(umzugInstance.executed).not.toHaveBeenCalled();
                 expect(returnCode).toBe(1);
                 done();
-            };
-            runMigration(logger, mockDb());
+            });
+            testMigration(logger, mockDb());
         });
     });
 
@@ -162,15 +167,15 @@ describe('migration', () => {
         const umzugInstance = mockUmzug();
         const logger = mockLogger();
         setArgs();
-        return new Promise(done => {
-            process.exit = returnCode => {
+        return new Promise<void>(done => {
+            mockProcessExit(returnCode => {
                 expect(logger.logErrorsOnly).not.toHaveBeenCalled();
                 expect(umzugInstance.pending).not.toHaveBeenCalled();
                 expect(umzugInstance.executed).not.toHaveBeenCalled();
                 expect(returnCode).toBe(1);
                 done();
-            };
-            runMigration(logger, mockDb());
+            });
+            testMigration(logger, mockDb());
         });
     });
 
@@ -178,13 +183,13 @@ describe('migration', () => {
         mockUmzug([], ['dummy']);
         const logger = mockLogger();
         setArgs('downTo', 'initial');
-        return new Promise(done => {
-            process.exit = returnCode => {
+        return new Promise<void>(done => {
+            mockProcessExit(returnCode => {
                 expect(logger.logErrorsOnly).not.toHaveBeenCalled();
                 expect(returnCode).toBe(1);
                 done();
-            };
-            runMigration(logger, mockDb());
+            });
+            testMigration(logger, mockDb());
         });
     });
 
@@ -192,13 +197,13 @@ describe('migration', () => {
         mockUmzug();
         const logger = mockLogger();
         setArgs('downTo', '');
-        return new Promise(done => {
-            process.exit = returnCode => {
+        return new Promise<void>(done => {
+            mockProcessExit(returnCode => {
                 expect(logger.logErrorsOnly).not.toHaveBeenCalled();
                 expect(returnCode).toBe(1);
                 done();
-            };
-            runMigration(logger, mockDb());
+            });
+            testMigration(logger, mockDb());
         });
     });
 
@@ -206,13 +211,13 @@ describe('migration', () => {
         mockUmzug(['valid'], ['dummy']);
         const logger = mockLogger();
         setArgs('downTo', 'invalid');
-        return new Promise(done => {
-            process.exit = returnCode => {
+        return new Promise<void>(done => {
+            mockProcessExit(returnCode => {
                 expect(logger.logErrorsOnly).not.toHaveBeenCalled();
                 expect(returnCode).toBe(1);
                 done();
-            };
-            runMigration(logger, mockDb());
+            });
+            testMigration(logger, mockDb());
         });
     });
 
@@ -220,14 +225,14 @@ describe('migration', () => {
         const umzugInstance = mockUmzug(['valid'], ['dummy']);
         const logger = mockLogger();
         setArgs('downTo', 'valid');
-        return new Promise(done => {
-            process.exit = returnCode => {
+        return new Promise<void>(done => {
+            mockProcessExit(returnCode => {
                 expect(logger.logErrorsOnly).not.toHaveBeenCalled();
                 expect(umzugInstance.down).not.toHaveBeenCalled();
                 expect(returnCode).toBe(0);
                 done();
-            };
-            runMigration(logger, mockDb());
+            });
+            testMigration(logger, mockDb());
         });
     });
 
@@ -235,14 +240,14 @@ describe('migration', () => {
         const umzugInstance = mockUmzug(['valid', 'last'], ['dummy']);
         const logger = mockLogger();
         setArgs('downTo', 'valid');
-        return new Promise(done => {
-            process.exit = returnCode => {
+        return new Promise<void>(done => {
+            mockProcessExit(returnCode => {
                 expect(logger.logErrorsOnly).not.toHaveBeenCalled();
                 expect(umzugInstance.down).toHaveBeenCalled();
                 expect(returnCode).toBe(0);
                 done();
-            };
-            runMigration(logger, mockDb());
+            });
+            testMigration(logger, mockDb());
         });
     });
 });

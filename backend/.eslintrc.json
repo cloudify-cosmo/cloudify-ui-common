@@ -3,7 +3,6 @@
     "rules": {
         // NOTE: packageDir is relative to the current working directory when executing linter
         "import/no-extraneous-dependencies": ["error", { "packageDir": "./" }],
-        // NOTE: handled by import/no-extraneous-dependencies
-        "node/no-extraneous-require": "off"
+        "node/no-extraneous-import": "off"
     }
 }

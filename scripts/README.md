@@ -4,9 +4,9 @@
 
 Provides helper function for creating new version of NPM package by creating a new branch with version change commit and pushing that branch to the remote repository.
 
-### run-system-tests.sh
+### get-ts-migration-progress.sh
 
-Provides common execution flow for lanuching system tests build for both stage and composer.
+Prints the summary of the migration to TypeScript.
 
 ### upload-package.sh
 
