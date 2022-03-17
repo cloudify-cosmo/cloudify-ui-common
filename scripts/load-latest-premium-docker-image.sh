@@ -5,7 +5,8 @@
 #   ./load-latest-premium-docker-image.sh
 #
 # Description:
-#   Loads latest premium docker image into docker.
+#   The script has been created to provide a tool for downloading and installing cloudify docker image with one command.
+#   It is mainly used in Makefile inside of cloudify-stage and cloudify-blueprint-composer repositories. It can be also used separately in aforementioned projects.
 #
 # Globals:
 #   None
@@ -17,8 +18,6 @@
 #   None
 #===================================================================================
 
-# The script has been created to provide a tool for downloading and installing cloudify docker image with one command.
-# It is mainly used inside of Makefile but it can be also used separately.
 
 PACKAGE_VERSION=$(cat package.json \
   | grep version \
