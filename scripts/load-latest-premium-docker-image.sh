@@ -5,8 +5,10 @@
 #   ./load-latest-premium-docker-image.sh
 #
 # Description:
-#   The script has been created to provide a tool for downloading and installing cloudify docker image with one command.
-#   It is mainly used in Makefile inside of cloudify-stage and cloudify-blueprint-composer repositories. It can be also used separately in aforementioned projects.
+#   The script has been created to provide a tool for downloading and installing 
+#   cloudify docker image with one command. It is mainly used in Makefile 
+#   inside of cloudify-stage and cloudify-blueprint-composer repositories. 
+#   It can be also used separately in aforementioned projects.
 #
 # Globals:
 #   None
