@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
 
+#===================================================================================
+# Usage:
+#   ./load-latest-premium-docker-image.sh
+#
+# Description:
+#   Loads latest premium docker image into docker.
+#
+# Globals:
+#   None
+#
+# Arguments:
+#   None
+#
+# Returns:
+#   None
+#===================================================================================
+
 # The script has been created to provide a tool for downloading and installing cloudify docker image with one command.
 # It is mainly used inside of Makefile but it can be also used separately.
 
