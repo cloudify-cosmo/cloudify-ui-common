@@ -13,7 +13,7 @@
     },
     "overrides": [
         {
-            "files": ["./support/*.ts"],
+            "files": ["**/support/*.ts"],
             "rules": {
                 // NOTE: used for declaring custom Cypress commands
                 "@typescript-eslint/no-namespace": "off"

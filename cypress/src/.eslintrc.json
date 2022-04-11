@@ -1,8 +1,0 @@
-{
-    "extends": [
-        "../../configs/eslint-common-cypress.json"
-    ],
-    "rules": {
-        "no-console": "off"
-    }
-}
