@@ -34,6 +34,7 @@ const setupPluginsAndConfig = (
         config.baseUrl = `${MANAGER_PROTOCOL}://${MANAGER_IP}`;
     }
 
+    // eslint-disable-next-line no-console
     console.info(`Testing on: ${config.baseUrl}`);
 
     if (config.testingType === 'component') {

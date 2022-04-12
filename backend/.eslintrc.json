@@ -1,8 +1,0 @@
-{
-    "extends": ["../configs/eslint-common-node.json"],
-    "rules": {
-        // NOTE: packageDir is relative to the current working directory when executing linter
-        "import/no-extraneous-dependencies": ["error", { "packageDir": "./" }],
-        "node/no-extraneous-import": "off"
-    }
-}

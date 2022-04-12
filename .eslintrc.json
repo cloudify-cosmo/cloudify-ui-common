@@ -1,5 +1,5 @@
 {
-    "extends": ["plugin:jsdoc/recommended", "./configs/eslint-common-node.json"],
+    "extends": ["plugin:jsdoc/recommended"],
     "rules": {
         "jsdoc/require-jsdoc": [
             "error",
@@ -14,5 +14,49 @@
                 "object": "Object"
             }
         }
-    }
+    },
+    "overrides": [
+        {
+            "files": ["./*.js"],
+            "extends": ["./configs/eslint-common-node.json"]
+        },
+        {
+            "files": "./src/**/*.ts",
+            "extends": [
+                "airbnb-base",
+                "./configs/eslint-common.json"
+            ]
+        },
+        {
+            "files": "./backend/*.ts",
+            "excludedFiles": "*.test.ts",
+            "extends": ["./configs/eslint-common-node.json"],
+            "rules": {
+                // NOTE: packageDir is relative to the current working directory when executing linter
+                "import/no-extraneous-dependencies": ["error", { "packageDir": "./" }],
+                "node/no-extraneous-import": "off"
+            }
+        },
+        {
+            "files": ["./backend/test/*.ts", "./test/*.ts"],
+            "extends": ["./configs/eslint-common-node.json", "plugin:jest/recommended"],
+            "rules": {
+                // NOTE: packageDir is relative to the current working directory when executing linter
+                "import/no-extraneous-dependencies": ["error", { "packageDir": "./" }],
+                "node/no-extraneous-import": "off",
+                "no-console": "off"
+            },
+            // TODO(RD-2856): Use common Jest configuration
+            "plugins": [
+                "jest"
+            ],
+            "env": {
+                "jest": true
+            }
+        },
+        {
+            "files": "./cypress/**/*.ts",
+            "extends": ["./configs/eslint-common-cypress.json"]
+        }
+    ]
 }
