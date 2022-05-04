@@ -1,4 +1,5 @@
-import { nodeStatuses, NodeStatus } from './consts';
+import type { NodeStatus } from './consts';
+import { nodeStatuses } from './consts';
 
 type StringRecord = Record<string, string>;
 
