@@ -3,8 +3,8 @@ import fs from 'fs';
 import _ from 'lodash';
 import Sequelize from 'sequelize';
 import type { ModelStatic } from 'sequelize';
-import getDbModule, { DialectOptions } from '../db';
-import type { DbConfig } from '../db';
+import getDbModule from '../db';
+import type { DbConfig, DialectOptions } from '../db';
 import type { LoggerFactory } from '../logger';
 import toMock from './toMock';
 

@@ -12,6 +12,9 @@
 
         "no-void": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/consistent-type-imports": ["error", {
+            "disallowTypeAnnotations": false
+        }],
 
         "scanjs-rules/accidental_assignment": "warn",
         "scanjs-rules/assign_to_hostname": "error",

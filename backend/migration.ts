@@ -1,10 +1,10 @@
-import { Umzug, SequelizeStorage } from 'umzug';
-import { chain, each, map, last } from 'lodash';
-import { DataTypes } from 'sequelize';
+import { chain, each, last, map } from 'lodash';
+import type { QueryInterface, Sequelize, DataTypes } from 'sequelize';
+
 import type { MigrationMeta } from 'umzug';
-import type { Sequelize, QueryInterface } from 'sequelize';
-import type { Logger, LoggerFactory } from './logger';
+import { SequelizeStorage, Umzug } from 'umzug';
 import type { DbModule } from './db';
+import type { Logger, LoggerFactory } from './logger';
 
 function onMigrationEnd(exitCode: number) {
     // eslint-disable-next-line no-process-exit
