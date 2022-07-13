@@ -28,6 +28,7 @@ Note: `eslint-common.json` does not extends AirBnB ESLint configuration, so it s
 | `eslint-common-react.json`   | React-based projects      | all from `eslint-config-airbnb` and `eslint-common.json` and `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y` |
 | `eslint-common-node.json`    | Node-based projects       | all from `eslint-config-airbnb-base` and `eslint-common.json`, `eslint-plugin-node`                                                       |
 | `eslint-common-cypress.json` | Cypress subprojects       | all from `eslint-config-airbnb-base` and `eslint-common.json`, `eslint-plugin-cypress`, `eslint-plugin-chai-friendly`                     |
+| `eslint-common-jest.json`    | Jest subprojects          | `eslint-plugin-jest`                                                                                                                      |
 
 
 ### TypeScript
