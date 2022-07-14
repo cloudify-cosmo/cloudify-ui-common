@@ -19,7 +19,7 @@ It is also required to install peer dependencies as specified in `package.json`.
 There are few configuration files that can be extended.
 The table below describes their purpose and dependencies necessary to be installed prior using each configuration file.
 
-Note: `eslint-common.json` does not extends AirBnB ESLint configuration, so it should not be used alone in the UI projects.
+Note: `eslint-common.json` and `eslint-common-jest.json` don't extend AirBnB ESLint configuration, so they should not be used alone in the UI projects.
 
 | Configuration file           | Used for                  | Dependencies                                                                                                                              |
 |---                           |---------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
@@ -28,6 +28,7 @@ Note: `eslint-common.json` does not extends AirBnB ESLint configuration, so it s
 | `eslint-common-react.json`   | React-based projects      | all from `eslint-config-airbnb` and `eslint-common.json` and `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y` |
 | `eslint-common-node.json`    | Node-based projects       | all from `eslint-config-airbnb-base` and `eslint-common.json`, `eslint-plugin-node`                                                       |
 | `eslint-common-cypress.json` | Cypress subprojects       | all from `eslint-config-airbnb-base` and `eslint-common.json`, `eslint-plugin-cypress`, `eslint-plugin-chai-friendly`                     |
+| `eslint-common-jest.json`    | Jest subprojects          | `eslint-plugin-jest`                                                                                                                      |
 
 
 ### TypeScript
