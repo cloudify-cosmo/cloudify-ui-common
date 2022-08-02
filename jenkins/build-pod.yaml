@@ -3,7 +3,7 @@ kind: Pod
 spec:
   containers:
   - name: node
-    image: node:14.18.1
+    image: node:16.16.0
     resources:
       requests:
         cpu: 0.8
