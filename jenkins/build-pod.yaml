@@ -4,7 +4,6 @@ spec:
   containers:
   - name: node
     image: node:16.16.0
-    options: --user 1001
     resources:
       requests:
         cpu: 0.8
