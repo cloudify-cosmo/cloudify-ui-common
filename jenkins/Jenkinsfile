@@ -34,8 +34,7 @@ pipeline {
         container('node'){
           dir("${env.WORKSPACE}/${env.PROJECT}") {
             echo "Install dependencies"
-            sh "chown `whoami` ."
-            sh "ls -al"
+            sh "chown `whoami` ." // workaround for https://github.com/cypress-io/cypress/issues/20286
             sh 'npm ci --prefer-offline'
 
             echo "Build application"
