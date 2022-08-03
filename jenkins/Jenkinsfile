@@ -34,6 +34,7 @@ pipeline {
         container('node'){
           dir("${env.WORKSPACE}/${env.PROJECT}") {
             echo "Install dependencies"
+            sh "chown `whoami` ."
             sh "ls -al"
             sh 'npm ci --prefer-offline'
 
