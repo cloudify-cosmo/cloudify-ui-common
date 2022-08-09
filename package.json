@@ -98,8 +98,8 @@
     "peerDependencies": {
         "@cypress/code-coverage": "^3.9.10",
         "@cypress/webpack-dev-server": "^1.6.0",
-        "@typescript-eslint/eslint-plugin": "^4.14.1",
-        "@typescript-eslint/parser": "^4.14.1",
+        "@typescript-eslint/eslint-plugin": ">=4.14.1",
+        "@typescript-eslint/parser": ">=4.14.1",
         "cypress": "^8.2.0",
         "eslint": "^7.11.0",
         "eslint-config-prettier": "^6.12.0",
