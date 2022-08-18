@@ -24,7 +24,7 @@ describe('migration', () => {
     }
 
     function mockLogger() {
-        const logger = { info: jest.fn(), error: _.noop };
+        const logger = { info: jest.fn(), error: jest.fn() };
         return {
             logErrorsOnly: jest.fn(),
             getLogger: _.constant(logger)
@@ -33,9 +33,9 @@ describe('migration', () => {
 
     const tableName = 'tableName';
 
-    function mockDb() {
+    function mockDb(successfulInit = true) {
         return {
-            init: _.constant(Promise.resolve()),
+            init: _.constant(successfulInit ? Promise.resolve() : Promise.reject()),
             db: {
                 sequelize: {
                     getQueryInterface: _.constant({
@@ -176,6 +176,18 @@ describe('migration', () => {
                 done();
             });
             testMigration(logger, mockDb());
+        });
+    });
+
+    it('should handle migration failure', () => {
+        const logger = mockLogger();
+        return new Promise<void>(done => {
+            mockProcessExit(returnCode => {
+                expect(logger.getLogger().error).toHaveBeenCalled();
+                expect(returnCode).toBe(1);
+                done();
+            });
+            testMigration(logger, mockDb(false));
         });
     });
 

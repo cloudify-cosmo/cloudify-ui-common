@@ -234,10 +234,15 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
                 });
     }
 
-    init().then(() => {
-        initUmzug();
-        handleCommand();
-    });
+    init()
+        .then(() => {
+            initUmzug();
+            handleCommand();
+        })
+        .catch(error => {
+            logger.error(`Error occured while running migration: ${error}`);
+            onMigrationEnd(1);
+        });
 }
 
 export default runMigration;

@@ -22,10 +22,7 @@
         },
         {
             "files": "./src/**/*.ts",
-            "extends": [
-                "airbnb-base",
-                "./configs/eslint-common.json"
-            ]
+            "extends": ["airbnb-base", "./configs/eslint-common.json"]
         },
         {
             "files": "./backend/*.ts",
@@ -34,7 +31,11 @@
             "rules": {
                 // NOTE: packageDir is relative to the current working directory when executing linter
                 "import/no-extraneous-dependencies": ["error", { "packageDir": "./" }],
-                "node/no-extraneous-import": "off"
+                "node/no-extraneous-import": "off",
+                "@typescript-eslint/no-floating-promises": ["error"]
+            },
+            "parserOptions": {
+                "project": "./backend/tsconfig.json"
             }
         },
         {

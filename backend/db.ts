@@ -201,7 +201,9 @@ function getDbModule(dbConfig: DbConfig, loggerFactory: LoggerFactory, modelFact
                 await sequelize.close();
                 logger.info('Re-initializing DB...');
                 await wait(1);
-                init();
+                init().catch(error => {
+                    logger.error(`Error occured while initializing DB connection: ${error}`);
+                });
             }
         }
 
