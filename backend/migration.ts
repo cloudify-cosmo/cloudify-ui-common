@@ -241,6 +241,7 @@ function runMigration(loggerFactory: LoggerFactory, dbModule: DbModule): void {
         })
         .catch(error => {
             logger.error(`Error occured while running migration: ${error}`);
+            onMigrationEnd(1);
         });
 }
 
