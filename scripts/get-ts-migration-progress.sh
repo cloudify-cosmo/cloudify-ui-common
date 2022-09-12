@@ -24,7 +24,7 @@ TS_FILES=`find $DIRECTORIES_TO_CHECK -type f \( -name '*.ts' -o -name '*.tsx' \)
 TS_FILES_COUNT=`echo "$TS_FILES" | sed -r '/^\s*$/d' | wc -l`
 echo "Found $TS_FILES_COUNT TS/TSX files"
 if test $TS_FILES_COUNT -gt 0; then
-    TS_NON_FULLY_MIGRATED_FILES_COUNT=`grep -E '@ts-nocheck|@ts-expect-error' $TS_FILES | wc -l || true`
+    TS_NON_FULLY_MIGRATED_FILES_COUNT=`grep -E -l '@ts-nocheck|@ts-expect-error' $TS_FILES | uniq | wc -l || true`
     echo "$TS_NON_FULLY_MIGRATED_FILES_COUNT out of these TS/TSX files have a '@ts-nocheck' header or '@ts-expect-error'"
 else
     TS_NON_FULLY_MIGRATED_FILES_COUNT=0
