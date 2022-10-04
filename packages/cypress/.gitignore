@@ -1,3 +1,4 @@
 .eslintcache
 plugins
 support
+!src/**

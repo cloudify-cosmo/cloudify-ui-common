@@ -20,7 +20,7 @@
         "audit": "npm audit --production",
         "build": "tsc -p .",
         "check-types": "tsc -b .",
-        "lint": "eslint --cache ."
+        "lint": "eslint --cache  --ignore-path .gitignore ."
     },
     "dependencies": {
         "@cypress/code-coverage": "^3.10.0",
