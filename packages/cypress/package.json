@@ -1,0 +1,30 @@
+{
+    "name": "cloudify-ui-common-cypress",
+    "version": "0.0.1",
+    "description": "Common Cloudify UI Cypress library",
+    "homepage": "https://github.com/cloudify-cosmo/cloudify-ui-common/blob/master/cypress/README.md",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cloudify-cosmo/cloudify-ui-common.git"
+    },
+    "license": "Apache-2.0",
+    "author": "Cloudify Platform Ltd. <cosmo-admin@cloudify.co>",
+    "files": [
+        "cypress.json",
+        "plugins",
+        "support",
+        "src",
+        "README.md"
+    ],
+    "scripts": {
+        "audit": "npm audit --production",
+        "build": "tsc -p .",
+        "check-types": "tsc -b .",
+        "lint": "eslint --cache ."
+    },
+    "dependencies": {
+        "@cypress/code-coverage": "^3.10.0",
+        "@cypress/webpack-dev-server": "^1.6.0",
+        "cypress": "^8.2.0"
+    }
+}

@@ -1,6 +1,6 @@
 {
     "exclude": ["plugins", "support"],
-    "extends": "../configs/tsconfig.composite.json",
+    "extends": "cloudify-ui-common-configs/tsconfig.composite",
     "compilerOptions": {
         "allowJs": false,
         "emitDeclarationOnly": false,
