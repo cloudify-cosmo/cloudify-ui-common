@@ -3,9 +3,9 @@ import fs from 'fs';
 import _ from 'lodash';
 import Sequelize from 'sequelize';
 import type { ModelStatic } from 'sequelize';
-import getDbModule from '../db';
-import type { DbConfig, DialectOptions } from '../db';
-import type { LoggerFactory } from '../logger';
+import getDbModule from '../src/db';
+import type { DbConfig, DialectOptions } from '../src/db';
+import type { LoggerFactory } from '../src/logger';
 import toMock from './toMock';
 
 jest.mock('sequelize');

@@ -5,6 +5,7 @@ import events from 'events';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LoggerArgs = any[];
+
 export type Logger = winston.Logger &
     Record<'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly' | 'log', (...args: LoggerArgs) => winston.Logger>;
 export type LoggerFactory = { getLogger: (category: string) => Logger; logErrorsOnly: () => void };

@@ -1,0 +1,12 @@
+{
+    "extends": "cloudify-ui-common-configs/tsconfig.composite",
+    "compilerOptions": {
+        "target": "ESNext",
+        "allowJs": false,
+        "emitDeclarationOnly": false,
+        "module": "CommonJS",
+        "outDir": "../lib",
+        "declarationDir": "../typings"
+    },
+
+}
