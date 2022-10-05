@@ -1,0 +1,15 @@
+{
+    "overrides": [
+        {
+            "files": "./src/**/*.ts",
+            "extends": ["airbnb-base", "../configs/eslint-common.json"]
+        },
+        {
+            "files": ["./test/**/*.ts"],
+            "extends": ["../configs/eslint-common-node.json", "../configs/eslint-common-jest.json"],
+            "rules": {
+                "no-console": "off"
+            }
+        }
+    ]
+}
