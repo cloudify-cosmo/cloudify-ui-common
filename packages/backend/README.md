@@ -17,8 +17,15 @@ npm install cloudify-ui-common-backend
 
 ## Usage
 
+Example of how to create logger and send a log:
+
 ```typescript
-import { getDbModule } from 'cloudify-ui-common-backend';
+import { initLogging } from 'cloudify-ui-common-backend';
+
+const loggerFactory = initLogging({ logLevel: "debug" });
+const logger = loggerFactory.getLogger('MyCatagory');
+
+logger.log('Something happened!')
 ```
 
 ## Development
