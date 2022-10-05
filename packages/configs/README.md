@@ -1,18 +1,33 @@
-## Configurations
+# Cloudify UI Common Configurations
 
-This directory contains shared configuration for development tools.
+[![npm](https://img.shields.io/npm/v/cloudify-ui-common-configs.svg?style=flat)](https://www.npmjs.com/package/cloudify-ui-common-configs)
 
+This package contains shared configuration for development tools:
+1. ESLint configurations - see `eslint-*.json` files
+2. TypeScript configurations - see `tsconfig.*.json` files
+3. Prettier configuration - see [`prettier-common.json` file](./prettier-common.json)
+
+## Installation
+
+```npm
+npm install cloudify-ui-common-configs
+```
+
+More packages should be installed depending on the chosen configuration file you use. See details below.
+
+## Usage
 
 ### ESLint
 
-ESLint configs should be extended by every cloudify-ui project/module.
+ESLint configs should be extended by every Cloudify UI project/module.
 
 #### Usage
 
-Once `cloudify-ui-common` is installed as a dependency it is required to modify project's ESLint config (most probably `.eslintrc` or `.eslintrc.json` file) by adding the following entry (assuming ESLint config file is located in top level directory and it is a React project):
+Once `cloudify-ui-common-configs` is installed as a dependency it is required to modify project's ESLint config (most 
+probably `.eslintrc` or `.eslintrc.json` file) by adding the following entry (assuming ESLint config file is located in top level directory and it is a React project):
 ```json
 {
-  "extends": ["./node_modules/cloudify-ui-common/configs/eslint-common-react.json"]
+  "extends": ["./node_modules/cloudify-ui-common-configs/eslint-common-react.json"]
 }
 ```
 It is also required to install peer dependencies as specified in `package.json`.
@@ -50,17 +65,16 @@ To use an existing tsconfig as a base, specify the [extends](https://www.typescr
 
 ```json
 {
-    "extends": "./node_modules/cloudify-ui-common/configs/tsconfig.base.json"
+    "extends": "./node_modules/cloudify-ui-common-configs/tsconfig.base.json"
 }
 ```
 
 ### Prettier
 
-Prettier config should be extended by every cloudify-ui project/module.
+Prettier config should be extended by every Cloudify UI project/module.
 
-#### Usage
-
-Once `cloudify-ui-common` is installed as a dependency it is required to modify project's Prettier config (you should use JS version - `.prettierrc.js` file) by requiring common configuration the following way:
+Once `cloudify-ui-common-configs` is installed as a dependency it is required to modify project's Prettier config 
+(you should use JS version - `.prettierrc.js` file) by requiring common configuration the following way:
 ```js
-module.exports = require('./node_modules/cloudify-ui-common/configs/prettier-common.json');
+module.exports = require('./node_modules/cloudify-ui-common-configs/prettier-common.json');
 ```
