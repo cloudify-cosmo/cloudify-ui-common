@@ -109,13 +109,13 @@ select choice in "Yes" "No"; do
 case "$choice" in
     Yes)
         log "Pushing changes...";
-        git push origin ${NEXT_VERSION_BRANCH} tag ${NEXT_VERSION}
+        git push origin ${NEXT_VERSION_BRANCH} tag ${GIT_TAG}
         git checkout ${MAIN_BRANCH}
         break;;
     *)
         log "Reverting changes...";
         git checkout ${MAIN_BRANCH}
-        git tag -d ${NEXT_VERSION}
+        git tag -d ${GIT_TAG}
         git branch -D ${NEXT_VERSION_BRANCH}
         break;;
 esac
