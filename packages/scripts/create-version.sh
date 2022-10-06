@@ -97,7 +97,9 @@ fi
 
 git checkout -b ${NEXT_VERSION_BRANCH}
 git add package.json
-if [ -z "$IS_WORKSPACE_PACKAGE" ]; then
+if [ -n "$IS_WORKSPACE_PACKAGE" ]; then
+    git add ../../package-lock.json
+else
     git add package-lock.json
 fi
 git commit -m "${COMMIT_MESSAGE}"
