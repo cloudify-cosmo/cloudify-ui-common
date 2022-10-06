@@ -61,7 +61,7 @@ pipeline {
         expression { return env.BRANCH =~ /^publish_.*/ }
       }
       environment{
-        PACKAGE_PATH = "packages/${sh(script:'echo ${env.BRANCH} | cut -d'_' -f 2', returnStdout: true).trim()}"
+        PACKAGE_PATH = "packages/${sh(script:'echo ${env.BRANCH} | cut -d\'_\' -f 2', returnStdout: true).trim()}"
       }
       steps {
         container('node'){
