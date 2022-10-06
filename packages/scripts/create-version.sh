@@ -87,8 +87,12 @@ log "Creating ${NPM_PACKAGE_NAME} ${NEXT_VERSION}...";
 log "Creating version publish branch...";
 if [ -n "$IS_WORKSPACE_PACKAGE" ]; then
     NEXT_VERSION_BRANCH="publish_${PACKAGE_NAME}_${NEXT_VERSION}"
+    COMMIT_MESSAGE="Bump ${PACKAGE_NAME} version to ${NEXT_VERSION}"
+    GIT_TAG="${PACKAGE_NAME}_${NEXT_VERSION}"
 else
     NEXT_VERSION_BRANCH="publish_${NEXT_VERSION}"
+    COMMIT_MESSAGE="Bump version to ${NEXT_VERSION}"
+    GIT_TAG="${NEXT_VERSION}"
 fi
 
 git checkout -b ${NEXT_VERSION_BRANCH}
@@ -96,8 +100,8 @@ git add package.json
 if [ -z "$IS_WORKSPACE_PACKAGE" ]; then
     git add package-lock.json
 fi
-git commit -m "Bump version to ${NEXT_VERSION}"
-git tag ${NEXT_VERSION}
+git commit -m "${COMMIT_MESSAGE}"
+git tag ${GIT_TAG}
 
 log "This is the last step before CI-based npm publish.";
 log "Are you sure you want to trigger publish ${NPM_PACKAGE_NAME} ${NEXT_VERSION}?";
