@@ -17,40 +17,8 @@
     },
     "overrides": [
         {
-            "files": ["./*.js"],
-            "extends": ["./configs/eslint-common-node.json"]
-        },
-        {
-            "files": "./src/**/*.ts",
-            "extends": ["airbnb-base", "./configs/eslint-common.json"]
-        },
-        {
-            "files": "./backend/*.ts",
-            "excludedFiles": "*.test.ts",
-            "extends": ["./configs/eslint-common-node.json"],
-            "rules": {
-                // NOTE: packageDir is relative to the current working directory when executing linter
-                "import/no-extraneous-dependencies": ["error", { "packageDir": "./" }],
-                "node/no-extraneous-import": "off",
-                "@typescript-eslint/no-floating-promises": ["error"]
-            },
-            "parserOptions": {
-                "project": "./backend/tsconfig.json"
-            }
-        },
-        {
-            "files": ["./backend/test/*.ts", "./test/*.ts"],
-            "extends": ["./configs/eslint-common-node.json", "./configs/eslint-common-jest.json"],
-            "rules": {
-                // NOTE: packageDir is relative to the current working directory when executing linter
-                "import/no-extraneous-dependencies": ["error", { "packageDir": "./" }],
-                "node/no-extraneous-import": "off",
-                "no-console": "off"
-            }
-        },
-        {
-            "files": "./cypress/**/*.ts",
-            "extends": ["./configs/eslint-common-cypress.json"]
+            "files": ["**/*.js"],
+            "extends": ["./packages/configs/eslint-common-node.json"]
         }
     ]
 }

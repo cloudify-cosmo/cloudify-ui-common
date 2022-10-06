@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { Umzug } from 'umzug';
-import runMigration from '../migration';
-import type { LoggerFactory } from '../logger';
-import type { DbModule } from '../db';
+import runMigration from '../src/migration';
+import type { LoggerFactory } from '../src/logger';
+import type { DbModule } from '../src/db';
 import toMock from './toMock';
 
 jest.mock('umzug');

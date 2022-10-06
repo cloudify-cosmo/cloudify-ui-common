@@ -1,0 +1,4 @@
+.eslintcache
+plugins
+support
+!src/**

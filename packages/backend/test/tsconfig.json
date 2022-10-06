@@ -1,5 +1,5 @@
 {
-    "extends": "../../configs/tsconfig.base.json",
+    "extends": "cloudify-ui-common-configs/tsconfig.base",
     "compilerOptions": {
         "module": "CommonJS",
         "types": ["jest", "node"]

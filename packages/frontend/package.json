@@ -1,0 +1,48 @@
+{
+    "name": "cloudify-ui-common-frontend",
+    "version": "0.0.1",
+    "description": "Common Cloudify UI frontend library",
+    "homepage": "https://github.com/cloudify-cosmo/cloudify-ui-common/blob/master/frontend/README.md",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cloudify-cosmo/cloudify-ui-common.git"
+    },
+    "license": "Apache-2.0",
+    "author": "Cloudify Platform Ltd. <cosmo-admin@cloudify.co>",
+    "main": "dist/cloudify-ui-common-frontend.cjs.js",
+    "module": "dist/cloudify-ui-common-frontend.esm.js",
+    "browser": "dist/cloudify-ui-common-frontend.min.js",
+    "files": [
+        "dist",
+        "images",
+        "fonts",
+        "styles",
+        "src",
+        "typings",
+        "README.md"
+    ],
+    "types": "./typings/index.d.ts",
+    "scripts": {
+        "audit": "npm audit --production",
+        "build": "npm run build:code && npm run generate-type-declarations",
+        "build:code": "rollup -c",
+        "check-types": "tsc -b",
+        "dev": "rollup -c -w",
+        "generate-type-declarations": "tsc -p src",
+        "lint": "eslint --cache --ignore-path .gitignore .",
+        "test": "npm run test:coverage",
+        "test:coverage": "jest test --coverage",
+        "test:only": "jest test"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "@rollup/plugin-babel": "^5.2.2",
+        "@rollup/plugin-commonjs": "^17.1.0",
+        "@rollup/plugin-node-resolve": "^11.1.1",
+        "@typescript-eslint/eslint-plugin": "^4.33.0",
+        "@typescript-eslint/parser": "^4.33.0",
+        "browserslist": "^4.21.1",
+        "rollup": "^2.38.1",
+        "rollup-plugin-terser": "^7.0.2"
+    }
+}

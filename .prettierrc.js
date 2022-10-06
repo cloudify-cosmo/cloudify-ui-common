@@ -1,1 +1,1 @@
-module.exports = require('./configs/prettier-common.json');
+module.exports = require('./packages/configs/prettier-common.json');

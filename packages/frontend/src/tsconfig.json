@@ -1,5 +1,5 @@
 {
-    "extends": "../configs/tsconfig.composite.json",
+    "extends": "cloudify-ui-common-configs/tsconfig.composite",
     "compilerOptions": {
         "declarationDir": "../typings"
     }
