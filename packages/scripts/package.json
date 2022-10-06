@@ -1,6 +1,6 @@
 {
     "name": "cloudify-ui-common-scripts",
-    "version": "0.0.2-pre.0",
+    "version": "0.0.2-pre.1",
     "description": "Common Cloudify UI shell scripts library",
     "homepage": "https://github.com/cloudify-cosmo/cloudify-ui-common/blob/master/packages/scripts/README.md",
     "repository": {
