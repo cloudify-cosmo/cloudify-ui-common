@@ -80,8 +80,8 @@ If you met all points from the checklist above, follow these steps:
 
 1. Provide version type and package name to `npm run publish`. For example:
 
-    * `npm run publish -- minor cypress` - to publish new minor version of `cloudify-ui-common-cypress` package
-    * `npm run publish -- prepatch scripts` - to publish new prerelease patch version of `cloudify-ui-common-scripts` 
+    * `npm run publish minor cypress` - to publish new minor version of `cloudify-ui-common-cypress` package
+    * `npm run publish prepatch scripts` - to publish new prerelease patch version of `cloudify-ui-common-scripts` 
       package
   
    It will create special branch, add commit to it containing version bump in `package*.json` files according to your 
