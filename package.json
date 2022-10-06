@@ -11,9 +11,7 @@
     "author": "Cloudify Platform Ltd. <cosmo-admin@cloudify.co>",
     "scripts": {
         "clean": "git clean -fXd -e \\!node_modules -e \\!node_modules/**/*",
-        "publish:major": "bash ci/publish-version.sh major",
-        "publish:minor": "bash ci/publish-version.sh minor",
-        "publish:patch": "bash ci/publish-version.sh patch"
+        "publish": "MAIN_BRANCH=RD-5955 bash packages/scripts/create-version.sh"
     },
     "dependencies": {},
     "devDependencies": {
