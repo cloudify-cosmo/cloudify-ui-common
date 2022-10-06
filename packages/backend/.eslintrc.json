@@ -1,0 +1,21 @@
+{
+    "overrides": [
+        {
+            "files": "./src/**/*.ts",
+            "extends": ["../configs/eslint-common-node.json"],
+            "rules": {
+                "@typescript-eslint/no-floating-promises": ["error"]
+            },
+            "parserOptions": {
+                "project": "./src/tsconfig.json"
+            }
+        },
+        {
+            "files": "./test/**/*.ts",
+            "extends": ["../configs/eslint-common-node.json", "../configs/eslint-common-jest.json"],
+            "rules": {
+                "no-console": "off"
+            }
+        }
+    ]
+}

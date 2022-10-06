@@ -19,31 +19,6 @@
         {
             "files": ["**/*.js"],
             "extends": ["./packages/configs/eslint-common-node.json"]
-        },
-        {
-            "files": "./packages/frontend/src/**/*.ts",
-            "extends": ["airbnb-base", "./packages/configs/eslint-common.json"]
-        },
-        {
-            "files": "./packages/backend/src/**/*.ts",
-            "extends": ["./packages/configs/eslint-common-node.json"],
-            "rules": {
-                "@typescript-eslint/no-floating-promises": ["error"]
-            },
-            "parserOptions": {
-                "project": "./src/tsconfig.json"
-            }
-        },
-        {
-            "files": ["./packages/backend/test/*.ts", "./packages/frontend/test/*.ts"],
-            "extends": ["./packages/configs/eslint-common-node.json", "./packages/configs/eslint-common-jest.json"],
-            "rules": {
-                "no-console": "off"
-            }
-        },
-        {
-            "files": "./packages/cypress/src/**/*.ts",
-            "extends": ["./packages/configs/eslint-common-cypress.json"]
         }
     ]
 }
