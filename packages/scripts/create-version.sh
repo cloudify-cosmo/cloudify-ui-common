@@ -1,38 +1,51 @@
 #!/usr/bin/env bash
 set -e
 
-#===================================================================================
-# Usage:
-#   create-version.sh <version-type> [<package-name>]
-#
-# Description:
-#   Create new version of package to be published on NPM.
-#   Before pushing changes to remote, build and test npm scripts are executed.
-#
-# Globals:
-#   MAIN_BRANCH - (optional) Repository main branch (default: master)
-#
-# Arguments:
-#   $1 (version type) - `npm version` strings allowed
-#                       see https://docs.npmjs.com/cli/v8/commands/npm-version#workspaces
-#   $2 (package name) - last portion of the package name inside `packages` directory
-#
-# Returns:
-#   None
-#===================================================================================
+help()
+{
+   echo
+   echo "Creates new version of a package to be published on NPM."
+   echo "Before pushing changes to remote the following NPM scripts - if present - are executed:"
+   echo "build, lint, check-types, test."
+   echo
+   echo "Syntax:"
+   echo "  create-version.sh <version-type> [<package-name>]"
+   echo
+   echo "Environment variables:"
+   echo "  MAIN_BRANCH - (optional) Repository main branch (default: master)"
+   echo
+   echo "Arguments:"
+   echo "  version-type - version type supported by NPM version script"
+   echo "                 examples: patch, minor, major, prepatch, preminor, premajor, prerelease,"
+   echo "                 see https://docs.npmjs.com/cli/v8/commands/npm-version for details"
+   echo "  package-name - package directory name, relevant only for cloudify-ui-common repository,"
+   echo "                 examples: backend, configs, cypress, frontend, scripts"
+   false
+}
+
 
 log() {
     LOG_PREFIX="create-version.sh:"
     echo -e $LOG_PREFIX $@
 }
 
+error() {
+    log "ERROR: " $@
+}
+
 VERSION_TYPE=$1
 PACKAGE_NAME=$2
 
+if [ -z "$VERSION_TYPE" ]; then
+    error "No version type provided."
+    help
+fi
+
 if [ -n "$PACKAGE_NAME" ]; then
     IS_WORKSPACE_PACKAGE=1
-    cd packages/$2 || {
-        log "Invalid package name provided"
+    PACKAGE_DIRECTORY="packages/$PACKAGE_NAME"
+    cd $PACKAGE_DIRECTORY || {
+        error "Invalid package name provided. Directory '$PACKAGE_DIRECTORY' does not exist."
         false
     }
 fi
@@ -41,37 +54,37 @@ NPM_PACKAGE_NAME=`cut -d "=" -f 2 <<< $(npm run env | grep "npm_package_name")`
 MAIN_BRANCH=${MAIN_BRANCH:-master}
 log "Switching to main branch (${MAIN_BRANCH}) and checking if its up-to-date...";
 git checkout ${MAIN_BRANCH} || {
-  log "Error during checking out ${MAIN_BRANCH} branch"
+  error "Error during checking out ${MAIN_BRANCH} branch"
   false
 }
 git fetch || {
-  log "Error during fetching data from repository"
+  error "Error during fetching data from repository"
   false
 }
 git pull || {
-  log "Error during pulling ${MAIN_BRANCH} branch"
+  error "Error during pulling ${MAIN_BRANCH} branch"
   false
 }
 git diff origin/${MAIN_BRANCH} --exit-code --compact-summary || {
-  log "Working directory not clean. Delete or push your changes to ${MAIN_BRANCH}}."
+  error "Working directory not clean. Delete or push your changes to ${MAIN_BRANCH}}."
   false
 }
 
 log "Running tests and build..."
 npm run lint --if-present || {
-  log "Running lint check failed"
+  error "Running lint check failed"
   false
 }
 npm run check-types --if-present || {
-  log "Running types check failed"
+  error "Running types check failed"
   false
 }
 npm run test --if-present || {
-  log "Running tests failed"
+  error "Running tests failed"
   false
 }
 npm run build --if-present || {
-  log "Running build failed"
+  error "Running build failed"
   false
 }
 
