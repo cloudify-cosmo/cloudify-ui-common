@@ -66,7 +66,7 @@ git pull || {
   false
 }
 git diff origin/${MAIN_BRANCH} --exit-code --compact-summary || {
-  error "Working directory not clean. Delete or push your changes to ${MAIN_BRANCH}}."
+  error "Working directory not clean. Delete or push your changes to ${MAIN_BRANCH}."
   false
 }
 
