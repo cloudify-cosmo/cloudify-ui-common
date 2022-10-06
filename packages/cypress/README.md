@@ -30,6 +30,7 @@ const setupPluginsAndConfig: Cypress.PluginConfig = (on, config) => {
     config.baseUrl = 'http://localhost:9000';
     return performCommonSetup(on, config, getWebpackConfig({}));
 };
+
 export default setupPluginsAndConfig;
 ```
 
@@ -50,11 +51,11 @@ declare global {
         export interface Chainable extends GetCypressChainableFromCommands<typeof commands> {}
     }
 }
+
 const commands = {
     myCommand: () => cy.log('This is my command')
 };
 addCommands(commands);
-```
 
 With that, you should be able to access Cypress custom command through `cy` global in your Cypress test code.
 
