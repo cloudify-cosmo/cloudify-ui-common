@@ -11,7 +11,6 @@ function onMigrationEnd(exitCode: number) {
     process.exit(exitCode);
 }
 
-/* istanbul ignore next */
 function changeExtensionToJs(migrationName: string) {
     return migrationName.replace(/\.ts$/, '.js');
 }
