@@ -60,9 +60,6 @@ pipeline {
       when {
         expression { return env.BRANCH =~ /^publish_.*/ }
       }
-      environment{
-        PACKAGE_PATH = "packages/${sh(script:'echo ${BRANCH} | cut -d_ -f 2', returnStdout: true).trim()}"
-      }
       steps {
         container('node'){
           dir("${env.WORKSPACE}/${env.PROJECT}") {
@@ -71,7 +68,10 @@ pipeline {
               sh "echo '//registry.npmjs.org/:_authToken=${env.NPM_TOKEN}' > .npmrc"
 
               echo "Publish package"
-              sh 'npm publish --workspace "${env.PACKAGE_PATH}"'
+              sh '''
+                export PACKAGE_NAME=`echo ${BRANCH} | cut -d "_" -f 2`
+	            npm publish --workspace packages/${PACKAGE_NAME}
+	          '''
 
               echo "Setup git user"
               sh '''
