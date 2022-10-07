@@ -2,7 +2,7 @@
     "name": "cloudify-ui-common-configs",
     "version": "0.0.1",
     "description": "Common Cloudify UI tools configuration library",
-    "homepage": "https://github.com/cloudify-cosmo/cloudify-ui-common/blob/master/configs/README.md",
+    "homepage": "https://github.com/cloudify-cosmo/cloudify-ui-common/blob/master/packages/configs/README.md",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/cloudify-cosmo/cloudify-ui-common.git"
@@ -17,6 +17,7 @@
         "eslint": "^7.32.0",
         "eslint-config-airbnb": "^18.2.1",
         "eslint-config-airbnb-base": "^14.2.1",
+        "eslint-config-prettier": "^6.12.0",
         "eslint-plugin-chai-friendly": "^0.6.0",
         "eslint-plugin-cypress": "^2.11.3",
         "eslint-plugin-import": "^2.22.1",

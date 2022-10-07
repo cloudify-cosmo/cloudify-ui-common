@@ -78,13 +78,14 @@ This section is divided into two parts:
 
 If you met all points from the checklist above, follow these steps:
 
-1. According to [Semantic Versioning](https://semver.org/#summary) run one of the following scripts:
+1. Provide version type and package name to `npm run publish`. For example:
 
-    * `npm run publish:patch` for new patch version,
-    * `npm run publish:minor` for new minor version,
-    * `npm run publish:major` for new major version,
-
-   which will create special branch, add commit to it containing version bump in `package*.json` files according to your choice, tag the commit and push branch to remote. That should trigger Jenkins jobs finalizing publish.
+    * `npm run publish minor cypress` - to publish new minor version of `cloudify-ui-common-cypress` package
+    * `npm run publish prepatch scripts` - to publish new prerelease patch version of `cloudify-ui-common-scripts` 
+      package
+  
+   It will create special branch, add commit to it containing version bump in `package*.json` files according to your 
+   choice, tag the commit and push branch to remote. That should trigger Jenkins jobs finalizing publish.
 
 1. Check if Jenkins jobs were successful.
 

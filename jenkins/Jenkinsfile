@@ -58,7 +58,7 @@ pipeline {
     }
     stage('Deploy') {
       when {
-        expression { return env.BRANCH =~ /^publish-v.*/ }
+        expression { return env.BRANCH =~ /^publish_.*/ }
       }
       steps {
         container('node'){
@@ -68,7 +68,10 @@ pipeline {
               sh "echo '//registry.npmjs.org/:_authToken=${env.NPM_TOKEN}' > .npmrc"
 
               echo "Publish package"
-              sh 'npm publish'
+              sh '''
+                export PACKAGE_NAME=`echo ${BRANCH} | cut -d "_" -f 2`
+	            npm publish --workspace packages/${PACKAGE_NAME}
+	          '''
 
               echo "Setup git user"
               sh '''

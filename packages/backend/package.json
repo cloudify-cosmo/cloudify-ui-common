@@ -2,7 +2,7 @@
     "name": "cloudify-ui-common-backend",
     "version": "0.0.1",
     "description": "Common Cloudify UI backend library",
-    "homepage": "https://github.com/cloudify-cosmo/cloudify-ui-common/blob/master/backend/README.md",
+    "homepage": "https://github.com/cloudify-cosmo/cloudify-ui-common/blob/master/packages/backend/README.md",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/cloudify-cosmo/cloudify-ui-common.git"
