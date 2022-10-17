@@ -3,8 +3,8 @@
     "extends": [
         "plugin:prettier/recommended",
         "plugin:security/recommended",
-        "./eslint-ts-overrides.json",
-        "plugin:no-unsanitized/DOM"
+        "plugin:no-unsanitized/DOM",
+        "./eslint-ts-overrides.json"
     ],
     "plugins": ["@typescript-eslint", "xss"],
     "rules": {
