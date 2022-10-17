@@ -30,6 +30,7 @@
         "dev": "rollup -c -w",
         "generate-type-declarations": "tsc -p src",
         "lint": "eslint --cache --ignore-path .gitignore .",
+        "snyk": "snyk code test --org=cloudify-manager",
         "test": "npm run test:coverage",
         "test:coverage": "jest test --coverage",
         "test:only": "jest test"

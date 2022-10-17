@@ -23,7 +23,7 @@
         "check-types": "tsc -b",
         "generate-type-declarations": "tsc -p src",
         "lint": "eslint --cache --ignore-path .gitignore .",
-        "snyk": "snyk code test",
+        "snyk": "snyk code test --org=cloudify-manager",
         "test": "npm run test:coverage",
         "test:coverage": "jest test --coverage",
         "test:only": "jest test"
