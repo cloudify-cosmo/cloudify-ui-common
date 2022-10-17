@@ -1,4 +1,5 @@
 {
+    "plugins": ["security-node"],
     "extends": [
         "airbnb-base",
         "./eslint-common.json",
@@ -7,7 +8,26 @@
     "rules": {
         "node/no-unsupported-features/es-syntax": "off",
         // NOTE: handled by import/no-extraneous-dependencies
-        "node/no-extraneous-require": "off"
+        "node/no-extraneous-require": "off",
+
+        "security-node/detect-absence-of-name-option-in-exrpress-session": "error",
+        "security-node/detect-buffer-unsafe-allocation": "error",
+        "security-node/detect-child-process": "error",
+        "security-node/detect-crlf": "error",
+        "security-node/detect-dangerous-redirects": "error",
+        "security-node/detect-eval-with-expr": "error",
+        "security-node/detect-html-injection": "error",
+        "security-node/detect-insecure-randomness": "error",
+        "security-node/detect-nosql-injection": "error",
+        "security-node/detect-option-multiplestatements-in-mysql": "error",
+        "security-node/detect-option-rejectunauthorized-in-nodejs-httpsrequest": "error",
+        "security-node/detect-option-unsafe-in-serialize-javascript-npm-package": "error",
+        "security-node/detect-possible-timing-attacks": "error",
+        "security-node/detect-runinthiscontext-method-in-nodes-vm": "error",
+        "security-node/detect-security-missconfiguration-cookie": "error",
+        "security-node/detect-sql-injection": "error",
+        "security-node/detect-unhandled-async-errors": "error",
+        "security-node/disable-ssl-across-node-server": "error"
     },
     "settings": {
         "node": {

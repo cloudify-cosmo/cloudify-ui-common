@@ -36,14 +36,14 @@ The table below describes their purpose and dependencies necessary to be install
 
 Note: `eslint-common.json` and `eslint-common-jest.json` don't extend AirBnB ESLint configuration, so they should not be used alone in the UI projects.
 
-| Configuration file           | Used for                  | Dependencies                                                                                                                              |
-|---                           |---------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| `eslint-ts-overrides.json`   | TypeScript-based projects | `@typescript-eslint/eslint-plugin`, `@typescript-eslint/parser`                                                                           |
-| `eslint-common.json`         | a base for other configs  | `eslint`, `eslint-config-prettier`, `eslint-plugin-import`, `eslint-plugin-prettier`, `eslint-plugin-scanjs-rules`, `eslint-plugin-security` |
-| `eslint-common-react.json`   | React-based projects      | all from `eslint-config-airbnb` and `eslint-common.json` and `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y` |
-| `eslint-common-node.json`    | Node-based projects       | all from `eslint-config-airbnb-base` and `eslint-common.json`, `eslint-plugin-node`                                                       |
-| `eslint-common-cypress.json` | Cypress subprojects       | all from `eslint-config-airbnb-base` and `eslint-common.json`, `eslint-plugin-cypress`, `eslint-plugin-chai-friendly`                     |
-| `eslint-common-jest.json`    | Jest subprojects          | `eslint-plugin-jest`                                                                                                                      |
+| Configuration file           | Used for                  | Dependencies                                                                                                                                                                                       |
+|---                           |---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `eslint-ts-overrides.json`   | TypeScript-based projects | `@typescript-eslint/eslint-plugin`, `@typescript-eslint/parser`                                                                                                                                    |
+| `eslint-common.json`         | a base for other configs  | `eslint`, `eslint-config-prettier`, `eslint-plugin-import`, `eslint-plugin-prettier`, `eslint-plugin-no-unsanitized`, `eslint-plugin-security`, `eslint-plugin-security-node`, `eslint-plugin-xss` |
+| `eslint-common-react.json`   | React-based projects      | all from `eslint-config-airbnb` and `eslint-common.json` and `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y`                                                          |
+| `eslint-common-node.json`    | Node-based projects       | all from `eslint-config-airbnb-base` and `eslint-common.json`, `eslint-plugin-node`                                                                                                                |
+| `eslint-common-cypress.json` | Cypress subprojects       | all from `eslint-config-airbnb-base` and `eslint-common.json`, `eslint-plugin-cypress`, `eslint-plugin-chai-friendly`                                                                              |
+| `eslint-common-jest.json`    | Jest subprojects          | `eslint-plugin-jest`                                                                                                                                                                               |
 
 
 ### TypeScript

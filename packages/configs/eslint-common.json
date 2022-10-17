@@ -3,9 +3,10 @@
     "extends": [
         "plugin:prettier/recommended",
         "plugin:security/recommended",
+        "plugin:no-unsanitized/DOM",
         "./eslint-ts-overrides.json"
     ],
-    "plugins": ["scanjs-rules", "@typescript-eslint"],
+    "plugins": ["@typescript-eslint", "xss"],
     "rules": {
         "no-param-reassign": ["error", { "props": false }],
         "func-names": ["error", "always", { "generators": "never" }],
@@ -15,35 +16,6 @@
         "@typescript-eslint/consistent-type-imports": ["error", {
             "disallowTypeAnnotations": false
         }],
-
-        "scanjs-rules/accidental_assignment": "warn",
-        "scanjs-rules/assign_to_hostname": "error",
-        "scanjs-rules/assign_to_href": "warn",
-        "scanjs-rules/assign_to_location": "warn",
-        "scanjs-rules/assign_to_onmessage": "error",
-        "scanjs-rules/assign_to_pathname": "warn",
-        "scanjs-rules/assign_to_protocol": "error",
-        "scanjs-rules/assign_to_search": "warn",
-        "scanjs-rules/assign_to_src": "error",
-        "scanjs-rules/call_Function": "error",
-        "scanjs-rules/call_addEventListener_deviceproximity": "error",
-        "scanjs-rules/call_addEventListener_message": "error",
-        "scanjs-rules/call_eval": "error",
-        "scanjs-rules/call_execScript": "error",
-        "scanjs-rules/call_open_remote=true": "error",
-        "scanjs-rules/call_parseFromString": "error",
-        "scanjs-rules/call_setImmediate": "error",
-        "scanjs-rules/identifier_indexedDB": "error",
-        "scanjs-rules/new_Function": "error",
-        "scanjs-rules/property_addIdleObserver": "error",
-        "scanjs-rules/property_createContextualFragment": "error",
-        "scanjs-rules/property_crypto": "error",
-        "scanjs-rules/property_geolocation": "error",
-        "scanjs-rules/property_getUserMedia": "error",
-        "scanjs-rules/property_indexedDB": "error",
-        "scanjs-rules/property_localStorage": "error",
-        "scanjs-rules/property_mgmt": "error",
-        "scanjs-rules/property_sessionStorage": "error",
 
         "security/detect-buffer-noassert": "error",
         "security/detect-child-process": "error",
@@ -56,7 +28,9 @@
         "security/detect-object-injection": "off",
         "security/detect-possible-timing-attacks": "error",
         "security/detect-pseudoRandomBytes": "error",
-        "security/detect-unsafe-regex": "error"
+        "security/detect-unsafe-regex": "error",
+
+        "xss/no-location-href-assign": "error"
     },
     "overrides": [
         {
