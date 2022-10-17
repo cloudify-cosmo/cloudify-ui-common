@@ -30,6 +30,9 @@ pipeline {
   }
   stages {
     stage('Build') {
+      environment {
+        SNYK_TOKEN = credentials('snyk_token_test')
+      }
       steps {
         container('node'){
           dir("${env.WORKSPACE}/${env.PROJECT}") {
@@ -43,6 +46,7 @@ pipeline {
 
             echo "Run static analysis and check code style"
             sh 'npm run lint --workspaces --if-present'
+            sh 'npm run snyk --workspaces --if-present'
 
             echo "Check TypeScript types"
             sh 'npm run check-types --workspaces --if-present'

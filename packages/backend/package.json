@@ -23,6 +23,7 @@
         "check-types": "tsc -b",
         "generate-type-declarations": "tsc -p src",
         "lint": "eslint --cache --ignore-path .gitignore .",
+        "snyk": "snyk code test",
         "test": "npm run test:coverage",
         "test:coverage": "jest test --coverage",
         "test:only": "jest test"
@@ -40,6 +41,7 @@
         "@types/sequelize": "^4.28.10",
         "@types/tmp": "^0.2.1",
         "@types/umzug": "^2.3.3",
+        "snyk": "^1.1032.0",
         "tmp": "^0.2.1"
     },
     "engines": {
