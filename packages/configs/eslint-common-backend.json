@@ -1,0 +1,50 @@
+{
+    "overrides": [
+        {
+            "files": "./backend/**/*.ts",
+            "extends": [
+                "./eslint-common-node.json",
+                "plugin:node/recommended-module"
+            ],
+            "rules": {
+                "prefer-promise-reject-errors": "off",
+                "node/no-missing-require": [
+                    "error",
+                    {
+                        "tryExtensions": [".js", ".ts", ".json"]
+                    }
+                ]
+            }
+        },
+        {
+            "files": "./backend/**/*.ts",
+            "excludedFiles": ["./backend/test/**", "./backend/**/__mocks__/*"],
+            "parser": "@typescript-eslint/parser",
+            "rules": {
+                "@typescript-eslint/no-floating-promises": "error"
+            },
+            "parserOptions": {
+                "project": "./backend/tsconfig.json"
+            }
+        },
+        {
+            "files": "./backend/test/**/*.ts",
+            "extends": [
+                "./eslint-common-node.json",
+                "./eslint-common-jest.json",
+                "plugin:node/recommended-module"
+            ],
+            "rules": {
+                "node/no-missing-import": [
+                    "error",
+                    {
+                        "tryExtensions": [".js", ".json", ".ts"],
+                        "resolvePaths": ["./backend", "."]
+                    }
+                ],
+                "import/no-unresolved": "off",
+                "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+            }
+        }
+    ]
+}
