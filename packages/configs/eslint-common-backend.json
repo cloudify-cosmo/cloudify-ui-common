@@ -7,7 +7,6 @@
                 "plugin:node/recommended-module"
             ],
             "rules": {
-                "prefer-promise-reject-errors": "off",
                 "node/no-missing-require": [
                     "error",
                     {
