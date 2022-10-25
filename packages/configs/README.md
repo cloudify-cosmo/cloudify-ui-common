@@ -49,7 +49,7 @@ Note: `eslint-common.json` and `eslint-common-jest.json` don't extend AirBnB ESL
 
 ### TypeScript
 
-There are 2 possible base `tsconfig.json` files:
+There are 3 possible base `tsconfig.json` files:
 
 1. `tsconfig.base.json` - contains compiler options that help maintain code quality. They allow
    using JavaScript and TypeScript in the same project.
@@ -61,6 +61,8 @@ There are 2 possible base `tsconfig.json` files:
    generating [declaration maps](https://www.typescriptlang.org/tsconfig#declarationMap).
 
    This is useful for libraries, which are consumed by other user-facing projects.
+
+3. `tsconfig.node.json`- extends `tsconfig.base.json` with settings specific to `ts-node` projects.
 
 To use an existing tsconfig as a base, specify the [extends](https://www.typescriptlang.org/tsconfig#extends) property in your `tsconfig.json`:
 
