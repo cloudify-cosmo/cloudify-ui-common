@@ -27,7 +27,7 @@
         "build": "npm run build:code && npm run generate-type-declarations",
         "build:code": "rollup -c",
         "check-types": "tsc -b",
-        "dev": "rollup -c -w",
+        "dev": "rollup -c -w & tsc -w -p src",
         "generate-type-declarations": "tsc -p src",
         "lint": "eslint --cache --ignore-path .gitignore .",
         "test": "npm run test:coverage",
