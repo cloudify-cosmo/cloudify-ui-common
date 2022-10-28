@@ -10,8 +10,7 @@
     "license": "Apache-2.0",
     "author": "Cloudify Platform Ltd. <cosmo-admin@cloudify.co>",
     "files": [
-        "cypress.json",
-        "plugins",
+        "config",
         "support",
         "src",
         "README.md"
@@ -24,7 +23,6 @@
     },
     "dependencies": {
         "@cypress/code-coverage": "^3.10.0",
-        "@cypress/webpack-dev-server": "^1.6.0",
-        "cypress": "^8.2.0"
+        "cypress": "^10.11.0"
     }
 }
