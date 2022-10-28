@@ -18,7 +18,7 @@
     "scripts": {
         "audit": "npm audit --production",
         "build": "tsc -p .",
-        "check-types": "tsc -b .",
+        "check-types": "tsc --noEmit",
         "lint": "eslint --cache  --ignore-path .gitignore ."
     },
     "dependencies": {
