@@ -1,6 +1,6 @@
 {
     "name": "cloudify-ui-common-cypress",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "description": "Common Cloudify UI Cypress library",
     "homepage": "https://github.com/cloudify-cosmo/cloudify-ui-common/blob/master/packages/cypress/README.md",
     "repository": {
