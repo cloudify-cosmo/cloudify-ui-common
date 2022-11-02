@@ -10,8 +10,7 @@
     "license": "Apache-2.0",
     "author": "Cloudify Platform Ltd. <cosmo-admin@cloudify.co>",
     "files": [
-        "cypress.json",
-        "plugins",
+        "config",
         "support",
         "src",
         "README.md"
@@ -19,12 +18,11 @@
     "scripts": {
         "audit": "npm audit --production",
         "build": "tsc -p .",
-        "check-types": "tsc -b .",
+        "check-types": "tsc --noEmit",
         "lint": "eslint --cache  --ignore-path .gitignore ."
     },
     "dependencies": {
         "@cypress/code-coverage": "^3.10.0",
-        "@cypress/webpack-dev-server": "^1.6.0",
-        "cypress": "^8.2.0"
+        "cypress": "^10.11.0"
     }
 }
