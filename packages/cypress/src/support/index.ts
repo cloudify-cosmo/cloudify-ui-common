@@ -1,3 +1,5 @@
+import '@cypress/code-coverage/support';
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CustomCypressCommands = Record<string, (...args: any[]) => Cypress.Chainable | void>;
 

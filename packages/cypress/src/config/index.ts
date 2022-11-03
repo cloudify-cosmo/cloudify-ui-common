@@ -31,6 +31,7 @@ export function getConfig(localBaseUrl: string, webpackConfig?: ConfigHandler<Pi
     const setupNodeEvents: ResolvedConfigOptions['setupNodeEvents'] = (on, config) => {
         coverageTask(on, config);
         setRemovingVideosForPassedTestsTask(on);
+        return config;
     };
 
     return defineConfig({
@@ -49,8 +50,8 @@ export function getConfig(localBaseUrl: string, webpackConfig?: ConfigHandler<Pi
         nodeVersion: 'system',
         e2e: {
             setupNodeEvents: (on, config) => {
-                setupNodeEvents(on, config);
                 console.info(`Testing on: ${baseUrl}`);
+                return setupNodeEvents(on, config);
             },
             specPattern: 'test/cypress/integration/**/*_spec.ts',
             supportFile: 'test/cypress/support/index.ts',
