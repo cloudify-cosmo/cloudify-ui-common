@@ -36,12 +36,14 @@
         "winston": "^3.3.3"
     },
     "devDependencies": {
+        "@types/fs-extra": "^11.0.1",
         "@types/js-yaml": "^4.0.5",
         "@types/lodash": "^4.14.170",
         "@types/node": "^16.11.68",
         "@types/sequelize": "^4.28.10",
         "@types/tmp": "^0.2.1",
         "@types/umzug": "^2.3.3",
+        "fs-extra": "^11.1.0",
         "tmp": "^0.2.1"
     },
     "engines": {
