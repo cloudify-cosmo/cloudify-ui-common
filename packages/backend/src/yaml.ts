@@ -41,11 +41,11 @@ function prepareIntrinsicFunctions(obj: Record<string, any>) {
 
 export const renderBlueprintYaml = (blueprint: Blueprint) => {
     prepareIntrinsicFunctions(blueprint);
-    // Omit values that are object (object or array, not a simple type) and are empty, or are just null
-    const result = omitBy(blueprint, member => member === null || (isObject(member) && isEmpty(member)));
-    return renderYaml(result);
+    return renderYaml(blueprint);
 };
 
 export const renderYaml = (source: any) => {
-    return yaml.dump(source, { lineWidth, schema });
+    // Omit values that are object (object or array, not a simple type) and are empty, or are just null
+    const result = omitBy(source, member => member === null || (isObject(member) && isEmpty(member)));
+    return yaml.dump(result, { lineWidth, schema });
 };
