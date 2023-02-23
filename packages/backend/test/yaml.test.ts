@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { readFileSync } from 'fs';
-import { renderBlueprintYaml } from '../src/yaml';
+import { renderBlueprintYaml, renderYaml } from '../src/yaml';
 
 describe('yaml', () => {
     it('should convert blueprint model to YAML', () => {
@@ -19,5 +19,15 @@ describe('yaml', () => {
         };
         const expectedYaml = readFileSync(join(__dirname, 'fixtures/blueprint.yaml'), { encoding: 'utf8' });
         expect(renderBlueprintYaml(blueprintModel)).toBe(expectedYaml);
+    });
+
+    it('should not render empty or null properties on root level', () => {
+        const model = {
+            a: [],
+            b: {},
+            c: null,
+            d: ''
+        };
+        expect(renderYaml(model)).toBe("d: ''\n");
     });
 });
