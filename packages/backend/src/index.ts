@@ -2,6 +2,7 @@ export { default as getDbModule } from './db';
 export { default as initLogging } from './logger';
 export { default as runMigration } from './migration';
 export * from './yaml';
+export * from './blueprint';
 
 export type { DbConfig, DbModule, DbOptions, DialectOptions, ModelFactories, ModelFactory } from './db';
 export type { Logger, LoggerFactory } from './logger';
