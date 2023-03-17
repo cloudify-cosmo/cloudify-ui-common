@@ -31,29 +31,34 @@ export function createGetInputCall(arg: string) {
     return createIntrinsicFunctionCall('get_input', arg);
 }
 
+type AtLeastOneArgFunction<Arg> = (arg1: Arg, ...restArgs: Arg[]) => IntrinsicFunction;
+
 /**
  * Creates `get_attribute` intrinsic function invocation object
  *
- * @param {...any} args
+ * @param arg1
+ * @param {...any} restArgs
  */
-export function createGetAttributeCall(...args: (string | number)[]) {
-    return createIntrinsicFunctionCall('get_attribute', args);
-}
+export const createGetAttributeCall: AtLeastOneArgFunction<string | number> = (arg1, ...restArgs) => {
+    return createIntrinsicFunctionCall('get_attribute', [arg1, ...restArgs]);
+};
 
 /**
  * Creates `get_sys` intrinsic function invocation object
  *
- * @param {...any} args
+ * @param arg1
+ * @param {...any} restArgs
  */
-export function createGetSysCall(...args: string[]) {
-    return createIntrinsicFunctionCall('get_sys', args);
-}
+export const createGetSysCall: AtLeastOneArgFunction<string> = (arg1, ...restArgs) => {
+    return createIntrinsicFunctionCall('get_sys', [arg1, ...restArgs]);
+};
 
 /**
  * Creates `concat` intrinsic function invocation object
  *
- * @param {...any} args
+ * @param arg1
+ * @param {...any} restArgs
  */
-export function createConcatCall(...args: (string | IntrinsicFunction)[]) {
-    return createIntrinsicFunctionCall('concat', args);
-}
+export const createConcatCall: AtLeastOneArgFunction<string | IntrinsicFunction> = (arg1, ...restArgs) => {
+    return createIntrinsicFunctionCall('concat', [arg1, ...restArgs]);
+};
