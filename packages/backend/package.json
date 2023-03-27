@@ -32,6 +32,8 @@
         "js-yaml": "^4.1.0",
         "lodash": "^4.17.21",
         "sequelize": "^6.29.0",
+        "short-uuid": "^4.2.2",
+        "simple-git": "^3.17.0",
         "umzug": "^3.0.0",
         "winston": "^3.3.3"
     },
