@@ -15,7 +15,7 @@ const getUniqNotExistingTemporaryDirectory = (): string => {
     return repositoryPath;
 };
 
-const getGitUrl = (url: string, authHeader?: string) => {
+export const getGitUrl = (url: string, authHeader?: string) => {
     if (authHeader) {
         const encodedCredentials = authHeader.replace(new RegExp('Basic ', 'ig'), '');
         const gitCredentials = Buffer.from(encodedCredentials, 'base64').toString('binary');
@@ -49,6 +49,6 @@ export const cloneGitRepo = async <Result>(
     }
 };
 
-const removeGitRepo = (repositoryPath: string) => {
+export const removeGitRepo = (repositoryPath: string) => {
     fs.rmdirSync(repositoryPath, { recursive: true });
 };
