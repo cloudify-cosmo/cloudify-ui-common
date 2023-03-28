@@ -1,17 +1,30 @@
 import fs from 'fs';
-import { getGitUrl, removeGitRepo } from '../src';
+import simpleGit from 'simple-git';
+import os from 'os';
+import uniqueDirectoryName from 'short-uuid';
+import { cloneGitRepo } from '../src';
 
 jest.mock('fs');
+jest.mock('simple-git');
+jest.mock('short-uuid');
+jest.mock('os');
+jest.mock('os');
 
 describe('git', () => {
-    it('creates credentials URL', () => {
-        const result = getGitUrl('//url', 'dXNlcjpwYXNz');
-        expect(result).toBe('//user:pass@url');
-    });
+    it('clones git repo', async () => {
+        const clone = jest.fn();
+        (<jest.Mock>simpleGit).mockReturnValue({ clone });
+        (<jest.Mock>os.tmpdir).mockReturnValue('tmp');
+        (<jest.Mock>uniqueDirectoryName.generate).mockReturnValue('dir');
 
-    it('removes git repo', () => {
-        const path = 'xyz';
-        removeGitRepo(path);
-        expect(fs.rmdirSync).toHaveBeenCalledWith(path, { recursive: true });
+        const url = '//url';
+        const callback = jest.fn();
+
+        await cloneGitRepo(url, callback, 'dXNlcjpwYXNz');
+
+        const repositoryPath = 'tmp/dir';
+        expect(clone).toHaveBeenCalledWith('//user:pass@url', repositoryPath, ['-c core.askPass=echo']);
+        expect(callback).toHaveBeenCalledWith(repositoryPath);
+        expect(fs.rmdirSync).toHaveBeenCalledWith(repositoryPath, { recursive: true });
     });
 });
