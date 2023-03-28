@@ -22,7 +22,10 @@ describe('git', () => {
         await cloneGitRepo(url, callback, 'dXNlcjpwYXNz');
 
         const repositoryPath = 'tmp/dir';
-        expect(clone).toHaveBeenCalledWith('//user:pass@url', repositoryPath, ['-c core.askPass=echo']);
+        expect(clone).toHaveBeenCalledWith('//user:pass@url', repositoryPath, [
+            '-c core.askPass=echo',
+            '--filter=blob:none'
+        ]);
         expect(callback).toHaveBeenCalledWith(repositoryPath);
         expect(fs.rmdirSync).toHaveBeenCalledWith(repositoryPath, { recursive: true });
     });
