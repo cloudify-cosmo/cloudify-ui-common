@@ -1,6 +1,6 @@
 {
     "name": "cloudify-ui-common-backend",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "description": "Common Cloudify UI backend library",
     "homepage": "https://github.com/cloudify-cosmo/cloudify-ui-common/blob/master/packages/backend/README.md",
     "repository": {
