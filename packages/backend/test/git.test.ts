@@ -8,7 +8,6 @@ jest.mock('fs');
 jest.mock('simple-git');
 jest.mock('short-uuid');
 jest.mock('os');
-jest.mock('os');
 
 describe('git', () => {
     it('clones git repo', async () => {
