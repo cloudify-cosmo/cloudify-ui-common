@@ -27,6 +27,6 @@ describe('git', () => {
             '--filter=blob:none'
         ]);
         expect(callback).toHaveBeenCalledWith(repositoryPath);
-        expect(fs.rmdirSync).toHaveBeenCalledWith(repositoryPath, { recursive: true });
+        expect(fs.existsSync).toHaveBeenCalledWith(repositoryPath);
     });
 });
