@@ -51,5 +51,5 @@ export const cloneGitRepo = async <Result>(
 };
 
 const removeGitRepo = (repositoryPath: string) => {
-    fs.rmdirSync(repositoryPath, { recursive: true });
+    if (fs.existsSync(repositoryPath)) fs.rmdirSync(repositoryPath, { recursive: true });
 };
