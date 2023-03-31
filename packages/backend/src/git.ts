@@ -4,9 +4,12 @@ import os from 'os';
 import uniqueDirectoryName from 'short-uuid';
 import simpleGit from 'simple-git';
 
-// NOTE: The idea behind the code below has been described in more details here: https://serverfault.com/questions/544156/git-clone-fail-instead-of-prompting-for-credentials
-const disableGitAuthenticationPromptOption = '-c core.askPass=echo';
-const filterOutBlobsOption = '--filter=blob:none';
+const cloneOptions = [
+    // Disable git authentication prompt - see https://serverfault.com/questions/544156/git-clone-fail-instead-of-prompting-for-credentials
+    '-c core.askPass=echo',
+    '--single-branch',
+    '--depth=1'
+];
 
 const getUniqNotExistingTemporaryDirectory = (): string => {
     const repositoryPath = path.join(os.tmpdir(), uniqueDirectoryName.generate());
@@ -36,7 +39,7 @@ export const cloneGitRepo = async <Result>(
     const repositoryPath = getUniqNotExistingTemporaryDirectory();
     try {
         const gitUrl = getGitUrl(url, authHeader);
-        await simpleGit().clone(gitUrl, repositoryPath, [disableGitAuthenticationPromptOption, filterOutBlobsOption]);
+        await simpleGit().clone(gitUrl, repositoryPath, cloneOptions);
         return await callback(repositoryPath);
     } catch (error: any) {
         const isAuthenticationIssue = error.message.includes('Authentication failed');

@@ -24,7 +24,8 @@ describe('git', () => {
         const repositoryPath = 'tmp/dir';
         expect(clone).toHaveBeenCalledWith('//user:pass@url', repositoryPath, [
             '-c core.askPass=echo',
-            '--filter=blob:none'
+            '--single-branch',
+            '--depth=1'
         ]);
         expect(callback).toHaveBeenCalledWith(repositoryPath);
         expect(fs.existsSync).toHaveBeenCalledWith(repositoryPath);
