@@ -9,7 +9,7 @@
   font-family: "dds-icons";
   font-style: normal;
   font-weight: normal;
-  src: url("./dds-icons.woff2") format("woff2"), url("./dds-icons.woff") format("woff");
+  src: url("dds-icons.woff2") format("woff2"), url("dds-icons.woff") format("woff");
 }
 .dds__icon {
   font-family: "dds-icons" !important;
