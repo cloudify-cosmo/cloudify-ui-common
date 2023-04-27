@@ -457,7 +457,7 @@ const iconsSuffix = [
     'zoom-out'
 ];
 
-const iconClassName = (iconSuffix: string) => `icon-button dds__icon dds__icon--${iconSuffix}`;
+const iconClassName = (iconSuffix: string) => `dds__icon dds__icon--${iconSuffix}`;
 
 const dashToCamelCase = (text: string) => text.replace(/-([a-z])/g, dashPrefix => dashPrefix[1].toUpperCase());
 
@@ -468,3 +468,5 @@ export const icons: Record<string, string> = iconsSuffix.reduce(
     }),
     {}
 );
+
+export const iconButtonClassName = (ddsIcon: string) => `icon-button ${ddsIcon}`
