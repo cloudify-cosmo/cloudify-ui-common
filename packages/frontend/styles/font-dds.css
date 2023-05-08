@@ -1,0 +1,6 @@
+@font-face {
+    font-family: "dds-icons-embedded";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../fonts/dell/dds-icons.woff2") format("woff2"), url("../fonts/dell/dds-icons.woff") format("woff");
+}
