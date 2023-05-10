@@ -12,9 +12,13 @@ Provides basic style aligned with Cloudify official brand typography guidelines.
 
 Creates font-family for cloudify font.
 
-### font-dds.css
+### font-dds-icons.css
 
-Creates font-family for dds icons font.
+Creates font-family for DDS icons font.
+
+### font-dds-Roboto.css
+
+Creates font-family for DDS text font.
 
 ### font-JosefinSans-Bold.css
 
