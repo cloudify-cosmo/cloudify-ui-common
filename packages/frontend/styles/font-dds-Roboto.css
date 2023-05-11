@@ -1,6 +1,6 @@
 @charset "UTF-8";
-/* The order of the font-face is important. If the woff is last for the font-wieght Webkit broswers
-will end up using the woff file over the unicode-range version. If the woff is first for the font-wieght
+/* The order of the font-face is important. If the woff is last for the font-weight Webkit browsers
+will end up using the woff file over the unicode-range version. If the woff is first for the font-weight
 the browser will prefer the unicode-range woff2 version over the woff */
 /* roboto 300/light */
 @font-face {
