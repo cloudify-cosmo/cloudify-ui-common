@@ -24,6 +24,8 @@ We currently use [IcoMoon](https://icomoon.io) for making any changes (adding/de
 
 [DDS icons font](https://vanilla.delldesignsystem.com/2.28.0/index.html?path=/docs/foundations-icons--page)
 
+[DDS Roboto font](https://vanilla.delldesignsystem.com/2.28.0/index.html?path=/docs/foundations-typography--page)
+
 ### JosefinSans
 [OpenSans @ Google Fonts](https://fonts.google.com/specimen/OpenSans)
 
