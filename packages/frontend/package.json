@@ -23,7 +23,6 @@
     ],
     "types": "./typings/index.d.ts",
     "scripts": {
-        "audit": "npm audit --production",
         "build": "npm run build:code && npm run generate-type-declarations",
         "build:code": "rollup -c",
         "check-types": "tsc -b",
@@ -34,6 +33,7 @@
         "test:coverage": "jest test --coverage",
         "test:only": "jest test"
     },
+    "//": "NOTE: Consider adding audit script once there are any dependencies",
     "dependencies": {},
     "devDependencies": {
         "@rollup/plugin-babel": "^5.2.2",
