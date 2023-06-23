@@ -33,6 +33,7 @@
         "test:coverage": "jest test --coverage",
         "test:only": "jest test"
     },
+    // Consider adding audit script once we have any prod dependencies
     "dependencies": {},
     "devDependencies": {
         "@rollup/plugin-babel": "^5.2.2",
