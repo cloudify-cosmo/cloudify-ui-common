@@ -21,7 +21,7 @@
         "lint": "eslint --cache  --ignore-path .gitignore ."
     },
     "dependencies": {
-        "@cypress/code-coverage": "^3.10.0",
+        "@cypress/code-coverage": "^3.11.0",
         "cypress": "^10.11.0"
     }
 }
