@@ -87,7 +87,7 @@ export function getTypedValue(value: string): any {
         }
 
         // Number
-        const numericValue = Number(value);
+        const numericValue = parseFloat(value);
         if (!Number.isNaN(numericValue)) {
             return numericValue;
         }
