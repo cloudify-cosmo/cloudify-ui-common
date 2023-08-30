@@ -22,6 +22,6 @@
     },
     "dependencies": {
         "@cypress/code-coverage": "^3.11.0",
-        "cypress": "^10.11.0"
+        "cypress": "^13.0.0"
     }
 }
