@@ -12,5 +12,8 @@
     "files": [
         "*.sh",
         "README.md"
-    ]
+    ],
+    "engines": {
+        "node": "18.20.x"
+    }
 }
